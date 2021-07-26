@@ -1,0 +1,36 @@
+image: seandenigris/pharo
+
+# Run before *all* jobs, including deploy (https://docs.gitlab.com/ce/ci/yaml/#before_script)
+before_script:
+  # Install glue scripts
+  - wget -q https://gitlab.com/SeanDeNigris/gitlab-smalltalk-ci/raw/master/install_scripts.sh
+  - source install_scripts.sh
+  - source scripts/setup.sh # Use `source` per https://stackoverflow.com/questions/46030051/gitlab-pipeline-works-in-yml-fails-in-extracted-sh/46041447#46041447
+
+stages:
+  - build
+
+.build_template: &build
+  stage: build
+  script:
+    - source scripts/build.sh "$SMALLTALK_IMAGE"
+  artifacts:
+    when: on_failure
+    paths:
+    - ./*.fuel # Can't start with * (see https://gitlab.com/gitlab-org/gitlab-runner/issues/2086)
+
+.pharo61_template: &pharo61
+  variables:
+    SMALLTALK_IMAGE: "Pharo-6.1"
+
+pharo61_build:
+  <<: *pharo61
+  <<: *build
+
+.pharo70_template: &pharo70
+  variables:
+    SMALLTALK_IMAGE: "Pharo-7.0"
+
+pharo70_build:
+  <<: *pharo70
+  <<: *build

@@ -1,0 +1,1 @@
+Iceberg enableMetacelloIntegration: true.

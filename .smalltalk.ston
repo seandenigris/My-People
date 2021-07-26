@@ -1,0 +1,10 @@
+SmalltalkCISpec {
+  #preLoading : 'scripts/preLoading.st', 
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'MyPeople',
+      #directory : 'src',
+      #platforms : [ #pharo ]
+    }
+  ]
+}
