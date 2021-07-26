@@ -1,6 +1,16 @@
 # My-People
 Address Book service, minus the usual application stovepipe, running on GT (Smalltalk)
 
+# Installation
+```smalltalk
+EpMonitor current disable.
+Metacello new
+	baseline: 'MyPeople';
+	repository: 'github://seandenigris/My-People';
+	load.
+EpMonitor current enable.
+```
+
 # Disclaimer
 This project is part of a ~20 year (as of 2021) exploration of Alan Kay's Dynabook idea. It's intensely personal and opinionated and I've open sourced it due to repeated requests. Use at your own risk. Any part may change at any time. I'm happy to give support when I have time in the form of explanations, but do not expect me to implement any particular feature, or even accept PRs if they don't feel right. That said, I'm happy to have anyone along on the journey :)
 
