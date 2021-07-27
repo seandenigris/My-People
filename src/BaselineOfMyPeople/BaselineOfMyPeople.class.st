@@ -21,12 +21,14 @@ BaselineOfMyPeople >> baseline: spec [
 			baseline: 'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ].
 		spec package: #MyPeople with: [
-				spec requires: #('Magritte' 'Mocketry' 'PetitParser2' 'PharoEnhancements' 'SimplePersistence'). ]. ].
+				spec requires: #('Magritte' 'Mocketry' 'PharoEnhancements' 'SimplePersistence'). ]. ].
 				
 	spec for: #notGToolkit do: [ 
 		spec
 			baseline: 'PetitParser2' with: [
-				spec repository: 'github://seandenigris/PetitParser2' ] ]
+				spec repository: 'github://seandenigris/PetitParser2' ].
+		spec package: #MyPeople with: [
+				spec requires: #('PetitParser2'). ]. ]
 
 ]
 
