@@ -93,7 +93,7 @@ MpAddressBook >> gtGtSpotterForOrgsFor: aStep [
 { #category : #spotter }
 MpAddressBook >> gtGtSpotterForPeopleFor: aStep [
 	"Adapted from GT superclass"
-	<gtSearch>
+	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
 	
 	^ aStep listProcessor
 		priority: 5;
