@@ -1,16 +1,16 @@
 Class {
-	#name : #MpNameSpecification,
-	#superclass : #TestCase,
-	#category : #'MyPeople-Specifications'
+	#name : 'MpNameSpecification',
+	#superclass : 'TestCase',
+	#category : 'MyPeople-Specifications'
 }
 
-{ #category : #expectations }
+{ #category : 'expectations' }
 MpNameSpecification >> generationalOf: aMpName shouldMatch: aString [ 
 	aMpName generational ifNil: [ ^ aString isNil ].
 	^ (aMpName generational matches: aString) should beTrue
 ]
 
-{ #category : #expectations }
+{ #category : 'expectations' }
 MpNameSpecification >> name: firstPerson shouldBe: percentage similarTo: secondPerson [
 	
 	| aName anotherName |
@@ -19,7 +19,7 @@ MpNameSpecification >> name: firstPerson shouldBe: percentage similarTo: secondP
 	(aName similarityTo: anotherName) should equal: percentage asFloat percent
 ]
 
-{ #category : #expectations }
+{ #category : 'expectations' }
 MpNameSpecification >> nameFromArray: aCollection [ 
 
 	| result |
@@ -32,7 +32,7 @@ MpNameSpecification >> nameFromArray: aCollection [
 	^ result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MpNameSpecification >> testComparing [
 
 	| cases |
@@ -58,7 +58,7 @@ MpNameSpecification >> testComparing [
 		self name: firstPerson shouldBe: percentage similarTo: secondPerson ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MpNameSpecification >> testMerging [
 
 	| cases |
@@ -93,7 +93,7 @@ MpNameSpecification >> testMerging [
 			cmd should equal: (MAPatchOperation new receiver: baseName; field: field; oldValue: (baseName perform: readSelector); newValue: (proposedName perform: readSelector); yourself) ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MpNameSpecification >> testParsing [
 	
 	| cases |
@@ -116,7 +116,7 @@ MpNameSpecification >> testParsing [
 		self generationalOf: name shouldMatch: case fifth ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MpNameSpecification >> testParsingGenerational [
 
 	| options |

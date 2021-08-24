@@ -1,12 +1,12 @@
 Class {
-	#name : #PeMyPeopleWiki,
-	#superclass : #Object,
+	#name : 'PeMyPeopleWiki',
+	#superclass : 'Object',
 	#traits : 'TAPWiki',
 	#classTraits : 'TAPWiki classTrait',
-	#category : #'MyPeople-Documentation'
+	#category : 'MyPeople-Documentation'
 }
 
-{ #category : #wikiPages }
+{ #category : 'wikiPages' }
 PeMyPeopleWiki class >> wikiPagePersistence [
 	"This method was automatically generated."
 	<wikiPage: 'Persistence'>

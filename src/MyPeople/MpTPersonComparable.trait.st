@@ -2,23 +2,23 @@
 The main entry point I provide is ${method:MpTPersonComparable>>#chanceIsSameAs:}$, which compares by name. See its method comment (and those of its sent messages) for more info.
 "
 Trait {
-	#name : #MpTPersonComparable,
-	#category : #'MyPeople-Core'
+	#name : 'MpTPersonComparable',
+	#category : 'MyPeople-Core'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpTPersonComparable >> < aComparable [
 
 	^ self name < aComparable name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpTPersonComparable >> <= aComparable [
 
 	^ self name <= aComparable name
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpTPersonComparable >> chanceIsSameAs: rhs [
 
 	"Subclasses may want to add something like:
@@ -26,7 +26,7 @@ MpTPersonComparable >> chanceIsSameAs: rhs [
 	^ self similarityByNameTo: rhs.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpTPersonComparable >> is: fieldAccessor sameAs: rhs ifTrue: trueBlock ifConflicting: conflictBlock [
 	"
 	Possible Scenarios:
@@ -43,7 +43,7 @@ MpTPersonComparable >> is: fieldAccessor sameAs: rhs ifTrue: trueBlock ifConflic
 	^ conflictBlock value
 ]
 
-{ #category : #'helper-comparing' }
+{ #category : 'helper-comparing' }
 MpTPersonComparable >> similarityByNameTo: rhs [
 	"The reason this odd-sounding method was extracted is so a user can customize `chanceIsSameAs:` and still resuse this behavior without aliasing (because there is no equivalent of `super` for traits)"	
 	^ self name similarityTo: rhs name.

@@ -1,13 +1,13 @@
 Class {
-	#name : #MpContactRole,
-	#superclass : #Object,
+	#name : 'MpContactRole',
+	#superclass : 'Object',
 	#instVars : [
 		'emailAddresses'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core'
 }
 
-{ #category : #magritte }
+{ #category : 'magritte' }
 MpContactRole >> descriptionEmailAddresses [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -17,12 +17,12 @@ MpContactRole >> descriptionEmailAddresses [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactRole >> emailAddresses [
 	^ emailAddresses ifNil: [ emailAddresses := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactRole >> emailAddresses: anObject [
 	emailAddresses := anObject
 ]

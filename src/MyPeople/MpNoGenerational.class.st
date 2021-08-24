@@ -1,24 +1,24 @@
 Class {
-	#name : #MpNoGenerational,
-	#superclass : #Object,
-	#category : #'MyPeople-Core'
+	#name : 'MpNoGenerational',
+	#superclass : 'Object',
+	#category : 'MyPeople-Core'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpNoGenerational >> = rhs [
 	^ self class = rhs class
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 MpNoGenerational >> displayStringOn: aStream [
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpNoGenerational >> hash [
 	^ self class hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpNoGenerational >> token [
 	^ nil
 ]

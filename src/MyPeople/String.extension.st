@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*MyPeople' }
+{ #category : '*MyPeople' }
 String >> mpAsName [
 	^ MpName fromString: self
 ]
