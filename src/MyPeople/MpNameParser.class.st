@@ -1,6 +1,6 @@
 Class {
-	#name : 'MpNameParser',
-	#superclass : 'PP2CompositeNode',
+	#name : #MpNameParser,
+	#superclass : #PP2CompositeNode,
 	#instVars : [
 		'token',
 		'abbreviatableToken',
@@ -11,17 +11,17 @@ Class {
 	#category : 'MyPeople-Core'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 MpNameParser >> abbreviatable: aParser [
 	^ (aParser, $. asPParser optional) flatten
 ]
 
-{ #category : 'grammar' }
+{ #category : #grammar }
 MpNameParser >> abbreviatableToken [
 	^ self abbreviatable: token
 ]
 
-{ #category : 'grammar' }
+{ #category : #grammar }
 MpNameParser >> firstNameFirst [
 	| middleName generationalPart lastName |
 	generationalPart := (#space asPParser, generational) ==> #second.
@@ -38,7 +38,7 @@ MpNameParser >> firstNameFirst [
 		result ].
 ]
 
-{ #category : 'grammar' }
+{ #category : #grammar }
 MpNameParser >> generational [
 
 	| generationalChoices |
@@ -46,7 +46,7 @@ MpNameParser >> generational [
 	^ self abbreviatable: generationalChoices
 ]
 
-{ #category : 'grammar' }
+{ #category : #grammar }
 MpNameParser >> lastNameFirst [
 
 	| middleName generationalPart lastName firstName |
@@ -64,18 +64,18 @@ MpNameParser >> lastNameFirst [
 		result ].
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpNameParser >> start [
 	^ self topLevelGrammars end
 ]
 
-{ #category : 'grammar' }
+{ #category : #grammar }
 MpNameParser >> token [
 
 	^ (#letter asPParser | $' asPParser) plus flatten
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 MpNameParser >> topLevelGrammars [
 	^ lastNameFirst | firstNameFirst
 ]

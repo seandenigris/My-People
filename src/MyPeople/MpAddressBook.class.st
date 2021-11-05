@@ -10,20 +10,20 @@ I am called an ''address book'', but I'm in search of a better name.
 My superclass is ${class:GtABAddressBook}$. It has an example filled with some contacts - see ${class:GtABCartoonAddressBookExample}$. There's a bit of a rift with my parent, however. While I take advantage of its views, I have my own highly-opinionated model for the objects I contain.
 "
 Class {
-	#name : 'MpAddressBook',
-	#superclass : 'GtABAddressBook',
+	#name : #MpAddressBook,
+	#superclass : #GtABAddressBook,
 	#classVars : [
 		'Default'
 	],
 	#category : 'MyPeople-Core'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook class >> default [
 	^ default ifNil: [ default := self new ]
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 MpAddressBook class >> exampleHarryPotter [
 	<gtExample>
 	
@@ -39,7 +39,7 @@ MpAddressBook class >> exampleHarryPotter [
 		then: [ :col :ab | ab where contacts should haveSize: 3 ]	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook class >> gtDefaultFor: aView inContext: aContext [
 	<gtView>
 	<gtClassView>
@@ -49,41 +49,41 @@ MpAddressBook class >> gtDefaultFor: aView inContext: aContext [
 		views: (self default gtViewsInContext: aContext)
 ]
 
-{ #category : 'persistence' }
+{ #category : #persistence }
 MpAddressBook class >> restoreFrom: anObject [
 
 	default := anObject.
 ]
 
-{ #category : 'persistence' }
+{ #category : #persistence }
 MpAddressBook class >> spData [
 
 	^ default
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook >> contacts [
 	^ contacts ifNil: [ contacts := SortedCollection sortUsing: #fullName ascending ]
 ]
 
-{ #category : 'convenience' }
+{ #category : #convenience }
 MpAddressBook >> ensureOrganizationNamed: aString [
 	^ MpOrganization ensureNamed: aString.
 	"For the moment, there are person and organization, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : 'convenience' }
+{ #category : #convenience }
 MpAddressBook >> ensurePersonNamed: aString [
 	^ MpPerson ensureNamed: aString.
 	"For the moment, there are person and organization, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock [
 	^ self contacts detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
 ]
 
-{ #category : 'spotter' }
+{ #category : #spotter }
 MpAddressBook >> gtGtSpotterForOrgsFor: aStep [
 	"Adapted from GT superclass"
 	<gtSearch>
@@ -96,7 +96,7 @@ MpAddressBook >> gtGtSpotterForOrgsFor: aStep [
 		itemName:[ :aContact | aContact fullName ] 
 ]
 
-{ #category : 'spotter' }
+{ #category : #spotter }
 MpAddressBook >> gtGtSpotterForPeopleFor: aStep [
 	"Adapted from GT superclass"
 	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
@@ -112,7 +112,7 @@ MpAddressBook >> gtGtSpotterForPeopleFor: aStep [
 			
 ]
 
-{ #category : 'spotter' }
+{ #category : #spotter }
 MpAddressBook >> gtSpotterNewOrgFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -131,7 +131,7 @@ MpAddressBook >> gtSpotterNewOrgFor: aStep [
 		send: [ :newName :spotterStep | self ensureOrganizationNamed: newName ]
 ]
 
-{ #category : 'spotter' }
+{ #category : #spotter }
 MpAddressBook >> gtSpotterNewPersonFor: aStep [
 	<gtSearch>
 	self flag: 'copy pasted from new org spotter'.
@@ -151,17 +151,17 @@ MpAddressBook >> gtSpotterNewPersonFor: aStep [
 		send: [ :newName :spotterStep | self ensurePersonNamed: newName ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook >> hasEntryNamed: aString [
 	^ self contacts anySatisfy: [ :e | e fullName = aString ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook >> organizations [
 	^ self contacts select: #isOrganization
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpAddressBook >> people [
 	^ self contacts select: #isPerson
 ]

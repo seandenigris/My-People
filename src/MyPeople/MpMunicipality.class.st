@@ -1,5 +1,5 @@
 Class {
-	#name : 'MpMunicipality',
-	#superclass : 'MpOrganization',
+	#name : #MpMunicipality,
+	#superclass : #MpOrganization,
 	#category : 'MyPeople-Core'
 }

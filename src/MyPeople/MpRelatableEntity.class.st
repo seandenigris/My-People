@@ -1,6 +1,6 @@
 Class {
-	#name : 'MpRelatableEntity',
-	#superclass : 'MAObject',
+	#name : #MpRelatableEntity,
+	#superclass : #MAObject,
 	#traits : 'MpTPersonComparable',
 	#classTraits : 'MpTPersonComparable classTrait',
 	#instVars : [
@@ -14,7 +14,7 @@ Class {
 	#category : 'MyPeople-Core'
 }
 
-{ #category : 'convenience' }
+{ #category : #convenience }
 MpRelatableEntity class >> ensureNamed: aString [
 	"Assumes default Address Book"
 	| collection |
@@ -28,28 +28,28 @@ MpRelatableEntity class >> ensureNamed: aString [
 	"Implementation note: This method is a holdover from before address book, when MpPerson has its own DB on its class-side. The problem is that now there are two axes: 1) which AddressBook and 2) which entity (e.g. person or organization)."
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity class >> isAbstract [
 	^ false
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 MpRelatableEntity >> = rhs [
 	"Override MAObject's implementation"
 	^ self == rhs
 ]
 
-{ #category : 'GtABContact compatibility' }
+{ #category : #'GtABContact compatibility' }
 MpRelatableEntity >> addresses [
 	^ self maLazyInstVarUsing: self addressesDescription
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> addresses: anObject [
 	addresses := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> addressesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -60,17 +60,17 @@ MpRelatableEntity >> addressesDescription [
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> aliases [
 	^ self maLazyInstVarUsing: self aliasesDescription
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> aliases: anObject [
 	aliases := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> aliasesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -81,17 +81,17 @@ MpRelatableEntity >> aliasesDescription [
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> avatar [
 	^ avatar ifNil: [ self defaultAvatar ]
 ]
 
-{ #category : 'GtABContact compatibility' }
+{ #category : #'GtABContact compatibility' }
 MpRelatableEntity >> description [
 	^ ''
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> doesNotUnderstand: aMessage [
 	^ self roles
 		detect: [ :r | r respondsTo: aMessage selector ]
@@ -99,13 +99,13 @@ MpRelatableEntity >> doesNotUnderstand: aMessage [
 		ifNone: [ super doesNotUnderstand: aMessage ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> fullName [
 
 	^ name asString.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> gtViewContactDetailsOn: aView [
 	<gtView>
 	^ aView explicit
@@ -165,7 +165,7 @@ MpRelatableEntity >> gtViewContactDetailsOn: aView [
 			container ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> gtViewPreviewOn: aView [
 	<gtView>
 	^ aView explicit
@@ -177,65 +177,65 @@ MpRelatableEntity >> gtViewPreviewOn: aView [
 				imageForm asElement asPannableElement ]
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 MpRelatableEntity >> hash [
 	"Override MAObject's implementation"
 
 	^ self identityHash 
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpRelatableEntity >> isOrganization [
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpRelatableEntity >> isPerson [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> name [
 	^ self maLazyInstVarUsing: self nameDescription
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> name: anObject [
 	name := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 MpRelatableEntity >> printOn: aStream [
 
 	name displayStringOn: aStream.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> roles [
 	^ roles ifNil: [ roles := OrderedCollection new ]
 ]
 
-{ #category : 'GtABContact compatibility' }
+{ #category : #'GtABContact compatibility' }
 MpRelatableEntity >> telephone [
 	^ ''
 ]
 
-{ #category : 'GtABContact compatibility' }
+{ #category : #'GtABContact compatibility' }
 MpRelatableEntity >> telephones [
 	^ #()
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> website [
 	^ self maLazyInstVarUsing: self websiteDescription
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpRelatableEntity >> website: anObject [
 	website := anObject
 ]
 
-{ #category : 'magritte-accessing' }
+{ #category : #'magritte-accessing' }
 MpRelatableEntity >> websiteDescription [
 	<magritteDescription>
 	^ MAUrlDescription new

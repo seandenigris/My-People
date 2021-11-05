@@ -1,6 +1,6 @@
 Class {
-	#name : 'MpGenerational',
-	#superclass : 'Object',
+	#name : #MpGenerational,
+	#superclass : #Object,
 	#instVars : [
 		'token',
 		'abbreviations'
@@ -8,7 +8,7 @@ Class {
 	#category : 'MyPeople-Core'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpGenerational class >> all [
 	<gtExample>
 	
@@ -25,38 +25,38 @@ MpGenerational class >> all [
 			yourself ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 MpGenerational class >> fromString: aString [
 
 	^ self all detect: [ :e | e matches: aString ]
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 MpGenerational >> = rhs [
 	^ self token = rhs token and: [ self abbreviations hasEqualElements: rhs abbreviations ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpGenerational >> abbreviations [
 	^ abbreviations
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpGenerational >> abbreviations: anObject [
 	abbreviations := anObject
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 MpGenerational >> hash [
 	^ self token hash
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpGenerational >> isEmptyOrNil [
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpGenerational >> matches: aString [ 
 	aString asUppercase = self token asUppercase ifTrue: [ ^ true ].
 	self abbreviations 
@@ -65,7 +65,7 @@ MpGenerational >> matches: aString [
 	^ false
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 MpGenerational >> printOn: aStream [
 
 	abbreviations 
@@ -73,12 +73,12 @@ MpGenerational >> printOn: aStream [
 		ifEmpty: [ aStream nextPutAll: token ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpGenerational >> token [
 	^ token
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpGenerational >> token: anObject [
 	token := anObject
 ]

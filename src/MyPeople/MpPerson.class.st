@@ -1,6 +1,6 @@
 Class {
-	#name : 'MpPerson',
-	#superclass : 'MpRelatableEntity',
+	#name : #MpPerson,
+	#superclass : #MpRelatableEntity,
 	#instVars : [
 		'occupation',
 		'yearOfDeath',
@@ -9,10 +9,10 @@ Class {
 	#classInstVars : [
 		'contacts'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
-{ #category : 'examples' }
+{ #category : #examples }
 MpPerson class >> exampleAffiliation [
 	<gtExample>
 	| org result |
@@ -24,7 +24,7 @@ MpPerson class >> exampleAffiliation [
 		
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 MpPerson class >> exampleDumbledore [
 	<gtExample>
 	| result |
@@ -33,31 +33,31 @@ MpPerson class >> exampleDumbledore [
 	^ result
 ]
 
-{ #category : 'example' }
+{ #category : #example }
 MpPerson class >> exampleFlickrUser [
 	^ MpPerson new
 		propertyAt: #flickrUsername put: 'sixteenmilesofstring';
 		yourself
 ]
 
-{ #category : 'utilities' }
+{ #category : #utilities }
 MpPerson class >> exampleMatch: masterList to: prospectList [
 
 	^ masterList collect: [ :m | { m. prospectList select: [ :pm | (m chanceIsSameAs: pm) > 0 percent ] } ].
 ]
 
-{ #category : 'examples' }
+{ #category : #examples }
 MpPerson class >> exampleNassimTaleb [
 	^ MpPerson named: 'Nassim Taleb'
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpPerson class >> isValidName: aString [
 
 	^ MpName isValidInput: aString
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 MpPerson class >> named: convertibleToName [
 
 	^ self new
@@ -65,23 +65,23 @@ MpPerson class >> named: convertibleToName [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> addAffiliationWith: anOrganization as: titleString [
 	^ self affiliations at: anOrganization put: titleString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> affiliations [
 	^ self propertyAt: #affiliations ifAbsentPut: [ Dictionary new ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> ageOn: aDate [
 
 	^ aDate yearsSince: self dateOfBirth
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> birthdate [
 	self 
 		deprecated: 'Renamed to #dateOfBirth'
@@ -89,7 +89,7 @@ MpPerson >> birthdate [
 	^ self dateOfBirth.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> birthdate: aDate [
 	self 
 		deprecated: 'Renamed to #dateOfBirth:'
@@ -98,19 +98,19 @@ MpPerson >> birthdate: aDate [
 	self dateOfBirth: aDate.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> dateOfBirth [
 
 	^ dateOfBirth.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> dateOfBirth: aDate [
 
 	dateOfBirth := aDate.
 ]
 
-{ #category : 'magritte' }
+{ #category : #magritte }
 MpPerson >> dateOfBirthDescription [
 	
 	<magritteDescription>
@@ -122,18 +122,28 @@ MpPerson >> dateOfBirthDescription [
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> defaultAvatar [
 	^ GtABContact unknowsJoeAvatar
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
+MpPerson >> flickrUsername [
+	^ self propertyAt: #flickrUsername
+]
+
+{ #category : #accessing }
+MpPerson >> flickrUsername: aString [
+	self propertyAt: #flickrUsername put: aString
+]
+
+{ #category : #accessing }
 MpPerson >> fullName: aString [
 
 	name := MpNameParser parse: aString onError: [ self error: 'Failed parsing ', aString ]
 ]
 
-{ #category : 'magritte' }
+{ #category : #magritte }
 MpPerson >> fullNameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -145,7 +155,7 @@ MpPerson >> fullNameDescription [
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> gtSpotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	| previewMorph |
@@ -158,22 +168,22 @@ MpPerson >> gtSpotterPreviewIn: aComposite [
 		hSpaceFill
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> isAffiliatedWith: anOrganization [
 	^ self affiliations includesKey: anOrganization
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpPerson >> isOrganization [
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 MpPerson >> isPerson [
 	^ true
 ]
 
-{ #category : 'magritte' }
+{ #category : #magritte }
 MpPerson >> nameDescription [
 	<magritteDescription>
 	^ MAToOneRelationDescription new
@@ -185,19 +195,19 @@ MpPerson >> nameDescription [
 			yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> occupation: aString [ 
 
 	occupation := aString.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> yearOfDeath [
 
 	^ yearOfDeath.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 MpPerson >> yearOfDeath: aNumber [
 
 	yearOfDeath := aNumber.
