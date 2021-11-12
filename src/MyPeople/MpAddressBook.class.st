@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #accessing }
@@ -63,7 +63,7 @@ MpAddressBook class >> spData [
 
 { #category : #accessing }
 MpAddressBook >> contacts [
-	^ contacts ifNil: [ contacts := SortedCollection sortUsing: #fullName ascending ]
+	^ contacts ifNil: [ contacts := SortedCollection sortUsing: #nameForAlphabetization ascending ]
 ]
 
 { #category : #convenience }

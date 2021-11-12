@@ -196,6 +196,11 @@ MpPerson >> nameDescription [
 ]
 
 { #category : #accessing }
+MpPerson >> nameForAlphabetization [
+	^ self fullName
+]
+
+{ #category : #accessing }
 MpPerson >> occupation: aString [ 
 
 	occupation := aString.

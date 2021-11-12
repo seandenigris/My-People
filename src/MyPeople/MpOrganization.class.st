@@ -1,11 +1,13 @@
 Class {
 	#name : #MpOrganization,
 	#superclass : #MpRelatableEntity,
+	#traits : 'MpTAlphabetizable',
+	#classTraits : 'MpTAlphabetizable classTrait',
 	#instVars : [
 		'children',
 		'parent'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #accessing }
