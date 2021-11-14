@@ -8,8 +8,17 @@ Class {
 		'firstNameFirst',
 		'generational'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
+
+{ #category : #examples }
+MpNameParser class >> exampleDashedLastName [
+	<gtExample>
+	^ self
+		given: []
+		when: [ self parse: 'Rebecca Wirfs-Brock' ]
+		then: [ :result | result isPetit2Success should equal: true ]
+]
 
 { #category : #private }
 MpNameParser >> abbreviatable: aParser [
@@ -72,7 +81,7 @@ MpNameParser >> start [
 { #category : #grammar }
 MpNameParser >> token [
 
-	^ (#letter asPParser | $' asPParser) plus flatten
+	^ (#letter asPParser | $' asPParser | $- asPParser) plus flatten
 ]
 
 { #category : #private }
