@@ -4,6 +4,11 @@ Class {
 	#category : #BaselineOfMyPeople
 }
 
+{ #category : #testing }
+BaselineOfMyPeople class >> isDynabook [
+	^ true
+]
+
 { #category : #baseline }
 BaselineOfMyPeople >> baseline: spec [
 	<baseline>
