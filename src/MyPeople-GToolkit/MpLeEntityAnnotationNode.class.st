@@ -5,7 +5,7 @@ Class {
 		'items',
 		'bars'
 	],
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }
 
 { #category : #generated }

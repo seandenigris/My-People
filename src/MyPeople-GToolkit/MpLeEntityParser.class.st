@@ -1,7 +1,7 @@
 Class {
 	#name : #MpLeEntityParser,
 	#superclass : #SmaCCGLRParser,
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }
 
 { #category : #initialization }

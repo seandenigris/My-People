@@ -3,5 +3,5 @@ Class {
 	#superclass : #Object,
 	#traits : 'TMpLeEntityParseNodeVisitor',
 	#classTraits : 'TMpLeEntityParseNodeVisitor classTrait',
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }

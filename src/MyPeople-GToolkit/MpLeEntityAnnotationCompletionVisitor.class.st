@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TSmaCCComponentVisitor + (TMpLeEntityParseNodeVisitor - {#acceptNode:})',
 	#classTraits : 'TSmaCCComponentVisitor classTrait + TMpLeEntityParseNodeVisitor classTrait',
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }
 
 { #category : #accessing }

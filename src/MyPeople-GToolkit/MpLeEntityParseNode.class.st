@@ -1,7 +1,7 @@
 Class {
 	#name : #MpLeEntityParseNode,
 	#superclass : #SmaCCParseNode,
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }
 
 { #category : #generated }

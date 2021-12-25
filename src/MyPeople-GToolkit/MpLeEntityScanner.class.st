@@ -1,7 +1,7 @@
 Class {
 	#name : #MpLeEntityScanner,
 	#superclass : #SmaCCScanner,
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }
 
 { #category : #'generated-initialization' }

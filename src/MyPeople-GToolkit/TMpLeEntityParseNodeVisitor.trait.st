@@ -2,7 +2,7 @@ Trait {
 	#name : #TMpLeEntityParseNodeVisitor,
 	#traits : 'TSmaCCParseNodeVisitor',
 	#classTraits : 'TSmaCCParseNodeVisitor classTrait',
-	#category : #'MyPeople-GToolkit'
+	#category : #'MyPeople-GToolkit-Lepiter-Annotation'
 }
 
 { #category : #generated }
