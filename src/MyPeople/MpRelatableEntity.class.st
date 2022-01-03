@@ -1,8 +1,8 @@
 Class {
 	#name : #MpRelatableEntity,
-	#superclass : #MAObject,
-	#traits : 'MpTPersonComparable',
-	#classTraits : 'MpTPersonComparable classTrait',
+	#superclass : #Object,
+	#traits : 'MpTPersonComparable + MATPropertyOwner',
+	#classTraits : 'MpTPersonComparable classTrait + MATPropertyOwner classTrait',
 	#instVars : [
 		'name',
 		'aliases',
@@ -11,7 +11,7 @@ Class {
 		'website',
 		'addresses'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #convenience }
