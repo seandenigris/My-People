@@ -1,7 +1,7 @@
 Class {
 	#name : #MpNoGenerational,
 	#superclass : #Object,
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #comparing }
@@ -16,6 +16,11 @@ MpNoGenerational >> displayStringOn: aStream [
 { #category : #comparing }
 MpNoGenerational >> hash [
 	^ self class hash
+]
+
+{ #category : #accessing }
+MpNoGenerational >> isEmptyOrNil [
+	^ true
 ]
 
 { #category : #accessing }
