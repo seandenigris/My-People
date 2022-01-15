@@ -197,7 +197,15 @@ MpPerson >> nameDescription [
 
 { #category : #accessing }
 MpPerson >> nameForAlphabetization [
-	^ self fullName
+	^ String streamContents: [ :str |
+		self name lastName ifNotNil: [ :n |
+			str << n ].
+		str << ' '.
+		self name firstName ifNotNil: [ :n |
+			str << n ].
+		str << ' '.
+		self name middleName ifNotNil: [ :n |
+			str << n ] ]
 ]
 
 { #category : #accessing }
