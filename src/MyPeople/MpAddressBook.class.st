@@ -108,8 +108,7 @@ MpAddressBook >> gtGtSpotterForPeopleFor: aStep [
 		filter: GtFilterSubstrings;
 		candidatesLimit: 7;
 		itemName:[ :aContact | 
-			aContact name lastName , ', ' , aContact name firstName ].
-			
+			aContact name lastName , ', ' , aContact name firstName ].		
 ]
 
 { #category : #spotter }
