@@ -11,10 +11,9 @@ My superclass is ${class:GtABAddressBook}$. It has an example filled with some c
 "
 Class {
 	#name : #MpAddressBook,
-	#superclass : #GtABAddressBook,
-	#classVars : [
-		'Default'
-	],
+	#superclass : #MpGtABAddressBook,
+	#traits : 'MpTEntityCollection',
+	#classTraits : 'MpTEntityCollection classTrait',
 	#category : #'MyPeople-Core'
 }
 
@@ -78,39 +77,6 @@ MpAddressBook >> ensurePersonNamed: aString [
 	"For the moment, there are person and organization, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : #accessing }
-MpAddressBook >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock [
-	^ self contacts detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
-]
-
-{ #category : #spotter }
-MpAddressBook >> gtGtSpotterForOrgsFor: aStep [
-	"Adapted from GT superclass"
-	<gtSearch>
-	^ aStep listProcessor
-		priority: 5;
-		title: 'Organizations';
-		allCandidates: [ self organizations ];
-		filter: GtFilterSubstrings;
-		candidatesLimit: 7;
-		itemName:[ :aContact | aContact fullName ] 
-]
-
-{ #category : #spotter }
-MpAddressBook >> gtGtSpotterForPeopleFor: aStep [
-	"Adapted from GT superclass"
-	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
-	
-	^ aStep listProcessor
-		priority: 5;
-		title: 'People';
-		allCandidates: [ self people ];
-		filter: GtFilterSubstrings;
-		candidatesLimit: 7;
-		itemName:[ :aContact | 
-			aContact name lastName , ', ' , aContact name firstName ].		
-]
-
 { #category : #spotter }
 MpAddressBook >> gtSpotterNewOrgFor: aStep [
 	<gtSearch>
@@ -148,19 +114,4 @@ MpAddressBook >> gtSpotterNewPersonFor: aStep [
 				(isExisting not and: [ MpPerson isValidName: context textTrimmed ]) ifTrue: [ 
 					filter value: context textTrimmed ] ];
 		send: [ :newName :spotterStep | self ensurePersonNamed: newName ]
-]
-
-{ #category : #accessing }
-MpAddressBook >> hasEntryNamed: aString [
-	^ self contacts anySatisfy: [ :e | e fullName = aString ]
-]
-
-{ #category : #accessing }
-MpAddressBook >> organizations [
-	^ self contacts select: #isOrganization
-]
-
-{ #category : #accessing }
-MpAddressBook >> people [
-	^ self contacts select: #isPerson
 ]

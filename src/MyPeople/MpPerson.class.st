@@ -40,6 +40,15 @@ MpPerson class >> exampleFlickrUser [
 		yourself
 ]
 
+{ #category : #examples }
+MpPerson class >> exampleHarryPotter [
+	<gtExample>
+	| result |
+	result := MpPerson named: 'Harry Potter'.
+	result where name lastName should equal: 'Potter'.
+	^ result
+]
+
 { #category : #utilities }
 MpPerson class >> exampleMatch: masterList to: prospectList [
 
