@@ -25,6 +25,15 @@ MpPerson class >> exampleAffiliation [
 ]
 
 { #category : #examples }
+MpPerson class >> exampleBrettVictor [
+	<gtExample>
+	| result |
+	result := MpPerson named: 'Brett Victor'.
+	result where name lastName should equal: 'Victor'.
+	^ result
+]
+
+{ #category : #examples }
 MpPerson class >> exampleDumbledore [
 	<gtExample>
 	| result |
