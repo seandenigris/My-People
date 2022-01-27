@@ -90,7 +90,7 @@ MpPerson >> addAffiliationWith: anOrganization as: titleString [
 
 { #category : #accessing }
 MpPerson >> affiliations [
-	^ self propertyAt: #affiliations ifAbsentPut: [ Dictionary new ]
+	^ self propertyAt: #affiliations ifAbsentPut: [ OrderedCollection new ]
 ]
 
 { #category : #accessing }
