@@ -61,6 +61,12 @@ MpAddressBook class >> spData [
 ]
 
 { #category : #accessing }
+MpAddressBook class >> uniqueInstance [
+	"For compatibility with other common singletons. Maybe should replace #default completely. What is the use case for multiple address books?"
+	^ self default
+]
+
+{ #category : #accessing }
 MpAddressBook >> contacts [
 	^ contacts ifNil: [ contacts := SortedCollection sortUsing: #nameForAlphabetization ascending ]
 ]
@@ -114,4 +120,12 @@ MpAddressBook >> gtSpotterNewPersonFor: aStep [
 				(isExisting not and: [ MpPerson isValidName: context textTrimmed ]) ifTrue: [ 
 					filter value: context textTrimmed ] ];
 		send: [ :newName :spotterStep | self ensurePersonNamed: newName ]
+]
+
+{ #category : #accessing }
+MpAddressBook >> printOn: aStream [
+
+	aStream 
+		print: self contacts size;
+		nextPutAll: ' contacts'
 ]
