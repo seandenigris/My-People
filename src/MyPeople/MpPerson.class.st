@@ -85,12 +85,9 @@ MpPerson class >> named: convertibleToName [
 
 { #category : #accessing }
 MpPerson >> addAffiliationWith: anOrganization as: titleString [
-	^ self affiliations at: anOrganization put: titleString
-]
-
-{ #category : #accessing }
-MpPerson >> affiliations [
-	^ self propertyAt: #affiliations ifAbsentPut: [ OrderedCollection new ]
+	| aff |
+	aff := MpAffiliation organization: anOrganization person: self role: titleString.
+	aff link
 ]
 
 { #category : #accessing }

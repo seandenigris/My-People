@@ -33,12 +33,6 @@ MpRelatableEntity class >> isAbstract [
 	^ false
 ]
 
-{ #category : #comparing }
-MpRelatableEntity >> = rhs [
-	"Override MAObject's implementation"
-	^ self == rhs
-]
-
 { #category : #'GtABContact compatibility' }
 MpRelatableEntity >> addresses [
 	^ self maLazyInstVarUsing: self addressesDescription
@@ -58,6 +52,11 @@ MpRelatableEntity >> addressesDescription [
 			default: OrderedCollection new;
 			classes: { MpUSAddress };
 			yourself
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> affiliations [
+	^ self propertyAt: #affiliations ifAbsentPut: [ Set new ]
 ]
 
 { #category : #accessing }
@@ -175,13 +174,6 @@ MpRelatableEntity >> gtViewPreviewOn: aView [
 			"Use the old morph for now"
 			((GtABPreviewMorph new contact: self) extent: 500@300)
 				imageForm asElement asPannableElement ]
-]
-
-{ #category : #comparing }
-MpRelatableEntity >> hash [
-	"Override MAObject's implementation"
-
-	^ self identityHash 
 ]
 
 { #category : #testing }

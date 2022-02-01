@@ -20,7 +20,19 @@ MpAffiliation class >> organization: anOrganization person: aPerson role: titleS
 ]
 
 { #category : #accessing }
+MpAffiliation >> = rhs [
+	^ self organization = rhs organization and: [ self person = rhs person and: [ self role = rhs role ] ]
+]
+
+{ #category : #accessing }
+MpAffiliation >> hash [
+	^ self organization hash bitXor: (self person hash bitXor: self role hash)
+]
+
+{ #category : #accessing }
 MpAffiliation >> link [
+	self person affiliations add: self.
+	self organization affiliations add: self.
 ]
 
 { #category : #accessing }
@@ -68,4 +80,10 @@ MpAffiliation >> role [
 MpAffiliation >> role: anObject [
 
 	role := anObject
+]
+
+{ #category : #accessing }
+MpAffiliation >> unlink [
+	self person affiliations remove: self.
+	self organization affiliations remove: self.
 ]
