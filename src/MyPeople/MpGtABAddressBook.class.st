@@ -1,6 +1,8 @@
 "
 I model an address book that can hold a list of contacts.
 
+I am adapted from GToolkit's {{gtClass:GtABAddressBook}} (I started life as a copy of it). I exist primarily because GT's contribution situation at the time made it too difficult to get even minor needed changes made reliably.
+
 
 "
 Class {
@@ -189,6 +191,46 @@ MpGtABAddressBook >> gtViewContactsAddressOn: aView [
 			(each isCategory)
 				ifTrue: [ each subcategories, each contacts ]
 				ifFalse: [ #() ] ].
+]
+
+{ #category : #ui }
+MpGtABAddressBook >> gtViewContactsIconsCircularOn: aView [
+	<gtView>
+	self contacts size > 2 ifFalse: [ ^ aView empty].
+	^ aView mondrian
+		title: 'Circular' translated;
+		priority: 50;
+		painting: [ :view |
+			view nodes
+				stencil: [ :aContact | 
+					(aContact avatar scaledToSize: 124@124) asElement ];
+				with: self contacts.
+			view layout circle
+				radius: 200 ]
+]
+
+{ #category : #ui }
+MpGtABAddressBook >> gtViewContactsListOn: aView [
+	<gtView>
+	^ aView list
+		title: 'Contacts List' translated;
+		priority: 8;
+		items: [ self contacts ];
+		itemText: [ :aContact | aContact fullName asRopedText ]
+]
+
+{ #category : #ui }
+MpGtABAddressBook >> gtViewContactsOn: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Contacts with details' translated;
+		priority: 5;
+		items: [ self contacts ];
+		column: 'Avatar' 
+			icon: [ :aContact | aContact avatar asElement asScalableElement size: 32 @ 32 ]
+			width: 75;
+		column: 'Name' text: [ :aContact | aContact fullName ];
+		column: 'Phone' text: [ :aContact | aContact telephone ]
 ]
 
 { #category : #adding }
