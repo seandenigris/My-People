@@ -25,10 +25,10 @@ MpPerson class >> exampleAffiliation [
 ]
 
 { #category : #examples }
-MpPerson class >> exampleBrettVictor [
+MpPerson class >> exampleBretVictor [
 	<gtExample>
 	| result |
-	result := MpPerson named: 'Brett Victor'.
+	result := MpPerson named: 'Bret Victor'.
 	result where name lastName should equal: 'Victor'.
 	^ result
 ]
