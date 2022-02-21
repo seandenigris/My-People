@@ -29,6 +29,9 @@ MpPerson class >> exampleBretVictor [
 	<gtExample>
 	| result |
 	result := MpPerson named: 'Bret Victor'.
+	result
+		website: 'http://worrydream.com' asUrl;
+		twitterUsername: 'worrydream'.
 	result where name lastName should equal: 'Victor'.
 	^ result
 ]
@@ -66,7 +69,13 @@ MpPerson class >> exampleMatch: masterList to: prospectList [
 
 { #category : #examples }
 MpPerson class >> exampleNassimTaleb [
-	^ MpPerson named: 'Nassim Taleb'
+	| result |
+	result := MpPerson named: 'Nassim Taleb'.
+	result
+		website: 'https://www.fooledbyrandomness.com' asUrl;
+		twitterUsername: 'nntaleb'.
+	result where name lastName should equal: 'Taleb'.
+	^ result
 ]
 
 { #category : #testing }
@@ -144,7 +153,7 @@ MpPerson >> defaultAvatar [
 
 { #category : #accessing }
 MpPerson >> flickrUsername [
-	^ self propertyAt: #flickrUsername
+	^ self propertyAt: #flickrUsername ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
@@ -227,6 +236,16 @@ MpPerson >> nameForAlphabetization [
 MpPerson >> occupation: aString [ 
 
 	occupation := aString.
+]
+
+{ #category : #accessing }
+MpPerson >> twitterUsername [
+	^ self propertyAt: #twitterUsername ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+MpPerson >> twitterUsername: aString [
+	^ self propertyAt: #twitterUsername put: aString
 ]
 
 { #category : #accessing }

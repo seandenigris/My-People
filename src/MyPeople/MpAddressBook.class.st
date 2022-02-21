@@ -23,6 +23,21 @@ MpAddressBook class >> default [
 ]
 
 { #category : #examples }
+MpAddressBook class >> exampleCelebrities [
+	<gtExample>
+	
+	^ self
+		given: [ self new ]
+		when: [ :ab |
+			ab contacts
+				add: MpPerson exampleNassimTaleb;
+				add: MpPerson exampleBretVictor;
+				yourself.
+			ab ]
+		then: [ :col :ab | ab where contacts should haveSize: 2 ]	
+]
+
+{ #category : #examples }
 MpAddressBook class >> exampleHarryPotter [
 	<gtExample>
 	
