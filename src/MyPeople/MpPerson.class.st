@@ -96,7 +96,8 @@ MpPerson class >> named: convertibleToName [
 MpPerson >> addAffiliationWith: anOrganization as: titleString [
 	| aff |
 	aff := MpAffiliation organization: anOrganization person: self role: titleString.
-	aff link
+	aff link.
+	^ aff
 ]
 
 { #category : #accessing }
