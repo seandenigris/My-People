@@ -1,13 +1,25 @@
+"
+Part names from [Wikipedia](https://en.wikipedia.org/wiki/North_American_Numbering_Plan)
+"
 Class {
 	#name : #MpTelephone,
 	#superclass : #Object,
 	#instVars : [
 		'areaCode',
-		'prefix',
-		'lineNumber'
+		'lineNumber',
+		'exchange',
+		'countryCode'
+	],
+	#classInstVars : [
+		'countryCode'
 	],
 	#category : #'MyPeople-Core'
 }
+
+{ #category : #'as yet unclassified' }
+MpTelephone class >> countryCode [
+	^ countryCode
+]
 
 { #category : #examples }
 MpTelephone class >> example [
@@ -23,5 +35,85 @@ MpTelephone class >> example [
 ]
 
 { #category : #examples }
-MpTelephone class >> fromString: aString [ 
+MpTelephone class >> fromString: aString [
+	| pyNumber nationalNumberStream |
+	pyNumber:= PBApplication uniqueInstance 
+		sendSource: '# https://github.com/daviddrysdale/python-phonenumbers
+import phonenumbers
+phonenumbers.parse(str, "US")' 
+		withBindings: { #str -> aString }.
+	
+	nationalNumberStream := (pyNumber getAttribute: #national_number) asString readStream.
+		
+	^ self new
+		countryCode: (pyNumber getAttribute: #country_code);
+		areaCode: (nationalNumberStream next: 3) asNumber;
+		exchange: (nationalNumberStream next: 3) asNumber;
+		lineNumber: (nationalNumberStream upToEnd) asNumber;
+		yourself
+		
+]
+
+{ #category : #accessing }
+MpTelephone >> areaCode [
+
+	^ areaCode
+]
+
+{ #category : #accessing }
+MpTelephone >> areaCode: anObject [
+
+	areaCode := anObject
+]
+
+{ #category : #accessing }
+MpTelephone >> countryCode [
+	^ countryCode
+]
+
+{ #category : #'as yet unclassified' }
+MpTelephone >> countryCode: anInteger [ 
+	countryCode := anInteger
+]
+
+{ #category : #accessing }
+MpTelephone >> exchange [
+
+	^ exchange
+]
+
+{ #category : #accessing }
+MpTelephone >> exchange: anObject [
+
+	exchange := anObject
+]
+
+{ #category : #accessing }
+MpTelephone >> lineNumber [
+
+	^ lineNumber
+]
+
+{ #category : #accessing }
+MpTelephone >> lineNumber: anObject [
+
+	lineNumber := anObject
+]
+
+{ #category : #accessing }
+MpTelephone >> printOn: aStream [
+
+	aStream
+		nextPutAll: self countryCode asString;
+		nextPutAll: ' (';
+		nextPutAll: self areaCode asString;
+		nextPutAll: ') ';
+		nextPutAll: self exchange asString;
+		nextPut: $-;
+		nextPutAll: ((self lineNumber asString padLeftTo: 4 with: $0));
+		nextPutAll: ' ('.
+		
+	super printOn: aStream.
+	
+	aStream nextPut: $)
 ]
