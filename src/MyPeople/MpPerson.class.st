@@ -208,6 +208,22 @@ MpPerson >> isPerson [
 	^ true
 ]
 
+{ #category : #accessing }
+MpPerson >> linkedInProfile: aString [
+	self propertyAt: #linkedInProfile put: aString
+]
+
+{ #category : #accessing }
+MpPerson >> linkedInProfileUrl [
+	^ self 
+		propertyAt: #linkedInProfile 
+		ifPresent: [ :str | 
+			| baseUrl |
+			baseUrl := 'https://www.linkedin.com/in/' asUrl.
+			baseUrl / str ]
+		ifAbsent: [ nil ]
+]
+
 { #category : #magritte }
 MpPerson >> nameDescription [
 	<magritteDescription>
