@@ -82,7 +82,23 @@ MpRelatableEntity >> aliasesDescription [
 
 { #category : #accessing }
 MpRelatableEntity >> avatar [
-	^ avatar ifNil: [ self defaultAvatar ]
+	avatar ifNotNil: [ ^ avatar ].
+	self avatarSource ifNotNil: [ :as | ^ as asForm ].
+	^ self defaultAvatar
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> avatarSource [
+	^ self
+		propertyAt: #avatarSource
+		ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> avatarSource: formable [
+	self
+		propertyAt: #avatarSource
+		put: formable
 ]
 
 { #category : #'GtABContact compatibility' }
