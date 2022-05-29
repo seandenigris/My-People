@@ -43,7 +43,7 @@ MpRelatableEntity >> addresses: anObject [
 	addresses := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #'magritte-descriptions' }
 MpRelatableEntity >> addressesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -99,6 +99,16 @@ MpRelatableEntity >> avatarSource: formable [
 	self
 		propertyAt: #avatarSource
 		put: formable
+]
+
+{ #category : #'magritte-descriptions' }
+MpRelatableEntity >> avatarSourceDescription [
+	<magritteDescription>
+	^ MAToOneRelationDescription new
+			accessor: #avatarSource;
+			priority: 500;
+			gtSearchSource: [ RlResourceLibrary uniqueInstance ];
+			yourself
 ]
 
 { #category : #'GtABContact compatibility' }
