@@ -106,6 +106,19 @@ MpOrganization >> fullName [
 			s << self name ]
 ]
 
+{ #category : #accessing }
+MpOrganization >> gtViewChildrenFor: aView [
+	<gtView>
+
+	self children isEmptyOrNil ifTrue: [ ^ aView empty ].
+	
+	^ aView list
+		title: 'Children' translated;
+		priority: 60;
+		items: [ self children ];
+		actionUpdateButtonTooltip: 'Update'.
+]
+
 { #category : #testing }
 MpOrganization >> isOrganization [
 	^ true
@@ -133,8 +146,9 @@ MpOrganization >> parent [
 
 { #category : #accessing }
 MpOrganization >> parent: anOrganization [
+	parent ifNotNil: [ parent children remove: self ].
 	parent := anOrganization.
-	self parent children add: self
+	parent ifNotNil: [ parent children add: self ]
 ]
 
 { #category : #magritte }
@@ -145,6 +159,7 @@ MpOrganization >> parentDescription [
 			priority: 500;
 			classes: { MpOrganization };
 			comment: 'Not too fleshed out - subsidiaries? Locations?';
+			gtSearchSource: [ MpAddressBook uniqueInstance ];
 			yourself
 ]
 
