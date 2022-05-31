@@ -23,6 +23,15 @@ MpAddressBook class >> default [
 ]
 
 { #category : #examples }
+MpAddressBook class >> example [
+
+	| result |
+	result := self exampleCelebrities.
+	result contacts addAll: self exampleHarryPotter contacts.
+	^ result
+]
+
+{ #category : #examples }
 MpAddressBook class >> exampleCelebrities [
 	<gtExample>
 	
