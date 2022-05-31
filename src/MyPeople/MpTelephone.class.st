@@ -89,6 +89,20 @@ MpTelephone >> exchange: anObject [
 ]
 
 { #category : #accessing }
+MpTelephone >> fullNumber [
+
+	^ String streamContents: [ :str | 
+		str
+		nextPutAll: self countryCode asString;
+			nextPutAll: ' (';
+			nextPutAll: self areaCode asString;
+			nextPutAll: ') ';
+			nextPutAll: self exchange asString;
+			nextPut: $-;
+			nextPutAll: (self lineNumber asString padLeftTo: 4 with: $0) ]
+]
+
+{ #category : #accessing }
 MpTelephone >> lineNumber [
 
 	^ lineNumber
@@ -104,13 +118,7 @@ MpTelephone >> lineNumber: anObject [
 MpTelephone >> printOn: aStream [
 
 	aStream
-		nextPutAll: self countryCode asString;
-		nextPutAll: ' (';
-		nextPutAll: self areaCode asString;
-		nextPutAll: ') ';
-		nextPutAll: self exchange asString;
-		nextPut: $-;
-		nextPutAll: ((self lineNumber asString padLeftTo: 4 with: $0));
+		nextPutAll: self fullNumber;
 		nextPutAll: ' ('.
 		
 	super printOn: aStream.

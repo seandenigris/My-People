@@ -240,7 +240,7 @@ MpRelatableEntity >> telephone [
 
 { #category : #'GtABContact compatibility' }
 MpRelatableEntity >> telephones [
-	^ #()
+	^ self propertyAt: #telephones ifAbsentPut: [ OrderedCollection new ]
 ]
 
 { #category : #accessing }
