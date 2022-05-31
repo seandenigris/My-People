@@ -135,7 +135,7 @@ MpPerson >> dateOfBirth: aDate [
 	dateOfBirth := aDate.
 ]
 
-{ #category : #magritte }
+{ #category : #'magritte-descriptions' }
 MpPerson >> dateOfBirthDescription [
 	
 	<magritteDescription>
@@ -168,7 +168,7 @@ MpPerson >> fullName: aString [
 	name := MpNameParser parse: aString onError: [ self error: 'Failed parsing ', aString ]
 ]
 
-{ #category : #magritte }
+{ #category : #'magritte-descriptions' }
 MpPerson >> fullNameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -224,7 +224,7 @@ MpPerson >> linkedInProfileUrl [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #magritte }
+{ #category : #'magritte-descriptions' }
 MpPerson >> nameDescription [
 	<magritteDescription>
 	^ MAToOneRelationDescription new

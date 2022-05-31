@@ -75,7 +75,7 @@ MpOrganization >> children: anObject [
 	children := anObject
 ]
 
-{ #category : #magritte }
+{ #category : #'magritte-descriptions' }
 MpOrganization >> childrenDescription [
 	<magritteDescription>
 	self flag: 'this will probably go away as long as parent is fast enough for tree children lookup'.
@@ -85,6 +85,7 @@ MpOrganization >> childrenDescription [
 			default: OrderedCollection new;
 			classes: { self class };
 			comment: 'Not too fleshed out - subsidiaries? Locations?';
+			beReadOnly;
 			yourself
 ]
 
@@ -129,7 +130,7 @@ MpOrganization >> isPerson [
 	^ false
 ]
 
-{ #category : #'acessing-magritte' }
+{ #category : #'magritte-descriptions' }
 MpOrganization >> nameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -151,7 +152,7 @@ MpOrganization >> parent: anOrganization [
 	parent ifNotNil: [ parent children add: self ]
 ]
 
-{ #category : #magritte }
+{ #category : #'magritte-descriptions' }
 MpOrganization >> parentDescription [
 	<magritteDescription>
 	^ MAToOneRelationDescription new

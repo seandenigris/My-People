@@ -6,7 +6,7 @@ Class {
 		'zipCode',
 		'streetAddress'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #accessing }
@@ -18,6 +18,7 @@ MpUSAddress class >> states [
 MpUSAddress >> cityDescription [
 	<magritteDescription>
 	^ MAStringDescription new
+		priority: 200;
 		accessor: #city;
 		yourself
 ]
@@ -55,6 +56,7 @@ MpUSAddress >> state: anObject [
 MpUSAddress >> stateDescription [
 	<magritteDescription>
 	^ MASingleOptionDescription new
+		priority: 300;
 		accessor: #state;
 		options: self class states;
 		yourself
@@ -74,6 +76,7 @@ MpUSAddress >> streetAddress: aString [
 MpUSAddress >> streetAddressDescription [
 	<magritteDescription>
 	^ MAStringDescription new
+		priority: 100;
 		accessor: #streetAddress;
 		yourself
 ]
@@ -92,6 +95,7 @@ MpUSAddress >> zipCode: aString [
 MpUSAddress >> zipCodeDescription [
 	<magritteDescription>
 	^ MAStringDescription new
+		priority: 400;
 		accessor: #zipCode;
 		yourself
 ]
