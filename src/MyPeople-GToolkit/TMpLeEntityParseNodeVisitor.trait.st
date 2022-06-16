@@ -22,3 +22,8 @@ TMpLeEntityParseNodeVisitor >> visitNameValue: aNameValue [
 
 	^ self visitEntityParse: aNameValue
 ]
+
+{ #category : #generated }
+TMpLeEntityParseNodeVisitor >> visitUIDArgument: anUIDArgument [
+	^ self visitEntityParse: anUIDArgument
+]

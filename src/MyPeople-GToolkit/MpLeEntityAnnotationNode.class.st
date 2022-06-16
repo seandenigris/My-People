@@ -58,3 +58,16 @@ MpLeEntityAnnotationNode >> items: anOrderedCollection [
 	items := anOrderedCollection.
 	self setParents: self items to: self
 ]
+
+{ #category : #accessing }
+MpLeEntityAnnotationNode >> object [
+	^ DbSoup detectUIDString36: self uid
+]
+
+{ #category : #accessing }
+MpLeEntityAnnotationNode >> uid [
+	^ self items
+		detect: [ :e | e isKindOf: MpLeUIDArgumentNode ]
+		ifFound: [ :uidArg | uidArg uid ]
+		ifNone: [ nil ]
+]

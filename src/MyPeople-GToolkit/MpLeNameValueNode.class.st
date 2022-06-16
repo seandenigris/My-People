@@ -56,3 +56,10 @@ MpLeNameValueNode >> value: aSmaCCToken [
 
 	value := aSmaCCToken
 ]
+
+{ #category : #accessing }
+MpLeNameValueNode >> valueStartPosition [
+	^ self equals 
+		ifNotNil: [ :eq | eq stopPosition ]
+		ifNil: [ self value startPosition ]
+]

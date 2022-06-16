@@ -6,37 +6,43 @@ Class {
 
 { #category : #'generated-initialization' }
 MpLeEntityScanner class >> initializeKeywordMap [
-
 	keywordMap := Dictionary new.
-	#( #( 4 'name' 2 ) ) do: [ :each | 
-		(keywordMap at: each first ifAbsentPut: [ Dictionary new ])
-			at: (each at: 2)
-			put: each last ].
+	#(#(5 'name' 2) #(5 'uid' 3) #(6 'name' 2) #(6 'uid' 3))
+		do: [ :each | 
+			(keywordMap at: each first ifAbsentPut: [ Dictionary new ])
+				at: (each at: 2)
+				put: each last ].
 	^ keywordMap
 ]
 
 { #category : #generated }
 MpLeEntityScanner >> emptySymbolTokenId [
-
-	^ 11
+	^ 14
 ]
 
 { #category : #generated }
 MpLeEntityScanner >> errorTokenId [
-
-	^ 12
+	^ 15
 ]
 
 { #category : #generated }
 MpLeEntityScanner >> scanForToken [
-
 	self step.
-	currentCharacter == $= ifTrue: [ ^ self recordAndReportMatch: #( 1 ) ].
-	currentCharacter == $| ifTrue: [ ^ self recordAndReportMatch: #( 3 ) ].
-	currentCharacter isLetter ifTrue: [ 
-		[ 
-		self recordMatch: #( 4 ).
-		self step.
-		currentCharacter isLetter ] whileTrue ].
+	currentCharacter == $= ifTrue: [ ^ self recordAndReportMatch: #(1) ].
+	currentCharacter == $| ifTrue: [ ^ self recordAndReportMatch: #(4) ].
+	currentCharacter isDigit
+		ifTrue: [ [ self recordMatch: #(6).
+			self step.
+			currentCharacter isAlphaNumeric ] whileTrue.
+			^ self reportLastMatch ].
+	currentCharacter isLetter
+		ifTrue: [ [ self recordMatch: #(5 6).
+			self step.
+			currentCharacter isDigit
+				ifTrue: [ [ self recordMatch: #(6).
+					self step.
+					currentCharacter isAlphaNumeric ] whileTrue.
+					^ self reportLastMatch ].
+			currentCharacter isLetter ] whileTrue ].
 	^ self reportLastMatch
 ]

@@ -13,8 +13,7 @@ MpLeEntityAnnotationCompletionVisitor class >> activate [
 
 { #category : #accessing }
 MpLeEntityAnnotationCompletionVisitor class >> initialize [
-	"WIP - not ready to enable by default"
-	"self activate"
+	self activate
 ]
 
 { #category : #accessing }
@@ -36,6 +35,16 @@ MpLeEntityAnnotationCompletionVisitor >> addStreamFor: words startingWith: prefi
 						position: self composite position ])
 ]
 
+{ #category : #accessing }
+MpLeEntityAnnotationCompletionVisitor >> position [
+	^ self composite position
+]
+
+{ #category : #accessing }
+MpLeEntityAnnotationCompletionVisitor >> visitArgument: anArgument [
+	^ self visitEntityParse: anArgument
+]
+
 { #category : #generated }
 MpLeEntityAnnotationCompletionVisitor >> visitEntityAnnotation: anEntityAnnotation [
 	"Halt once".
@@ -45,7 +54,13 @@ MpLeEntityAnnotationCompletionVisitor >> visitEntityAnnotation: anEntityAnnotati
 
 { #category : #generated }
 MpLeEntityAnnotationCompletionVisitor >> visitNameValue: aNameValue [
-	"Halt once."
-	^ self addStreamFor: (GtPrefixTree new add:'Tim'; add: 'Tom'; add: 'Toe'; yourself) startingWith: ''."
-	^ self visitEntityParse: aNameValue"
+	| first last completion isCursorInside |
+	first := aNameValue valueStartPosition.
+	last := aNameValue stopPosition + 1.
+	
+	isCursorInside := self position >= first and: [ self position < last ].
+	isCursorInside ifFalse: [ ^ self visitArgument: aNameValue ].
+			
+	completion := MpEntityCompletionResult forInterval: (first to: last).
+	^ self composite completionResult: completion
 ]

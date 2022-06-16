@@ -13,8 +13,7 @@ MpLeEntityAnnotationStyler class >> activate [
 
 { #category : #accessing }
 MpLeEntityAnnotationStyler class >> initialize [
-	"WIP - not ready to enable by default"
-	"self activate"
+	self activate
 ]
 
 { #category : #accessing }
@@ -23,18 +22,8 @@ MpLeEntityAnnotationStyler class >> obsolete [
 	^ super obsolete
 ]
 
-{ #category : #generated }
-MpLeEntityAnnotationStyler >> styleAnnotation: anEntityAnnotation [
-	"Add styling for the actual markup"
-	| aLinkColor |
-	aLinkColor := false
-		ifTrue: [ BrGlamorousColors textMarkupColor ]
-		ifFalse: [ BrGlamorousColors linkWithErrorColor ].
-	(self composite text from: anEntityAnnotation parent startPosition to: anEntityAnnotation parent stopPosition) foreground: aLinkColor
-]
-
-{ #category : #generated }
-MpLeEntityAnnotationStyler >> styleAutoHidingAnnotation: anAnnotation [
+{ #category : #private }
+MpLeEntityAnnotationStyler >> styleAutoHiding: anAnnotation [
 	"Add styling that hides the markup when it loses keyboard focus"
 	| first last range |
 	"anAnnotation hasWordSpecified ifFalse: [ ^ self ]."
@@ -47,22 +36,31 @@ MpLeEntityAnnotationStyler >> styleAutoHidingAnnotation: anAnnotation [
 		whenOutside: anAnnotation parent sourceInterval 
 ]
 
-{ #category : #generated }
-MpLeEntityAnnotationStyler >> styleButton: anAnnotation [
+{ #category : #private }
+MpLeEntityAnnotationStyler >> styleMarkup: anAnnotation [
+	self utility
+		subtleMarkupsInText: self text
+		start: anAnnotation parent startPosition
+		stop: anAnnotation parent stopPosition
+]
+
+{ #category : #private }
+MpLeEntityAnnotationStyler >> styleRendered: anAnnotation [
 	"Add styling for the (in this case clickable) rendered markup"
 	| attribute |
 	"anAnnotation hasWordSpecified ifFalse: [ ^ self ]."
+	
 	attribute := (GtButtonAttribute new)
 		beAppend;
 		stencil:
 				[ | button label |
-					label := 'anAnnotation word'.
+					label := anAnnotation object displayString.
 					button := LeSnippetStylerVisitor textLinkButtonPadding: (BlInsets top: 2) margin: BlInsets empty.
 					button aptitude glamorousCodeFont.
 					button
 						beSmallSize;
 						label: label;
-						action: [ :aButton | aButton phlow spawnObject: ('self dictionary lookup: label') ].
+						action: [ :aButton | aButton phlow spawnObject: anAnnotation object ].
 					button ].
 	self composite text
 		attribute: attribute
@@ -70,9 +68,19 @@ MpLeEntityAnnotationStyler >> styleButton: anAnnotation [
 		to: anAnnotation parent stopPosition
 ]
 
+{ #category : #accessing }
+MpLeEntityAnnotationStyler >> text [
+	^ self composite text
+]
+
+{ #category : #accessing }
+MpLeEntityAnnotationStyler >> utility [
+	^ GtDocumentUtility
+]
+
 { #category : #generated }
-MpLeEntityAnnotationStyler >> visitEntityAnnotation: anEntityAnnotation [
-	self styleAnnotation: anEntityAnnotation.
-	"self styleAutoHidingAnnotation: anEntityAnnotation."
-	self styleButton: anEntityAnnotation.
+MpLeEntityAnnotationStyler >> visitEntityAnnotation: anAnnotation [
+	self styleMarkup: anAnnotation.
+	self styleAutoHiding: anAnnotation.
+	self styleRendered: anAnnotation
 ]
