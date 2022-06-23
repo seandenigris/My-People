@@ -50,8 +50,24 @@ MpRelatableEntity >> addressesDescription [
 			accessor: #addresses;
 			priority: 400;
 			default: OrderedCollection new;
+			gtSearchDelegateTo: self message: #addressesSpotterFor:;
 			classes: { MpUSAddress };
 			yourself
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> addressesSpotterFor: aStep [
+	<gtSearch>
+	
+	^ aStep listProcessor
+		title: 'New Address';
+		priority: 50;
+		itemName: [ :input | 'Create new address: ', input ];
+		previewObject: [ :input | MpUSAddress fromString: input ];
+		wantsToDisplayOnEmptyQuery: false;
+		filter:  GtNullFilter
+			item:[ :filter :context | filter value: context textTrimmed ];
+		send: [ :input :spotterStep | MpUSAddress fromString: input ]
 ]
 
 { #category : #accessing }

@@ -1,3 +1,11 @@
+"
+# Parsing
+Rather than handroll, it seemed like there should be something great out there.
+
+The following python libraries were investigated:
+- [usaddress](https://github.com/datamade/usaddress) - doesn't seem to install on ARM Macs. Filed [this issue](https://github.com/scrapinghub/python-crfsuite/issues/149) with the offending dependency
+- [address_parser](https://pypi.org/project/address-parser/) is listed as beta and the last commit was in 2019
+"
 Class {
 	#name : #MpUSAddress,
 	#superclass : #GtABAddress,
@@ -8,6 +16,39 @@ Class {
 	],
 	#category : #'MyPeople-Core'
 }
+
+{ #category : #accessing }
+MpUSAddress class >> fromString: aString [
+	| tokens stateAndZip state |
+	tokens := aString splitOn: $,.
+	stateAndZip := tokens last trimBoth splitOn: Character space.
+	state := MpAddressBook uniqueInstance usStates detect: [ :e | e matches: stateAndZip first trimBoth ].
+	^ self new
+		streetAddress: tokens first trimBoth;
+		city: tokens second trimBoth;
+		state: state;
+		zipCode: stateAndZip second trimBoth;
+		yourself
+]
+
+{ #category : #accessing }
+MpUSAddress class >> fromStringExample [
+	<gtExample>
+	^ self fromString: '428 S. Main Street, Somewhere, NY 12345'
+]
+
+{ #category : #accessing }
+MpUSAddress class >> gtSpotterNewFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		title: 'New Address';
+		priority: 50;
+		itemName: [ :input | 'Create new address: ', input ];
+		previewObject: [ :input | self fromString: input ];
+		wantsToDisplayOnEmptyQuery: false;
+		filter: [ :filter :context | filter value: context textTrimmed ];
+		send: [ :input :spotterStep | self fromString: input ]
+]
 
 { #category : #accessing }
 MpUSAddress class >> states [
