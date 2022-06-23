@@ -212,6 +212,11 @@ MpRelatableEntity >> isPerson [
 	^ false
 ]
 
+{ #category : #testing }
+MpRelatableEntity >> isUSState [
+	^ false
+]
+
 { #category : #accessing }
 MpRelatableEntity >> name [
 	^ self maLazyInstVarUsing: self nameDescription

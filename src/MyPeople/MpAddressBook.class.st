@@ -153,3 +153,8 @@ MpAddressBook >> printOn: aStream [
 		print: self contacts size;
 		nextPutAll: ' contacts'
 ]
+
+{ #category : #accessing }
+MpAddressBook >> usStates [
+	^ self contacts select: #isUSState
+]
