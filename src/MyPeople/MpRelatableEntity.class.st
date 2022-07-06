@@ -108,7 +108,7 @@ MpRelatableEntity >> avatarSourceDescription [
 	^ MAToOneRelationDescription new
 			accessor: #avatarSource;
 			priority: 500;
-			gtSearchSource: [ RlResourceLibrary uniqueInstance ];
+			gtSearchSource: (MessageSend receiver: RlResourceLibrary selector: #uniqueInstance);
 			yourself
 ]
 

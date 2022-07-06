@@ -160,7 +160,7 @@ MpOrganization >> parentDescription [
 			priority: 500;
 			classes: { MpOrganization };
 			comment: 'Not too fleshed out - subsidiaries? Locations?';
-			gtSearchSource: [ MpAddressBook uniqueInstance ];
+			gtSearchSource: (MessageSend receiver: MpAddressBook selector: #uniqueInstance);
 			yourself
 ]
 
