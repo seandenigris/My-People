@@ -1,6 +1,8 @@
 Class {
 	#name : #MpAffiliation,
 	#superclass : #Object,
+	#traits : 'MATPropertyOwner',
+	#classTraits : 'MATPropertyOwner classTrait',
 	#instVars : [
 		'organization',
 		'person',
