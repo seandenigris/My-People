@@ -96,15 +96,40 @@ MpAddressBook >> contacts [
 ]
 
 { #category : #convenience }
+MpAddressBook >> ensureMunicipalityNamed: aString [
+	^ MpMunicipality ensureNamed: aString.
+	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
+]
+
+{ #category : #convenience }
 MpAddressBook >> ensureOrganizationNamed: aString [
 	^ MpOrganization ensureNamed: aString.
-	"For the moment, there are person and organization, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
+	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
 { #category : #convenience }
 MpAddressBook >> ensurePersonNamed: aString [
 	^ MpPerson ensureNamed: aString.
-	"For the moment, there are person and organization, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
+	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
+]
+
+{ #category : #spotter }
+MpAddressBook >> gtSpotterNewMunicipalityFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		title: 'New Municipality';
+		priority: 100;
+		itemName: [ :input | 'Add municipality: ', input ];
+		previewObject: [ :input | MpMunicipality named: input ];
+		wantsToDisplayOnEmptyQuery: false;
+		filter: GtNullFilter
+			item: [ :filter :context | 
+				| isExisting |
+				isExisting := self organizations anySatisfy: [ :e | 
+					e fullName = context textTrimmed ].
+				isExisting ifFalse: [ 
+					filter value: context textTrimmed ] ];
+		send: [ :newName :spotterStep | self ensureMunicipalityNamed: newName ]
 ]
 
 { #category : #spotter }
