@@ -22,7 +22,9 @@ BaselineOfMyPeople >> baseline: spec [
 			baseline: 'Mocketry' with: [
 				spec repository: 'github://dionisiydk/Mocketry' ];
 			baseline: 'PharoEnhancements' with: [
-				spec repository: 'github://seandenigris/Pharo-Enhancements' ];
+				spec 
+					repository: 'github://seandenigris/Pharo-Enhancements';
+					loads: #(#default 'PharoEnhancements-Magritte') ];
 			baseline: 'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ].
 		spec package: #MyPeople with: [
@@ -33,7 +35,6 @@ BaselineOfMyPeople >> baseline: spec [
 			spec repository: 'github://seandenigris/PetitParser2' ].
 		spec package: #MyPeople with: [
 			spec requires: #('PetitParser2'). ]. ]
-
 ]
 
 { #category : #accessing }
