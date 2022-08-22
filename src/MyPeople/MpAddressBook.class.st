@@ -56,8 +56,7 @@ MpAddressBook class >> exampleHarryPotter [
 			ab contacts
 				add: MpPerson exampleDumbledore;
 				add: MpOrganization exampleLeakyCauldron;
-				add: MpOrganization exampleOllivanders;
-				yourself.
+				add: MpOrganization exampleOllivanders.
 			ab ]
 		then: [ :col :ab | ab where contacts should haveSize: 3 ]	
 ]
