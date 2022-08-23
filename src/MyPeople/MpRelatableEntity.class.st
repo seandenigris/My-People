@@ -33,6 +33,13 @@ MpRelatableEntity class >> isAbstract [
 	^ false
 ]
 
+{ #category : #comparing }
+MpRelatableEntity >> = rhs [
+
+	self class = rhs class ifFalse: [ ^ false ].
+	^ self uuid = rhs uuid
+]
+
 { #category : #'GtABContact compatibility' }
 MpRelatableEntity >> addresses [
 	^ self maLazyInstVarUsing: self addressesDescription
@@ -201,6 +208,18 @@ MpRelatableEntity >> gtViewPreviewOn: aView [
 			"Use the old morph for now"
 			((GtABPreviewMorph new contact: self) extent: 500@300)
 				imageForm asElement asPannableElement ]
+]
+
+{ #category : #comparing }
+MpRelatableEntity >> hash [
+
+	^ self uuid hash
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> initialize [
+	super initialize.
+	self ensureUUID
 ]
 
 { #category : #testing }
