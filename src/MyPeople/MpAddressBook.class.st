@@ -153,20 +153,20 @@ MpAddressBook >> gtSpotterNewOrgFor: aStep [
 { #category : #spotter }
 MpAddressBook >> gtSpotterNewPersonFor: aStep [
 	<gtSearch>
+	
 	self flag: 'copy pasted from new org spotter'.
-	aStep listProcessor
+	
+	^ aStep listProcessor
 		title: 'New person';
 		priority: 60;
-		itemName: [ :input | 'Add person: ', input ];
+		itemName: [ :input | '+ ', input ];
 		previewObject: [ :input | MpPerson named: input trimBoth ];
 		wantsToDisplayOnEmptyQuery: false;
 		filter: GtNullFilter
 			item: [ :filter :context | 
-				| isExisting |
-				isExisting := self people anySatisfy: [ :e | 
-					e fullName = context textTrimmed ].
-				(isExisting not and: [ MpPerson isValidName: context textTrimmed ]) ifTrue: [ 
-					filter value: context textTrimmed ] ];
+				(MpPerson isValidName: context textTrimmed) 
+					ifTrue: [ 
+						filter value: context textTrimmed ] ];
 		send: [ :newName :spotterStep | self ensurePersonNamed: newName ]
 ]
 
