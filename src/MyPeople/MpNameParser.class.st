@@ -61,7 +61,7 @@ MpNameParser >> lastNameFirst [
 	| middleName generationalPart lastName firstName |
 	generationalPart := (#space asPParser, generational) ==> #second.
 	lastName := token.
-	firstName := (#space asPParser, (generational not, abbreviatableToken) ==> #second) ==> #second.
+	firstName := (#space asPParser optional, (generational not, abbreviatableToken) ==> #second) ==> #second.
 	middleName := (#space asPParser, (generational not, abbreviatableToken) ==> #second) ==> #second.
 	^ lastName, ',' asPParser, firstName, middleName optional, generationalPart optional ==> [ :nodes | | result |
 		result := MpName new
