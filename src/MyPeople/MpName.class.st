@@ -7,7 +7,7 @@ Class {
 		'lastName',
 		'generational'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #'instance creation' }
@@ -67,14 +67,25 @@ MpName >> abbreviationsFor: givenNameString [
 
 { #category : #comparing }
 MpName >> detectMostSimilarIn: collection [
+	^ self detectMostSimilarIn: collection ifNone: [ nil ]
+]
+
+{ #category : #comparing }
+MpName >> detectMostSimilarIn: collection ifNone: noneBlock [
 	| maxSimilarity candidates |
 	maxSimilarity := collection max: [ :e | e name similarityTo: self ].
+	
+	maxSimilarity = 0 ifTrue: [ ^ noneBlock value ].
+	
 	candidates := collection select: [ :e | 
 		| similarity |
 		similarity := e name similarityTo: self.
 		similarity = maxSimilarity ].
-	self assert: candidates size = 1.
+		
+	candidates size > 1 ifTrue: [ self error: 'multiple best matches' ].
+	
 	^ candidates first
+		
 ]
 
 { #category : #accessing }
