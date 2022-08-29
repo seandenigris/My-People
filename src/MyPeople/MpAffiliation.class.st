@@ -23,7 +23,11 @@ MpAffiliation class >> organization: anOrganization person: aPerson role: titleS
 
 { #category : #accessing }
 MpAffiliation >> = rhs [
-	^ self organization = rhs organization and: [ self person = rhs person and: [ self role = rhs role ] ]
+	
+	^ [ 
+		self organization = rhs organization and: [ self person = rhs person and: [ self role = rhs role ] ] 
+	]
+		on: Error do: [ false ]
 ]
 
 { #category : #accessing }
