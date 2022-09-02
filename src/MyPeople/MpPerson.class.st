@@ -100,6 +100,11 @@ MpPerson >> addAffiliationWith: anOrganization as: titleString [
 	^ aff
 ]
 
+{ #category : #'as yet unclassified' }
+MpPerson >> age [
+	^ self ageOn: Date today translateToUTC
+]
+
 { #category : #accessing }
 MpPerson >> ageOn: aDate [
 
