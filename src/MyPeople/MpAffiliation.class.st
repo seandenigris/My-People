@@ -68,10 +68,14 @@ MpAffiliation >> person: anObject [
 { #category : #accessing }
 MpAffiliation >> printOn: aStream [
 
+	aStream print: self organization.
+		
+	self role ifNotNil: [ :r |
+		aStream
+			space;
+			nextPutAll: r ].
+			
 	aStream
-		print: self organization;
-		space;
-		nextPutAll: self role;
 		space;
 		print: self person
 ]
