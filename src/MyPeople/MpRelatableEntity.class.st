@@ -9,7 +9,8 @@ Class {
 		'avatar',
 		'roles',
 		'website',
-		'addresses'
+		'addresses',
+		'emailAddresses'
 	],
 	#category : #'MyPeople-Core'
 }
@@ -38,6 +39,13 @@ MpRelatableEntity >> = rhs [
 
 	self class = rhs class ifFalse: [ ^ false ].
 	^ self uuid = rhs uuid
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> addressBook [
+	^ self
+		propertyAt: #addressBook
+		ifAbsent: [ MpAddressBook uniqueInstance ]
 ]
 
 { #category : #'GtABContact compatibility' }

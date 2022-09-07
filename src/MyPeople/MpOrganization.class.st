@@ -58,10 +58,10 @@ MpOrganization class >> named: aString [
 { #category : #accessing }
 MpOrganization >> addChildNamed: aString [
 	| child |
-	self error: 'no way to propogate to my address book'.
 	child := (self class named: aString)
 		parent: self;
 		yourself.
+	self addressBook contacts add: child.
 	^ self children add: child
 ]
 
@@ -78,15 +78,15 @@ MpOrganization >> children: anObject [
 { #category : #'magritte-descriptions' }
 MpOrganization >> childrenDescription [
 	<magritteDescription>
-	self flag: 'this will probably go away as long as parent is fast enough for tree children lookup'.
+	
 	^ MAToManyRelationDescription new
-			accessor: #children;
-			priority: 500;
-			default: OrderedCollection new;
-			classes: { self class };
-			comment: 'Not too fleshed out - subsidiaries? Locations?';
-			beReadOnly;
-			yourself
+		accessor: #children;
+		priority: 500;
+		default: Set new;
+		classes: MpOrganization withAllSubclasses;
+		comment: 'Not too fleshed out - subsidiaries? Locations?';
+		gtSearchSource: (MessageSend receiver: MpAddressBook selector: #uniqueInstance);
+		yourself
 ]
 
 { #category : #defaults }
