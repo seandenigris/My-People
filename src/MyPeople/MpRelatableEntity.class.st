@@ -141,9 +141,56 @@ MpRelatableEntity >> doesNotUnderstand: aMessage [
 ]
 
 { #category : #accessing }
+MpRelatableEntity >> emailAddresses [
+
+	^ self maLazyInstVarUsing: self emailAddressesDescription
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> emailAddresses: anObject [
+
+	emailAddresses := anObject
+]
+
+{ #category : #'magritte-descriptions' }
+MpRelatableEntity >> emailAddressesDescription [
+	<magritteDescription>
+	^ MAToManyRelationDescription new
+			accessor: #emailAddresses;
+			priority: 500;
+			default: OrderedCollection new;
+			"gtSearchSource: #e;"
+			gtSearchDelegateTo: self message: #gtSpotterNewEmailAddressFor:;
+			classes: { MpEmailField };
+			yourself
+]
+
+{ #category : #accessing }
 MpRelatableEntity >> fullName [
 
 	^ name asString.
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> gtSpotterNewEmailAddressFor: aStep [
+	
+	aStep listProcessor
+		title: 'New email';
+		priority: 50;
+		itemName: [ :input | '+ ', input ];
+		previewObject: [ :input | MpEmailField fromString: input ];
+		wantsToDisplayOnEmptyQuery: false;
+		filter: GtNullFilter
+			item: [ :filter :cntxt | 
+				| isExisting |
+				isExisting := #() anySatisfy: [ :e | 
+					e title = cntxt textTrimmed ].
+				isExisting ifFalse: [ 
+					filter value: cntxt textTrimmed ] ];
+		send: [ :input :spotterStep |
+			| result |
+			result := MpEmailField fromString: input.
+			self emailAddresses add: result  ]
 ]
 
 { #category : #accessing }
@@ -253,6 +300,11 @@ MpRelatableEntity >> name [
 { #category : #accessing }
 MpRelatableEntity >> name: anObject [
 	name := anObject
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> newEmail [
+	CwMacMail new newMessageTo: self fullName at: self emailAddresses atRandom address re: '' asFollows: ''
 ]
 
 { #category : #printing }
