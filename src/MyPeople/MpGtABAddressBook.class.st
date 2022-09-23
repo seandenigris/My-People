@@ -224,7 +224,7 @@ MpGtABAddressBook >> gtViewContactsOn: aView [
 	<gtView>
 	^ aView columnedList
 		title: 'Contacts with details' translated;
-		priority: 5;
+		priority: 10;
 		items: [ self contacts ];
 		column: 'Avatar' 
 			icon: [ :aContact | aContact avatar asElement asScalableElement size: 32 @ 32 ]
