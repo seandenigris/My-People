@@ -118,7 +118,7 @@ MpAddressBook >> gtSpotterNewMunicipalityFor: aStep [
 	aStep listProcessor
 		title: 'New Municipality';
 		priority: 100;
-		itemName: [ :input | 'Add municipality: ', input ];
+		itemName: [ :input | '+ ', input ];
 		previewObject: [ :input | MpMunicipality named: input ];
 		wantsToDisplayOnEmptyQuery: false;
 		filter: GtNullFilter
@@ -137,7 +137,7 @@ MpAddressBook >> gtSpotterNewOrgFor: aStep [
 	aStep listProcessor
 		title: 'New Organization';
 		priority: 50;
-		itemName: [ :input | 'Create new organization: ', input ];
+		itemName: [ :input | '+ ', input ];
 		previewObject: [ :input | MpOrganization named: input ];
 		wantsToDisplayOnEmptyQuery: false;
 		filter: GtNullFilter
