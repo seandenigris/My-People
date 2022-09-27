@@ -112,37 +112,34 @@ MpGtABAddressBook >> contactsWithTelephone: aNumber [
 ]
 
 { #category : #ui }
-MpGtABAddressBook >> gtGtSpotterForAddressesFor: aStep [
+MpGtABAddressBook >> gtGtSpotterForAddressesFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 10;
 		title: 'Addresses' translated;
-		allCandidates: [ (self contacts collect: #address as: Set) asOrderedCollection ];
-		candidatesLimit: 7;
+		items: [ (self contacts collect: #address as: Set) asOrderedCollection ];
 		itemName: [ :each | each city , ', ' , each country ];
 		matchSubstrings
 ]
 
 { #category : #ui }
-MpGtABAddressBook >> gtGtSpotterForPeopleFor: aStep [
+MpGtABAddressBook >> gtGtSpotterForPeopleFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 5;
 		title: 'People';
-		allCandidates: [ self contacts ];
-		filter: GtFilterSubstrings;
-		candidatesLimit: 7;
-		itemName:[ :aContact | 
-			aContact lastName asUppercase , ', ' , aContact firstName ] 
+		items: [ self contacts ];
+		matchSubstrings;
+		itemName: [ :aContact | aContact lastName asUppercase , ', ' , aContact firstName ]
 ]
 
 { #category : #ui }
-MpGtABAddressBook >> gtGtSpotterForTelephonesFor: aStep [
+MpGtABAddressBook >> gtGtSpotterForTelephonesFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 15;
 		title: 'Telephones' translated;
-		allCandidates: [ self contacts flatCollect: [ :aContact | aContact telephones ] ];
+		items: [ self contacts flatCollect: [ :aContact | aContact telephones ] ];
 		matchSubstrings
 ]
 

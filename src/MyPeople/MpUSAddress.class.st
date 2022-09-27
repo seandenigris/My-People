@@ -38,12 +38,12 @@ MpUSAddress class >> fromStringExample [
 ]
 
 { #category : #accessing }
-MpUSAddress class >> gtSpotterNewFor: aStep [
+MpUSAddress class >> gtSpotterNewFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		title: 'New Address';
 		priority: 50;
-		itemName: [ :input | 'Create new address: ', input ];
+		itemName: [ :input | 'Create new address: ' , input ];
 		previewObject: [ :input | self fromString: input ];
 		wantsToDisplayOnEmptyQuery: false;
 		filter: [ :filter :context | filter value: context textTrimmed ];

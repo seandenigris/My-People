@@ -14,16 +14,16 @@ MpTEntityCollection >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock
 ]
 
 { #category : #spotter }
-MpTEntityCollection >> gtGtSpotterForOrgsFor: aStep [
+MpTEntityCollection >> gtGtSpotterForOrgsFor: aSearch [
 	"Adapted from GT superclass"
+
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 5;
 		title: 'Organizations';
-		allCandidates: [ self organizations ];
-		filter: GtFilterSubstrings;
-		candidatesLimit: 7;
-		itemName:[ :aContact | aContact fullName ] 
+		items: [ self organizations ];
+		matchSubstrings;
+		itemName: [ :aContact | aContact fullName ]
 ]
 
 { #category : #spotter }
