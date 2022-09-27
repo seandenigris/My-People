@@ -113,9 +113,10 @@ MpAddressBook >> ensurePersonNamed: aString [
 ]
 
 { #category : #spotter }
-MpAddressBook >> gtSpotterNewMunicipalityFor: aStep [
+MpAddressBook >> gtSpotterNewMunicipalityFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	
+	^ aSearch list
 		title: 'New Municipality';
 		priority: 100;
 		itemName: [ :input | '+ ', input ];
@@ -132,9 +133,10 @@ MpAddressBook >> gtSpotterNewMunicipalityFor: aStep [
 ]
 
 { #category : #spotter }
-MpAddressBook >> gtSpotterNewOrgFor: aStep [
+MpAddressBook >> gtSpotterNewOrgFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	
+	^ aSearch list
 		title: 'New Organization';
 		priority: 50;
 		itemName: [ :input | '+ ', input ];
@@ -151,12 +153,12 @@ MpAddressBook >> gtSpotterNewOrgFor: aStep [
 ]
 
 { #category : #spotter }
-MpAddressBook >> gtSpotterNewPersonFor: aStep [
+MpAddressBook >> gtSpotterNewPersonFor: aSearch [
 	<gtSearch>
 	
 	self flag: 'copy pasted from new org spotter'.
 	
-	^ aStep listProcessor
+	^ aSearch list
 		title: 'New person';
 		priority: 60;
 		itemName: [ :input | '+ ', input ];

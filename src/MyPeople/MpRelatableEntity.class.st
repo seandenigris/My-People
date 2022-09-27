@@ -172,9 +172,9 @@ MpRelatableEntity >> fullName [
 ]
 
 { #category : #accessing }
-MpRelatableEntity >> gtSpotterNewEmailAddressFor: aStep [
+MpRelatableEntity >> gtSpotterNewEmailAddressFor: aSearch [
 	
-	aStep listProcessor
+	aSearch list
 		title: 'New email';
 		priority: 50;
 		itemName: [ :input | '+ ', input ];

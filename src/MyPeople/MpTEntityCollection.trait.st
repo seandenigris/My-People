@@ -27,16 +27,15 @@ MpTEntityCollection >> gtGtSpotterForOrgsFor: aSearch [
 ]
 
 { #category : #spotter }
-MpTEntityCollection >> gtGtSpotterForPeopleFor: aStep [
+MpTEntityCollection >> gtGtSpotterForPeopleFor: aSearch [
 	"Adapted from GT superclass"
 	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
 	
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 5;
 		title: 'People';
 		allCandidates: [ self people ];
-		filter: GtFilterSubstrings;
-		candidatesLimit: 7;
+		matchSubstrings;
 		itemName:[ :aContact | 
 			aContact name lastName , ', ' , aContact name firstName ].		
 ]
