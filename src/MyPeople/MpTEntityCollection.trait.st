@@ -34,7 +34,7 @@ MpTEntityCollection >> gtGtSpotterForPeopleFor: aSearch [
 	^ aSearch list
 		priority: 5;
 		title: 'People';
-		allCandidates: [ self people ];
+		items: [ self people ];
 		matchSubstrings;
 		itemName:[ :aContact | 
 			aContact name lastName , ', ' , aContact name firstName ].		

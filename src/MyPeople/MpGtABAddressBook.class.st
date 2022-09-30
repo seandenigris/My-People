@@ -117,8 +117,8 @@ MpGtABAddressBook >> gtGtSpotterForAddressesFor: aSearch [
 	^ aSearch list
 		priority: 10;
 		title: 'Addresses' translated;
-		items: [ (self contacts collect: #address as: Set) asOrderedCollection ];
-		itemName: [ :each | each city , ', ' , each country ];
+		items: [ (self contacts flatCollect: #addresses as: Set) asOrderedCollection ];
+		"itemName: [ :each | each city , ', ' , each country ];"
 		matchSubstrings
 ]
 

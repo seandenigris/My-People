@@ -140,7 +140,7 @@ MpAddressBook >> gtSpotterNewOrgFor: aSearch [
 		title: 'New Organization';
 		priority: 50;
 		itemName: [ :input | '+ ', input ];
-		previewObject: [ :input | MpOrganization named: input ];
+		"previewObject: [ :input | MpOrganization named: input ];"
 		wantsToDisplayOnEmptyQuery: false;
 		filter: GtNullFilter
 			item: [ :filter :context | 
