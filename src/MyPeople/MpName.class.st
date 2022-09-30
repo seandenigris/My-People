@@ -13,7 +13,7 @@ Class {
 { #category : #'instance creation' }
 MpName class >> fromString: aString [
 
-	^ MpNameParser parse: aString onError: [ self error: 'Failed paring ', aString ]
+	^ MpNameParser parse: aString onError: [ self error: 'Failed parsing ', aString ]
 ]
 
 { #category : #testing }
