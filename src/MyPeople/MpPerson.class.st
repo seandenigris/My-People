@@ -274,6 +274,32 @@ MpPerson >> occupation: aString [
 ]
 
 { #category : #accessing }
+MpPerson >> ssaFullRetirementAge [
+
+	| birthYear |
+	birthYear := self dateOfBirth
+		ifNotNil: [ :dob | dob year ]
+		ifNil: [ ^ nil ].
+	
+	birthYear <= 1937 ifTrue: [ ^ 65 ].
+	birthYear = 1938 ifTrue: [ ^ 65.02 ].
+	birthYear = 1939 ifTrue: [ ^ 65.04 ].
+	birthYear = 1940 ifTrue: [ ^ 65.06 ].
+	birthYear = 1941 ifTrue: [ ^ 65.08 ].
+	birthYear = 1942 ifTrue: [ ^ 65.1 ].
+	
+	(birthYear between: 1943 and: 1954) ifTrue: [ ^ 66 ].
+	birthYear = 1955 ifTrue: [ ^ 66.02 ].
+	birthYear = 1956 ifTrue: [ ^ 66.04 ].
+	birthYear = 1957 ifTrue: [ ^ 66.06 ].
+	birthYear = 1958 ifTrue: [ ^ 66.08 ].
+	birthYear = 1959 ifTrue: [ ^ 66.1 ].
+	birthYear >= 1960 ifTrue: [ ^ 67 ].
+	
+	"Reference: https://www.ssa.gov/oact/progdata/nra.html"
+]
+
+{ #category : #accessing }
 MpPerson >> twitterUsername [
 	^ self propertyAt: #twitterUsername ifAbsent: [ nil ]
 ]
