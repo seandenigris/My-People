@@ -113,63 +113,48 @@ MpAddressBook >> ensurePersonNamed: aString [
 ]
 
 { #category : #spotter }
+MpAddressBook >> gtSpotterNew: aClass for: aSearch priority: aNumber [
+	
+	^ aSearch explicit
+		title: 'New ', (aClass name allButFirst: 'Mp' size);
+		itemName: [ :result | '+ ', result fullName ];
+		search: [ :aContext | 
+			| input |
+			input := aContext searchQuery trimBoth.
+			(aClass isValidName: input)
+				ifTrue: [ { aClass named: input } asAsyncStream ]
+				ifFalse: [ {} asAsyncStream ] ];
+		itemActLogic: [ :newName | Halt now ]
+]
+
+{ #category : #spotter }
 MpAddressBook >> gtSpotterNewMunicipalityFor: aSearch [
 	<gtSearch>
 	
-	^ aSearch list
-		title: 'New Municipality';
-		priority: 100;
-		itemName: [ :input | '+ ', input ];
-		previewObject: [ :input | MpMunicipality named: input ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtNullFilter
-			item: [ :filter :context | 
-				| isExisting |
-				isExisting := self organizations anySatisfy: [ :e | 
-					e fullName = context textTrimmed ].
-				isExisting ifFalse: [ 
-					filter value: context textTrimmed ] ];
-		send: [ :newName :spotterStep | self ensureMunicipalityNamed: newName ]
+	^ self 
+		gtSpotterNew: MpMunicipality
+		for: aSearch 
+		priority: 100
 ]
 
 { #category : #spotter }
 MpAddressBook >> gtSpotterNewOrgFor: aSearch [
 	<gtSearch>
 	
-	^ aSearch list
-		title: 'New Organization';
-		priority: 50;
-		itemName: [ :input | '+ ', input ];
-		"previewObject: [ :input | MpOrganization named: input ];"
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtNullFilter
-			item: [ :filter :context | 
-				| isExisting |
-				isExisting := self organizations anySatisfy: [ :e | 
-					e fullName = context textTrimmed ].
-				isExisting ifFalse: [ 
-					filter value: context textTrimmed ] ];
-		send: [ :newName :spotterStep | self ensureOrganizationNamed: newName ]
+	^ self 
+		gtSpotterNew: MpOrganization
+		for: aSearch 
+		priority: 50
 ]
 
 { #category : #spotter }
 MpAddressBook >> gtSpotterNewPersonFor: aSearch [
 	<gtSearch>
 	
-	self flag: 'copy pasted from new org spotter'.
-	
-	^ aSearch list
-		title: 'New person';
-		priority: 60;
-		itemName: [ :input | '+ ', input ];
-		previewObject: [ :input | MpPerson named: input trimBoth ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtNullFilter
-			item: [ :filter :context | 
-				(MpPerson isValidName: context textTrimmed) 
-					ifTrue: [ 
-						filter value: context textTrimmed ] ];
-		send: [ :newName :spotterStep | self ensurePersonNamed: newName ]
+	^ self 
+		gtSpotterNew: MpPerson
+		for: aSearch 
+		priority: 60
 ]
 
 { #category : #accessing }

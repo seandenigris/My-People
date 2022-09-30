@@ -34,6 +34,12 @@ MpRelatableEntity class >> isAbstract [
 	^ false
 ]
 
+{ #category : #testing }
+MpRelatableEntity class >> isValidName: aString [
+
+	^ true
+]
+
 { #category : #comparing }
 MpRelatableEntity >> = rhs [
 
