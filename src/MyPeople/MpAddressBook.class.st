@@ -112,19 +112,47 @@ MpAddressBook >> ensurePersonNamed: aString [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
+{ #category : #searches }
+MpAddressBook >> gtSearchForOrgsFor: aSearch [
+	"Adapted from GT superclass"
+
+	<gtSearch>
+	^ aSearch list
+		priority: 5;
+		title: 'Organizations';
+		items: [ self organizations ];
+		matchSubstrings;
+		itemName: [ :aContact | aContact fullName ]
+]
+
+{ #category : #searches }
+MpAddressBook >> gtSearchForPeopleFor: aSearch [
+	"Adapted from GT superclass"
+	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
+	
+	^ aSearch list
+		priority: 5;
+		title: 'People';
+		items: [ self people ];
+		matchSubstrings;
+		itemName:[ :aContact | 
+			aContact name lastName , ', ' , aContact name firstName ].		
+]
+
 { #category : #spotter }
 MpAddressBook >> gtSpotterNew: aClass for: aSearch priority: aNumber [
 	
 	^ aSearch explicit
 		title: 'New ', (aClass name allButFirst: 'Mp' size);
 		itemName: [ :result | '+ ', result fullName ];
+		priority: aNumber;
 		search: [ :aContext | 
 			| input |
 			input := aContext searchQuery trimBoth.
 			(aClass isValidName: input)
 				ifTrue: [ { aClass named: input } asAsyncStream ]
 				ifFalse: [ {} asAsyncStream ] ];
-		itemActLogic: [ :newName | Halt now ]
+		itemSpawnAfter: [ :result | self contacts add: result ]
 ]
 
 { #category : #spotter }

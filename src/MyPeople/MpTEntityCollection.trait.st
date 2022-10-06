@@ -14,7 +14,7 @@ MpTEntityCollection >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock
 ]
 
 { #category : #spotter }
-MpTEntityCollection >> gtGtSpotterForOrgsFor: aSearch [
+MpTEntityCollection >> gtSearchForOrgsFor: aSearch [
 	"Adapted from GT superclass"
 
 	<gtSearch>
@@ -27,7 +27,7 @@ MpTEntityCollection >> gtGtSpotterForOrgsFor: aSearch [
 ]
 
 { #category : #spotter }
-MpTEntityCollection >> gtGtSpotterForPeopleFor: aSearch [
+MpTEntityCollection >> gtSearchForPeopleFor: aSearch [
 	"Adapted from GT superclass"
 	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
 	
