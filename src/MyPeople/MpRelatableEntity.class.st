@@ -180,23 +180,19 @@ MpRelatableEntity >> fullName [
 { #category : #accessing }
 MpRelatableEntity >> gtSpotterNewEmailAddressFor: aSearch [
 	
-	aSearch list
+	^ aSearch explicit
 		title: 'New email';
 		priority: 50;
-		itemName: [ :input | '+ ', input ];
-		previewObject: [ :input | MpEmailField fromString: input ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtNullFilter
-			item: [ :filter :cntxt | 
-				| isExisting |
-				isExisting := #() anySatisfy: [ :e | 
-					e title = cntxt textTrimmed ].
-				isExisting ifFalse: [ 
-					filter value: cntxt textTrimmed ] ];
-		send: [ :input :spotterStep |
-			| result |
-			result := MpEmailField fromString: input.
-			self emailAddresses add: result  ]
+		itemName: [ :result | '+ ' , result gtDisplayText ];
+		search: [ :context | 
+			| isExisting input |
+			input := context searchQuery trimmed.
+			self flag: 'what should be in empty collection?'.
+			isExisting := #() anySatisfy: [ :e | e title = input ].
+			isExisting 
+				ifFalse: [ { MpEmailField fromString: input } ]
+				ifTrue: [ { } ] ];
+		itemSpawnAfter: [ :result | self emailAddresses add: result ]
 ]
 
 { #category : #accessing }

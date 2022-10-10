@@ -40,14 +40,11 @@ MpUSAddress class >> fromStringExample [
 { #category : #accessing }
 MpUSAddress class >> gtSpotterNewFor: aSearch [
 	<gtSearch>
-	^ aSearch list
+	^ aSearch explicit
 		title: 'New Address';
 		priority: 50;
-		itemName: [ :input | 'Create new address: ' , input ];
-		previewObject: [ :input | self fromString: input ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: [ :filter :context | filter value: context textTrimmed ];
-		send: [ :input :spotterStep | self fromString: input ]
+		itemName: [ :result | '+ ' , result gtDisplayText ];
+		search: [ :context | self fromString: context searchQuery trimmed ]
 ]
 
 { #category : #accessing }
