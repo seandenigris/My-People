@@ -13,8 +13,18 @@ MpTEntityCollection >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock
 	^ self contacts detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
 ]
 
+{ #category : #accessing }
+MpTEntityCollection >> hasEntryNamed: aString [
+	^ self contacts anySatisfy: [ :e | e fullName = aString ]
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> organizations [
+	^ self contacts select: #isOrganization
+]
+
 { #category : #spotter }
-MpTEntityCollection >> gtSearchForOrgsFor: aSearch [
+MpTEntityCollection >> organizationsSearchFor: aSearch [
 	"Adapted from GT superclass"
 
 	<gtSearch>
@@ -26,8 +36,13 @@ MpTEntityCollection >> gtSearchForOrgsFor: aSearch [
 		itemName: [ :aContact | aContact fullName ]
 ]
 
+{ #category : #accessing }
+MpTEntityCollection >> people [
+	^ self contacts select: #isPerson
+]
+
 { #category : #spotter }
-MpTEntityCollection >> gtSearchForPeopleFor: aSearch [
+MpTEntityCollection >> peopleSearchFor: aSearch [
 	"Adapted from GT superclass"
 	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
 	
@@ -38,19 +53,4 @@ MpTEntityCollection >> gtSearchForPeopleFor: aSearch [
 		matchSubstrings;
 		itemName:[ :aContact | 
 			aContact name lastName , ', ' , aContact name firstName ].		
-]
-
-{ #category : #accessing }
-MpTEntityCollection >> hasEntryNamed: aString [
-	^ self contacts anySatisfy: [ :e | e fullName = aString ]
-]
-
-{ #category : #accessing }
-MpTEntityCollection >> organizations [
-	^ self contacts select: #isOrganization
-]
-
-{ #category : #accessing }
-MpTEntityCollection >> people [
-	^ self contacts select: #isPerson
 ]

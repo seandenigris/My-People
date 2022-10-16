@@ -112,8 +112,18 @@ MpAddressBook >> ensurePersonNamed: aString [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
+{ #category : #spotter }
+MpAddressBook >> municipalitiesSearchNewFor: aSearch [
+	<gtSearch>
+	
+	^ self 
+		searchNew: MpMunicipality
+		for: aSearch 
+		priority: 100
+]
+
 { #category : #searches }
-MpAddressBook >> gtSearchForOrgsFor: aSearch [
+MpAddressBook >> organizationsSearchFor: aSearch [
 	"Adapted from GT superclass"
 
 	<gtSearch>
@@ -125,8 +135,18 @@ MpAddressBook >> gtSearchForOrgsFor: aSearch [
 		itemName: [ :aContact | aContact fullName ]
 ]
 
+{ #category : #spotter }
+MpAddressBook >> organizationsSearchNewFor: aSearch [
+	<gtSearch>
+	
+	^ self 
+		searchNew: MpOrganization
+		for: aSearch 
+		priority: 50
+]
+
 { #category : #searches }
-MpAddressBook >> gtSearchForPeopleFor: aSearch [
+MpAddressBook >> peopleSearchFor: aSearch [
 	"Adapted from GT superclass"
 	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
 	
@@ -140,7 +160,25 @@ MpAddressBook >> gtSearchForPeopleFor: aSearch [
 ]
 
 { #category : #spotter }
-MpAddressBook >> gtSpotterNew: aClass for: aSearch priority: aNumber [
+MpAddressBook >> peopleSearchNewFor: aSearch [
+	<gtSearch>
+	
+	^ self 
+		searchNew: MpPerson
+		for: aSearch 
+		priority: 60
+]
+
+{ #category : #accessing }
+MpAddressBook >> printOn: aStream [
+
+	aStream 
+		print: self contacts size;
+		nextPutAll: ' contacts'
+]
+
+{ #category : #spotter }
+MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 	
 	^ aSearch explicit
 		title: 'New ', (aClass name allButFirst: 'Mp' size);
@@ -153,44 +191,6 @@ MpAddressBook >> gtSpotterNew: aClass for: aSearch priority: aNumber [
 				ifTrue: [ { aClass named: input } asAsyncStream ]
 				ifFalse: [ {} asAsyncStream ] ];
 		itemSpawnAfter: [ :result | self contacts add: result ]
-]
-
-{ #category : #spotter }
-MpAddressBook >> gtSpotterNewMunicipalityFor: aSearch [
-	<gtSearch>
-	
-	^ self 
-		gtSpotterNew: MpMunicipality
-		for: aSearch 
-		priority: 100
-]
-
-{ #category : #spotter }
-MpAddressBook >> gtSpotterNewOrgFor: aSearch [
-	<gtSearch>
-	
-	^ self 
-		gtSpotterNew: MpOrganization
-		for: aSearch 
-		priority: 50
-]
-
-{ #category : #spotter }
-MpAddressBook >> gtSpotterNewPersonFor: aSearch [
-	<gtSearch>
-	
-	^ self 
-		gtSpotterNew: MpPerson
-		for: aSearch 
-		priority: 60
-]
-
-{ #category : #accessing }
-MpAddressBook >> printOn: aStream [
-
-	aStream 
-		print: self contacts size;
-		nextPutAll: ' contacts'
 ]
 
 { #category : #accessing }

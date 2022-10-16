@@ -133,17 +133,6 @@ MpGtABAddressBook >> gtGtSpotterForTelephonesFor: aSearch [
 ]
 
 { #category : #ui }
-MpGtABAddressBook >> gtSearchForPeopleFor: aSearch [
-	<gtSearch>
-	^ aSearch list
-		priority: 5;
-		title: 'People';
-		items: [ self contacts ];
-		matchSubstrings;
-		itemName: [ :aContact | aContact lastName asUppercase , ', ' , aContact firstName ]
-]
-
-{ #category : #ui }
 MpGtABAddressBook >> gtSpotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	aComposite list
@@ -263,6 +252,17 @@ MpGtABAddressBook >> label [
 { #category : #accessing }
 MpGtABAddressBook >> label: anObject [
 	label := anObject
+]
+
+{ #category : #ui }
+MpGtABAddressBook >> peopleSearchFor: aSearch [
+	<gtSearch>
+	^ aSearch list
+		priority: 5;
+		title: 'People';
+		items: [ self contacts ];
+		matchSubstrings;
+		itemName: [ :aContact | aContact lastName asUppercase , ', ' , aContact firstName ]
 ]
 
 { #category : #printing }
