@@ -3,7 +3,7 @@ The main entry point I provide is ${method:MpTPersonComparable>>#chanceIsSameAs:
 "
 Trait {
 	#name : #MpTPersonComparable,
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #comparing }
@@ -15,7 +15,7 @@ MpTPersonComparable >> < aComparable [
 { #category : #comparing }
 MpTPersonComparable >> <= aComparable [
 
-	^ self name <= aComparable name
+	^ self nameForAlphabetization <= aComparable nameForAlphabetization
 ]
 
 { #category : #comparing }
