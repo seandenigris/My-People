@@ -7,7 +7,6 @@ Class {
 		'name',
 		'aliases',
 		'avatar',
-		'roles',
 		'website',
 		'addresses',
 		'emailAddresses'
@@ -136,14 +135,6 @@ MpRelatableEntity >> avatarSourceDescription [
 { #category : #'GtABContact compatibility' }
 MpRelatableEntity >> description [
 	^ ''
-]
-
-{ #category : #accessing }
-MpRelatableEntity >> doesNotUnderstand: aMessage [
-	^ self roles
-		detect: [ :r | r respondsTo: aMessage selector ]
-		ifFound: [ :r | aMessage sendTo: r ]
-		ifNone: [ super doesNotUnderstand: aMessage ]
 ]
 
 { #category : #accessing }
@@ -305,6 +296,12 @@ MpRelatableEntity >> name: anObject [
 ]
 
 { #category : #accessing }
+MpRelatableEntity >> nameForAlphabetization [
+
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 MpRelatableEntity >> newEmail [
 	CwMacMail new newMessageTo: self fullName at: self emailAddresses atRandom address re: '' asFollows: ''
 ]
@@ -313,11 +310,6 @@ MpRelatableEntity >> newEmail [
 MpRelatableEntity >> printOn: aStream [
 
 	name displayStringOn: aStream.
-]
-
-{ #category : #accessing }
-MpRelatableEntity >> roles [
-	^ roles ifNil: [ roles := OrderedCollection new ]
 ]
 
 { #category : #'GtABContact compatibility' }
