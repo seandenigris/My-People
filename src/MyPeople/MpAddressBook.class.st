@@ -190,7 +190,7 @@ MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 			(aClass isValidName: input)
 				ifTrue: [ { aClass named: input } asAsyncStream ]
 				ifFalse: [ {} asAsyncStream ] ];
-		itemSpawnAfter: [ :result | self contacts add: result ]
+		send: [ :result | self contacts add: result ]
 ]
 
 { #category : #accessing }
