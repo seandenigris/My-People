@@ -94,6 +94,15 @@ MpAddressBook >> contacts [
 	^ contacts ifNil: [ contacts := SortedCollection sortUsing: #nameForAlphabetization ascending ]
 ]
 
+{ #category : #accessing }
+MpAddressBook >> ensureContact: aRelatableEntity [
+
+	(self contacts identityIncludes: aRelatableEntity)
+		ifFalse: [ self contacts add: aRelatableEntity ].
+		
+	^ aRelatableEntity
+]
+
 { #category : #convenience }
 MpAddressBook >> ensureMunicipalityNamed: aString [
 	^ MpMunicipality ensureNamed: aString.

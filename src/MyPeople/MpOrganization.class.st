@@ -56,13 +56,19 @@ MpOrganization class >> named: aString [
 ]
 
 { #category : #accessing }
+MpOrganization >> addChild: aRelatableEntity [
+	
+	self addressBook ensureContact: aRelatableEntity.
+	^ self children add: aRelatableEntity
+]
+
+{ #category : #accessing }
 MpOrganization >> addChildNamed: aString [
 	| child |
 	child := (self class named: aString)
 		parent: self;
 		yourself.
-	self addressBook contacts add: child.
-	^ self children add: child
+	^ self addChild: child
 ]
 
 { #category : #accessing }
@@ -87,6 +93,23 @@ MpOrganization >> childrenDescription [
 		comment: 'Not too fleshed out - subsidiaries? Locations?';
 		gtSearchSource: (MessageSend receiver: MpAddressBook selector: #uniqueInstance);
 		yourself
+]
+
+{ #category : #accessing }
+MpOrganization >> childrenGtSpotNewFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch explicit
+		title: 'New Child';
+		priority: 50;
+		itemName: [ :result | '+ ', result gtDisplayText ];
+		search: [ :aContext | 
+			| input |
+			input := aContext searchQuery trimBoth.
+			{ MpOrganization new 
+				name: input; 
+				yourself } asAsyncStream ];
+		send: [ :anObject | self addChild: anObject ]
 ]
 
 { #category : #defaults }
