@@ -32,13 +32,24 @@ MpAffiliation >> = rhs [
 
 { #category : #accessing }
 MpAffiliation >> hash [
-	^ self organization hash bitXor: (self person hash bitXor: self role hash)
+	^ self organization ensureUUID hash bitXor: (self person ensureUUID hash bitXor: self role hash)
 ]
 
 { #category : #accessing }
 MpAffiliation >> link [
-	self person affiliations add: self.
-	self organization affiliations add: self.
+	self person affiliations 
+		detect: [ :aff |
+			aff person == self person 
+				and: [ aff organization == self organization 
+					and: [ self role = aff role ] ] ]
+		ifNone: [ self person affiliations add: self ].
+	
+	self organization affiliations 
+		detect: [ :aff |
+			aff person == self person 
+				and: [ aff organization == self organization 
+					and: [ self role = aff role ] ] ]
+		ifNone: [ self organization affiliations add: self ].
 ]
 
 { #category : #accessing }
