@@ -199,19 +199,6 @@ MpPerson >> gtSpotterPreviewIn: aComposite [
 ]
 
 { #category : #accessing }
-MpPerson >> gtViewAffiliationsOn: aView [
-	<gtView>
-	
-	self affiliations ifEmpty: [ ^ aView empty ].
-	
-	^ aView list
-		title: 'Affiliations' translated;
-		priority: 60;
-		items: [ self affiliations asOrderedCollection ];
-		actionUpdateButton
-]
-
-{ #category : #accessing }
 MpPerson >> isAffiliatedWith: anOrganization [
 	^ self affiliations includesKey: anOrganization
 ]
