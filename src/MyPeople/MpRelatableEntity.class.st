@@ -81,6 +81,18 @@ MpRelatableEntity >> affiliations [
 ]
 
 { #category : #accessing }
+MpRelatableEntity >> affiliationsGtSearchFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch list
+		priority: 40;
+		title: 'Affiliations';
+		items: [ self affiliations ];
+		"itemName: #gtDisplayString;"
+		filterBySubstring
+]
+
+{ #category : #accessing }
 MpRelatableEntity >> aliases [
 	^ self maLazyInstVarUsing: self aliasesDescription
 ]
