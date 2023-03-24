@@ -31,6 +31,12 @@ MpAffiliation >> = rhs [
 ]
 
 { #category : #accessing }
+MpAffiliation >> addressBook [
+	
+	^ MpAddressBook uniqueInstance
+]
+
+{ #category : #accessing }
 MpAffiliation >> hash [
 	^ self organization ensureUUID hash bitXor: (self person ensureUUID hash bitXor: self role hash)
 ]
@@ -53,6 +59,16 @@ MpAffiliation >> link [
 ]
 
 { #category : #accessing }
+MpAffiliation >> linkDescription [
+	<magritteActionDescription>
+	
+	^ MAActionDescription new
+		  action: #link;
+		  gtIcon: BrGlamorousVectorIcons link;
+		  yourself
+]
+
+{ #category : #accessing }
 MpAffiliation >> organization [
 
 	^ organization
@@ -65,6 +81,23 @@ MpAffiliation >> organization: anObject [
 ]
 
 { #category : #accessing }
+MpAffiliation >> organizationDescription [
+	<magritteDescription>
+	
+	| searchSource |
+	searchSource := PeGtDelegatedSearch
+		to: self addressBook
+		message: #organizationsSearchFor:.
+	
+	^ MAToOneRelationDescription new
+		accessor: #organization;
+		priority: 100;
+		classes: MpOrganization withAllSubclasses;
+		gtSearchSource: searchSource; 
+		yourself
+]
+
+{ #category : #accessing }
 MpAffiliation >> person [
 
 	^ person
@@ -74,6 +107,23 @@ MpAffiliation >> person [
 MpAffiliation >> person: anObject [
 
 	person := anObject
+]
+
+{ #category : #accessing }
+MpAffiliation >> personDescription [
+	<magritteDescription>
+	
+	| searchSource |
+	searchSource := PeGtDelegatedSearch
+		to: self addressBook
+		message: #peopleSearchFor:.
+	
+	^ MAToOneRelationDescription new
+		accessor: #person;
+		priority: 200;
+		classes: MpPerson withAllSubclasses;
+		gtSearchSource: searchSource; 
+		yourself
 ]
 
 { #category : #accessing }
@@ -101,6 +151,16 @@ MpAffiliation >> role [
 MpAffiliation >> role: anObject [
 
 	role := anObject
+]
+
+{ #category : #accessing }
+MpAffiliation >> roleDescription [
+	<magritteDescription>
+	
+	^ MAStringDescription new
+		accessor: #role;
+		priority: 300;
+		yourself
 ]
 
 { #category : #accessing }
