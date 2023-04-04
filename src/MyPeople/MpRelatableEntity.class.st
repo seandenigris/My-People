@@ -195,7 +195,7 @@ MpRelatableEntity >> gtSpotterNewEmailAddressFor: aSearch [
 			isExisting 
 				ifFalse: [ { MpEmailField fromString: input } ]
 				ifTrue: [ { } ] ];
-		itemSpawnAfter: [ :result | self emailAddresses add: result ]
+		send: [ :result | self emailAddresses add: result ]
 ]
 
 { #category : #accessing }
