@@ -347,6 +347,11 @@ MpRelatableEntity >> telephones [
 	^ self propertyAt: #telephones ifAbsentPut: [ OrderedCollection new ]
 ]
 
+{ #category : #'GtABContact compatibility' }
+MpRelatableEntity >> telephones: aCollection [
+	^ self propertyAt: #telephones putRemovingNil: aCollection
+]
+
 { #category : #accessing }
 MpRelatableEntity >> website [
 	^ self maLazyInstVarUsing: self websiteDescription
