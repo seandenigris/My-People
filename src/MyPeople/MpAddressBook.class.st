@@ -121,6 +121,14 @@ MpAddressBook >> ensurePersonNamed: aString [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
+{ #category : #accessing }
+MpAddressBook >> googleCSVExport [
+
+	| maxPhones |
+	maxPhones := self contacts max: [ :e | e telephones size ].
+	^ maxPhones
+]
+
 { #category : #spotter }
 MpAddressBook >> municipalitiesSearchNewFor: aSearch [
 	<gtSearch>

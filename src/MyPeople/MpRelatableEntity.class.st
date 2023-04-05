@@ -181,6 +181,17 @@ MpRelatableEntity >> fullName [
 ]
 
 { #category : #accessing }
+MpRelatableEntity >> gtPhonesOn: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Phones' translated;
+		priority: 10;
+		items: [ self telephones ];
+		column: 'Type' text: [ :e | e typeName ];
+		column: 'Number' text: [ :e | e fullNumber ]
+]
+
+{ #category : #accessing }
 MpRelatableEntity >> gtSpotterNewEmailAddressFor: aSearch [
 	
 	^ aSearch explicit

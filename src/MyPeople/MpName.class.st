@@ -105,6 +105,7 @@ MpName >> firstNameDescription [
 			accessor: #firstName;
 			priority: 100;
 			propertyAt: #shouldAutoMergeBlock put: self shouldAutoMergeBlock;
+			propertyAt: #googleCsvFieldName put: 'Given Name';
 			beRequired;
 			yourself
 ]
@@ -134,6 +135,8 @@ MpName >> generationalDescription [
 			options: MpGenerational all;
 			undefinedValue: MpNoGenerational new;
 			default: MpNoGenerational new;
+			propertyAt: #googleCsvFieldName put: 'Name Suffix';
+			csvReader: [ :str | MpGenerational fromString: str ];
 			propertyAt: #shouldAutoMergeBlock put: self shouldAutoMergeBlock;
 			yourself
 ]
@@ -169,6 +172,7 @@ MpName >> lastNameDescription [
 	^ MAStringDescription new
 			accessor: #lastName;
 			priority: 300;
+			propertyAt: #googleCsvFieldName put: 'Family Name';
 			propertyAt: #shouldAutoMergeBlock put: self shouldAutoMergeBlock;
 			beRequired;
 			yourself
@@ -214,6 +218,7 @@ MpName >> middleNameDescription [
 			accessor: #middleName;
 			priority: 200;
 			propertyAt: #shouldAutoMergeBlock put: self shouldAutoMergeBlock;
+			propertyAt: #googleCsvFieldName put: 'Additional Name';
 			yourself
 ]
 

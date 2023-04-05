@@ -3,7 +3,7 @@ Part names from [Wikipedia](https://en.wikipedia.org/wiki/North_American_Numberi
 "
 Class {
 	#name : #MpTelephone,
-	#superclass : #Object,
+	#superclass : #GtABContactField,
 	#instVars : [
 		'areaCode',
 		'lineNumber',

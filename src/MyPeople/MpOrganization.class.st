@@ -160,6 +160,7 @@ MpOrganization >> nameDescription [
 			accessor: #name;
 			label: 'Name';
 			priority: 100;
+			propertyAt: #googleCsvFieldName put: 'Organization 1 - Name';
 			yourself
 ]
 
