@@ -5,7 +5,7 @@ Class {
 		'token',
 		'abbreviations'
 	],
-	#category : 'MyPeople-Core'
+	#category : #'MyPeople-Core'
 }
 
 { #category : #accessing }
@@ -33,6 +33,7 @@ MpGenerational class >> fromString: aString [
 
 { #category : #comparing }
 MpGenerational >> = rhs [
+	self species = rhs species ifFalse: [ ^ false ].
 	^ self token = rhs token and: [ self abbreviations hasEqualElements: rhs abbreviations ]
 ]
 
