@@ -168,9 +168,9 @@ MpRelatableEntity >> emailAddressesDescription [
 			accessor: #emailAddresses;
 			priority: 500;
 			default: OrderedCollection new;
-			"gtSearchSource: #e;"
-			gtSearchDelegateTo: self message: #gtSpotterNewEmailAddressFor:;
+			gtSearchDelegateTo: self message: #gtSearchNewEmailAddressFor:;
 			classes: { MpEmailField };
+			referenceDisplay: #displayString;
 			yourself
 ]
 
@@ -192,7 +192,7 @@ MpRelatableEntity >> gtPhonesOn: aView [
 ]
 
 { #category : #accessing }
-MpRelatableEntity >> gtSpotterNewEmailAddressFor: aSearch [
+MpRelatableEntity >> gtSearchNewEmailAddressFor: aSearch [
 	
 	^ aSearch explicit
 		title: 'New email';
@@ -207,6 +207,24 @@ MpRelatableEntity >> gtSpotterNewEmailAddressFor: aSearch [
 				ifFalse: [ { MpEmailField fromString: input } ]
 				ifTrue: [ { } ] ];
 		send: [ :result | self emailAddresses add: result ]
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> gtSearchNewTelephoneFor: aSearch [
+	
+	^ aSearch explicit
+		title: 'New telephone';
+		priority: 50;
+		itemName: [ :result | '+ ' , result gtDisplayText ];
+		search: [ :context | 
+			| isExisting input result |
+			input := context searchQuery trimmed.
+			result := MpTelephone fromString: input.
+			isExisting := self telephones anySatisfy: [ :e | e fullNumber = result fullNumber ].
+			isExisting 
+				ifFalse: [ { result } ]
+				ifTrue: [ { } ] ];
+		send: [ :result | self telephones add: result ]
 ]
 
 { #category : #accessing }
@@ -361,6 +379,19 @@ MpRelatableEntity >> telephones [
 { #category : #'GtABContact compatibility' }
 MpRelatableEntity >> telephones: aCollection [
 	^ self propertyAt: #telephones putRemovingNil: aCollection
+]
+
+{ #category : #'magritte-descriptions' }
+MpRelatableEntity >> telephonesDescription [
+	<magritteDescription>
+	^ MAToManyRelationDescription new
+			accessor: #telephones;
+			priority: 500;
+			default: OrderedCollection new;
+			gtSearchDelegateTo: self message: #gtSearchNewTelephoneFor:;
+			classes: { MpTelephone };
+			referenceDisplay: #displayString;
+			yourself
 ]
 
 { #category : #accessing }
