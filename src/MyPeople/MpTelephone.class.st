@@ -77,6 +77,17 @@ MpTelephone >> countryCode: anInteger [
 ]
 
 { #category : #accessing }
+MpTelephone >> displayStringOn: aStream [
+
+	self fullNumber ifNotNil: [ :num | aStream nextPutAll: num ].
+	
+	self typeName ifNotNil: [ :str | 
+		aStream 
+			space;
+			nextPutAll: str ].
+]
+
+{ #category : #accessing }
 MpTelephone >> exchange [
 
 	^ exchange
@@ -117,8 +128,9 @@ MpTelephone >> lineNumber: anObject [
 { #category : #accessing }
 MpTelephone >> printOn: aStream [
 
+	self displayStringOn: aStream.
+	
 	aStream
-		nextPutAll: self fullNumber;
 		nextPutAll: ' ('.
 		
 	super printOn: aStream.

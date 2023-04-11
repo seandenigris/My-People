@@ -56,11 +56,24 @@ MpEmailField >> addressDescription [
 ]
 
 { #category : #accessing }
-MpEmailField >> printOn: aStream [
+MpEmailField >> displayStringOn: aStream [
 
 	self address ifNotNil: [ :add | aStream nextPutAll: add ].
-	self name ifNotNil: [ :str | 
+	self typeName ifNotNil: [ :str | 
 		aStream 
 			space;
 			nextPutAll: str ].
+]
+
+{ #category : #accessing }
+MpEmailField >> printOn: aStream [
+
+	self displayStringOn: aStream.
+	
+	aStream
+		nextPutAll: ' ('.
+		
+	super printOn: aStream.
+	
+	aStream nextPut: $)
 ]
