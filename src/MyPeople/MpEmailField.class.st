@@ -46,6 +46,16 @@ MpEmailField >> address: anObject [
 ]
 
 { #category : #accessing }
+MpEmailField >> addressDescription [
+	<magritteDescription>
+	
+	^ MAStringDescription new
+		accessor: #address;
+		priority: 200;
+		yourself
+]
+
+{ #category : #accessing }
 MpEmailField >> printOn: aStream [
 
 	self address ifNotNil: [ :add | aStream nextPutAll: add ].

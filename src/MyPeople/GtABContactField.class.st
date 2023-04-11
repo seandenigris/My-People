@@ -21,3 +21,14 @@ GtABContactField >> typeName [
 GtABContactField >> typeName: anObject [
 	typeName := anObject
 ]
+
+{ #category : #accessing }
+GtABContactField >> typeNameDescription [
+	<magritteDescription>
+	
+	^ MAStringDescription new
+		label: 'Label';
+		accessor: #typeName;
+		priority: 100;
+		yourself
+]
