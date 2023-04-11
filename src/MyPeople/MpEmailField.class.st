@@ -16,7 +16,7 @@ MpEmailField class >> fromString: aString [
 	parser := address, (#space asPParser plus, fieldName ==> #second) optional ==> [ :n |
 		self new
 			address: n first;
-			name: (n second ifNil: [ 'main' ]);
+			typeName: (n second ifNil: [ 'main' ]);
 			yourself ].
 	^ parser parse: aString.
 ]
