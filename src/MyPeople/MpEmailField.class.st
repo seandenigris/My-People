@@ -1,9 +1,8 @@
 Class {
 	#name : #MpEmailField,
-	#superclass : #Object,
+	#superclass : #GtABContactField,
 	#instVars : [
-		'address',
-		'name'
+		'address'
 	],
 	#category : #'MyPeople-Core'
 }
@@ -44,18 +43,6 @@ MpEmailField >> address [
 MpEmailField >> address: anObject [
 
 	address := anObject
-]
-
-{ #category : #accessing }
-MpEmailField >> name [
-
-	^ name
-]
-
-{ #category : #accessing }
-MpEmailField >> name: anObject [
-
-	name := anObject
 ]
 
 { #category : #accessing }
