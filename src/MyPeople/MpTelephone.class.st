@@ -57,7 +57,7 @@ phonenumbers.parse(str, "US")'
 { #category : #accessing }
 MpTelephone >> = rhs [
 
-	^ self typeName = rhs typeName and: [ self fullNumber = rhs fullNumber ]
+	^ super = rhs and: [ self fullNumber = rhs fullNumber ]
 ]
 
 { #category : #accessing }
@@ -122,7 +122,7 @@ MpTelephone >> fullNumber [
 { #category : #accessing }
 MpTelephone >> hash [
 
-	^ self typeName hash bitXor: self fullNumber hash
+	^ super hash bitXor: self fullNumber hash
 ]
 
 { #category : #accessing }

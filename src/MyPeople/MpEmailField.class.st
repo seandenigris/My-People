@@ -34,6 +34,12 @@ MpEmailField class >> fromStringExample [
 ]
 
 { #category : #accessing }
+MpEmailField >> = rhs [
+
+	^ super = rhs and: [ self address = rhs address ]
+]
+
+{ #category : #accessing }
 MpEmailField >> address [
 
 	^ address
@@ -63,6 +69,12 @@ MpEmailField >> displayStringOn: aStream [
 		aStream 
 			space;
 			nextPutAll: str ].
+]
+
+{ #category : #accessing }
+MpEmailField >> hash [
+
+	^ super hash bitXor: self address hash
 ]
 
 { #category : #accessing }

@@ -13,6 +13,18 @@ Class {
 }
 
 { #category : #accessing }
+GtABContactField >> = rhs [
+
+	^ self typeName = rhs typeName
+]
+
+{ #category : #accessing }
+GtABContactField >> hash [
+
+	^ self typeName hash
+]
+
+{ #category : #accessing }
 GtABContactField >> typeName [
 	^ typeName
 ]
