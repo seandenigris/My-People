@@ -319,6 +319,12 @@ MpRelatableEntity >> hash [
 ]
 
 { #category : #accessing }
+MpRelatableEntity >> import [
+
+	self addressBook ensureContact: self
+]
+
+{ #category : #accessing }
 MpRelatableEntity >> initialize [
 	super initialize.
 	self ensureUUID
