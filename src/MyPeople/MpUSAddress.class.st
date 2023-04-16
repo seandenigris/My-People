@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'state',
 		'zipCode',
-		'streetAddress'
+		'streetAddress',
+		'streetAddress2'
 	],
 	#category : #'MyPeople-Core'
 }
@@ -103,6 +104,25 @@ MpUSAddress >> stateDescription [
 { #category : #accessing }
 MpUSAddress >> streetAddress [
 	^ self maLazyInstVarUsing: self streetAddressDescription
+]
+
+{ #category : #accessing }
+MpUSAddress >> streetAddress2 [
+	^ streetAddress2
+]
+
+{ #category : #accessing }
+MpUSAddress >> streetAddress2: anObject [
+	streetAddress2 := anObject
+]
+
+{ #category : #'magritte-accessing' }
+MpUSAddress >> streetAddress2Description [
+	<magritteDescription>
+	^ MAStringDescription new
+		priority: 150;
+		accessor: #streetAddress2;
+		yourself
 ]
 
 { #category : #accessing }
