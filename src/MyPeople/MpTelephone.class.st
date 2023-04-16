@@ -55,6 +55,12 @@ phonenumbers.parse(str, "US")'
 ]
 
 { #category : #accessing }
+MpTelephone >> = rhs [
+
+	^ self typeName = rhs typeName and: [ self fullNumber = rhs fullNumber ]
+]
+
+{ #category : #accessing }
 MpTelephone >> areaCode [
 
 	^ areaCode
@@ -111,6 +117,12 @@ MpTelephone >> fullNumber [
 			nextPutAll: self exchange asString;
 			nextPut: $-;
 			nextPutAll: (self lineNumber asString padLeftTo: 4 with: $0) ]
+]
+
+{ #category : #accessing }
+MpTelephone >> hash [
+
+	^ self typeName hash bitXor: self fullNumber hash
 ]
 
 { #category : #accessing }
