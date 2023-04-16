@@ -194,6 +194,14 @@ MpAddressBook >> printOn: aStream [
 		nextPutAll: ' contacts'
 ]
 
+{ #category : #accessing }
+MpAddressBook >> removeDuplicateContactFields [
+
+	self contacts do: [ :entity | 
+		entity telephones: entity telephones asSet asOrderedCollection.
+		entity emailAddresses: entity emailAddresses asSet asOrderedCollection ]
+]
+
 { #category : #spotter }
 MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 	
