@@ -21,6 +21,10 @@ BaselineOfMyPeople >> baseline: spec [
 					repository: 'github://seandenigris/Magritte' ];
 			baseline: 'Mocketry' with: [
 				spec repository: 'github://dionisiydk/Mocketry' ];
+			baseline: 'NeoCSV' with: [
+				spec 
+					repository: 'github://seandenigris/NeoCSV';
+					loads: 'Neo-CSV-Magritte' ];
 			baseline: 'PharoEnhancements' with: [
 				spec 
 					repository: 'github://seandenigris/Pharo-Enhancements';
@@ -28,7 +32,7 @@ BaselineOfMyPeople >> baseline: spec [
 			baseline: 'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ].
 		spec package: #MyPeople with: [
-			spec requires: #('Magritte' 'Mocketry' 'PharoEnhancements' 'SimplePersistence'). ]. ].
+			spec requires: #('Magritte' 'Mocketry' 'NeoCSV' 'PharoEnhancements' 'SimplePersistence'). ]. ].
 				
 	spec for: #notGToolkit do: [ 
 		spec baseline: 'PetitParser2' with: [
