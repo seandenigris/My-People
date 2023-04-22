@@ -77,7 +77,7 @@ MpRelatableEntity >> addressesDescription [
 
 { #category : #accessing }
 MpRelatableEntity >> affiliations [
-	^ self propertyAt: #affiliations ifAbsentPut: [ Set new ]
+	^ self propertyAt: #affiliations ifAbsentPut: [ SortedCollection sortUsing: #nameForAlphabetization asSortFunction ]
 ]
 
 { #category : #accessing }
