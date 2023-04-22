@@ -36,6 +36,14 @@ MpAffiliation >> addressBook [
 	^ MpAddressBook uniqueInstance
 ]
 
+{ #category : #printing }
+MpAffiliation >> doesNotUnderstand: aMessage [
+	
+	^ self person
+		ifNotNil: [ :info | aMessage sendTo: info ]
+		ifNil: [ super doesNotUnderstand: aMessage ].
+]
+
 { #category : #accessing }
 MpAffiliation >> hash [
 	^ self organization ensureUUID hash bitXor: (self person ensureUUID hash bitXor: self role hash)
