@@ -237,6 +237,7 @@ MpRelatableEntity >> gtViewAffiliationsOn: aView [
 		title: 'Affiliations' translated;
 		priority: 60;
 		items: [ self affiliations asOrderedCollection ];
+		inspectButtonFor: [ self affiliations ];
 		actionUpdateButton
 ]
 
