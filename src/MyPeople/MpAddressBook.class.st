@@ -6,14 +6,13 @@ Some of these entities might be people, some organizations.
 Some might have addresses and other contact information, but some probably won't. For example, I may have a relationship with Walt Whitman through his works, and want to store information about him, but a phone number?!
 
 I am called an ''address book'', but I'm in search of a better name.
-
-My superclass is ${class:GtABAddressBook}$. It has an example filled with some contacts - see ${class:GtABCartoonAddressBookExample}$. There's a bit of a rift with my parent, however. While I take advantage of its views, I have my own highly-opinionated model for the objects I contain.
 "
 Class {
 	#name : #MpAddressBook,
-	#superclass : #MpGtABAddressBook,
-	#traits : 'MpTEntityCollection',
-	#classTraits : 'MpTEntityCollection classTrait',
+	#superclass : #MpContactsSnapshot,
+	#classVars : [
+		'UniqueInstance'
+	],
 	#category : #'MyPeople-Core'
 }
 
@@ -27,7 +26,7 @@ MpAddressBook class >> example [
 
 	| result |
 	result := self exampleCelebrities.
-	result contacts addAll: self exampleHarryPotter contacts.
+	result privateContacts addAll: self exampleHarryPotter privateContacts.
 	^ result
 ]
 
@@ -38,12 +37,12 @@ MpAddressBook class >> exampleCelebrities [
 	^ self
 		given: [ self new ]
 		when: [ :ab |
-			ab contacts
+			ab privateContacts
 				add: MpPerson exampleNassimTaleb;
 				add: MpPerson exampleBretVictor;
 				yourself.
 			ab ]
-		then: [ :col :ab | ab where contacts should haveSize: 2 ]	
+		then: [ :col :ab | ab where privateContacts should haveSize: 2 ]	
 ]
 
 { #category : #examples }
@@ -53,12 +52,12 @@ MpAddressBook class >> exampleHarryPotter [
 	^ self
 		given: [ self new ]
 		when: [ :ab |
-			ab contacts
+			ab privateContacts
 				add: MpPerson exampleDumbledore;
 				add: MpOrganization exampleLeakyCauldron;
 				add: MpOrganization exampleOllivanders.
 			ab ]
-		then: [ :col :ab | ab where contacts should haveSize: 3 ]	
+		then: [ :col :ab | ab where privateContacts should haveSize: 3 ]	
 ]
 
 { #category : #accessing }
@@ -68,37 +67,32 @@ MpAddressBook class >> gtDefaultFor: aView inContext: aContext [
 	^ aView composite
 		title: 'Default';
 		priority: 100;
-		views: (self default gtViewsInContext: aContext)
+		views: (self uniqueInstance gtViewsInContext: aContext)
 ]
 
 { #category : #persistence }
 MpAddressBook class >> restoreFrom: anObject [
 
-	default := anObject.
+	UniqueInstance := anObject.
 ]
 
 { #category : #persistence }
 MpAddressBook class >> spData [
 
-	^ default
+	^ UniqueInstance
 ]
 
 { #category : #accessing }
 MpAddressBook class >> uniqueInstance [
-	"For compatibility with other common singletons. Maybe should replace #default completely. What is the use case for multiple address books?"
-	^ self default
-]
-
-{ #category : #accessing }
-MpAddressBook >> contacts [
-	^ contacts ifNil: [ contacts := SortedCollection sortUsing: #nameForAlphabetization ascending ]
+	
+	^ UniqueInstance
 ]
 
 { #category : #accessing }
 MpAddressBook >> ensureContact: aRelatableEntity [
 
-	(self contacts identityIncludes: aRelatableEntity)
-		ifFalse: [ self contacts add: aRelatableEntity ].
+	(self privateContacts identityIncludes: aRelatableEntity)
+		ifFalse: [ self privateContacts add: aRelatableEntity ].
 		
 	^ aRelatableEntity
 ]
@@ -190,7 +184,7 @@ MpAddressBook >> peopleSearchNewFor: aSearch [
 MpAddressBook >> printOn: aStream [
 
 	aStream 
-		print: self contacts size;
+		print: self privateContacts size;
 		nextPutAll: ' contacts'
 ]
 
@@ -215,7 +209,7 @@ MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 			(aClass isValidName: input)
 				ifTrue: [ { aClass named: input } asAsyncStream ]
 				ifFalse: [ {} asAsyncStream ] ];
-		send: [ :result | self contacts add: result ]
+		send: [ :result | self privateContacts add: result ]
 ]
 
 { #category : #accessing }

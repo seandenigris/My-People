@@ -3,27 +3,87 @@ Trait {
 	#category : #'MyPeople-Core'
 }
 
+{ #category : #searches }
+MpTEntityCollection >> addressesSearchFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch list
+		priority: 10;
+		title: 'Addresses' translated;
+		items: [ (self privateContacts flatCollect: #addresses as: Set) asOrderedCollection ];
+		"itemName: [ :each | each city , ', ' , each country ];"
+		matchSubstrings
+]
+
 { #category : #accessing }
 MpTEntityCollection >> contacts [
 	self subclassResponsibility
 ]
 
+{ #category : #searches }
+MpTEntityCollection >> contactsViewDetailedOn: aView [
+	<gtView>
+	
+	^ aView columnedList
+		title: 'Contacts with details' translated;
+		priority: 10;
+		items: [ self privateContacts ];
+		column: 'Avatar' 
+			icon: [ :aContact | aContact avatar asElement asScalableElement size: 32 @ 32 ]
+			width: 75;
+		column: 'Name' text: [ :aContact | aContact fullName ];
+		column: 'Phone' text: [ :aContact | aContact telephone ]
+]
+
+{ #category : #searches }
+MpTEntityCollection >> contactsViewListOn: aView [
+	<gtView>
+	^ aView list
+		title: 'Contacts List' translated;
+		priority: 8;
+		items: [ self privateContacts ]";
+		itemText: [ :aContact | aContact fullName asRopedText ]"
+]
+
+{ #category : #searches }
+MpTEntityCollection >> contactsWithAddress: anAddress [
+
+	^ self snapshotFromContactsBlock: [ :aContact | 
+		aContact address = anAddress ] 
+]
+
+{ #category : #searches }
+MpTEntityCollection >> contactsWithTelephone: aNumber [
+
+	^ self snapshotFromContactsBlock: [ :aContact | 
+		aContact telephones anySatisfy: [ :aTelephone | 
+			aTelephone number = aNumber ] ]
+]
+
 { #category : #accessing }
 MpTEntityCollection >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock [
-	^ self contacts detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
+	^ self privateContacts detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> googleCSVExport [
+
+	| maxPhones |
+	maxPhones := self privateContacts max: [ :e | e telephones size ].
+	^ maxPhones
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> hasEntryNamed: aString [
-	^ self contacts anySatisfy: [ :e | e fullName = aString ]
+	^ self privateContacts anySatisfy: [ :e | e fullName = aString ]
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> organizations [
-	^ self contacts select: #isOrganization
+	^ self snapshotFromContactsBlock: #isOrganization
 ]
 
-{ #category : #spotter }
+{ #category : #accessing }
 MpTEntityCollection >> organizationsSearchFor: aSearch [
 	"Adapted from GT superclass"
 
@@ -38,13 +98,12 @@ MpTEntityCollection >> organizationsSearchFor: aSearch [
 
 { #category : #accessing }
 MpTEntityCollection >> people [
-	^ self contacts select: #isPerson
+	^ self snapshotFromContactsBlock: #isPerson
 ]
 
-{ #category : #spotter }
+{ #category : #searches }
 MpTEntityCollection >> peopleSearchFor: aSearch [
-	"Adapted from GT superclass"
-	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
+	<gtSearch>
 	
 	^ aSearch list
 		priority: 5;
@@ -53,4 +112,50 @@ MpTEntityCollection >> peopleSearchFor: aSearch [
 		matchSubstrings;
 		itemName:[ :aContact | 
 			aContact name lastName , ', ' , aContact name firstName ].		
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> printOn: aStream [
+
+	aStream 
+		print: self privateContacts size;
+		nextPutAll: ' contacts'
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> privateContacts [
+	self explicitRequirement
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> removeDuplicateContactFields [
+
+	self privateContacts do: [ :entity | 
+		entity telephones: entity telephones asSet asOrderedCollection.
+		entity emailAddresses: entity emailAddresses asSet asOrderedCollection ]
+]
+
+{ #category : #searches }
+MpTEntityCollection >> snapshotFromContactsBlock: aBlock [
+
+	| matches |
+	matches := self privateContacts select: aBlock.
+	^ MpContactsSnapshot new
+		privateContacts: matches asArray;
+		yourself
+]
+
+{ #category : #searches }
+MpTEntityCollection >> telephonesSearchFor: aSearch [
+	<gtSearch>
+	^ aSearch list
+		priority: 15;
+		title: 'Telephones' translated;
+		items: [ self privateContacts flatCollect: [ :aContact | aContact telephones ] ];
+		matchSubstrings
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> usStates [
+	^ self privateContacts select: #isUSState
 ]

@@ -18,7 +18,7 @@ Class {
 MpRelatableEntity class >> ensureNamed: aString [
 	"Assumes default Address Book"
 	| collection |
-	collection := MpAddressBook default contacts.
+	collection := MpAddressBook uniqueInstance privateContacts.
 	^ collection
 		detect: [ :e | e fullName asUppercase = aString asUppercase ]
 		ifNone: [ 
