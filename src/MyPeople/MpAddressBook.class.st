@@ -89,6 +89,12 @@ MpAddressBook class >> uniqueInstance [
 ]
 
 { #category : #accessing }
+MpAddressBook >> contacts [
+
+	^ self privateContacts
+]
+
+{ #category : #accessing }
 MpAddressBook >> ensureContact: aRelatableEntity [
 
 	(self privateContacts identityIncludes: aRelatableEntity)
