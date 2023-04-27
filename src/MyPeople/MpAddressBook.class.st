@@ -16,11 +16,6 @@ Class {
 	#category : #'MyPeople-Core'
 }
 
-{ #category : #accessing }
-MpAddressBook class >> default [
-	^ default ifNil: [ default := self new ]
-]
-
 { #category : #examples }
 MpAddressBook class >> example [
 
@@ -121,14 +116,6 @@ MpAddressBook >> ensurePersonNamed: aString [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : #accessing }
-MpAddressBook >> googleCSVExport [
-
-	| maxPhones |
-	maxPhones := self contacts max: [ :e | e telephones size ].
-	^ maxPhones
-]
-
 { #category : #spotter }
 MpAddressBook >> municipalitiesSearchNewFor: aSearch [
 	<gtSearch>
@@ -139,19 +126,6 @@ MpAddressBook >> municipalitiesSearchNewFor: aSearch [
 		priority: 100
 ]
 
-{ #category : #searches }
-MpAddressBook >> organizationsSearchFor: aSearch [
-	"Adapted from GT superclass"
-
-	<gtSearch>
-	^ aSearch list
-		priority: 5;
-		title: 'Organizations';
-		items: [ self organizations ];
-		matchSubstrings;
-		itemName: [ :aContact | aContact fullName ]
-]
-
 { #category : #spotter }
 MpAddressBook >> organizationsSearchNewFor: aSearch [
 	<gtSearch>
@@ -160,20 +134,6 @@ MpAddressBook >> organizationsSearchNewFor: aSearch [
 		searchNew: MpOrganization
 		for: aSearch 
 		priority: 50
-]
-
-{ #category : #searches }
-MpAddressBook >> peopleSearchFor: aSearch [
-	"Adapted from GT superclass"
-	"<gtSearch> - don't include pragma when overriding to avoid duplicated processors, per Tudor via Discord 7/26/2021"
-	
-	^ aSearch list
-		priority: 5;
-		title: 'People';
-		items: [ self people ];
-		matchSubstrings;
-		itemName:[ :aContact | 
-			aContact name lastName , ', ' , aContact name firstName ].		
 ]
 
 { #category : #spotter }
@@ -194,14 +154,6 @@ MpAddressBook >> printOn: aStream [
 		nextPutAll: ' contacts'
 ]
 
-{ #category : #accessing }
-MpAddressBook >> removeDuplicateContactFields [
-
-	self contacts do: [ :entity | 
-		entity telephones: entity telephones asSet asOrderedCollection.
-		entity emailAddresses: entity emailAddresses asSet asOrderedCollection ]
-]
-
 { #category : #spotter }
 MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 	
@@ -216,9 +168,4 @@ MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 				ifTrue: [ { aClass named: input } asAsyncStream ]
 				ifFalse: [ {} asAsyncStream ] ];
 		send: [ :result | self privateContacts add: result ]
-]
-
-{ #category : #accessing }
-MpAddressBook >> usStates [
-	^ self contacts select: #isUSState
 ]

@@ -17,7 +17,7 @@ MpTEntityCollection >> addressesSearchFor: aSearch [
 
 { #category : #accessing }
 MpTEntityCollection >> contacts [
-	self subclassResponsibility
+	^ self privateContacts
 ]
 
 { #category : #searches }
