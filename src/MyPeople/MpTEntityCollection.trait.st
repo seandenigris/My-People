@@ -91,7 +91,7 @@ MpTEntityCollection >> organizationsSearchFor: aSearch [
 	^ aSearch list
 		priority: 5;
 		title: 'Organizations';
-		items: [ self organizations ];
+		items: [ self organizations asEntityCollection ];
 		matchSubstrings;
 		itemName: [ :aContact | aContact fullName ]
 ]
@@ -108,7 +108,7 @@ MpTEntityCollection >> peopleSearchFor: aSearch [
 	^ aSearch list
 		priority: 5;
 		title: 'People';
-		items: [ self people ];
+		items: [ self people asEntityCollection ];
 		matchSubstrings;
 		itemName:[ :aContact | 
 			aContact name lastName , ', ' , aContact name firstName ].		
