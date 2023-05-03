@@ -5,24 +5,28 @@ Class {
 }
 
 { #category : #accessing }
-MpGoogleContactImporter >> convertToDomainObjects: aCollectionOfDictionaries [
-	^ aCollectionOfDictionaries 
-		collect: [ :rowDict | 
-			| mpEntity |
-			
-			mpEntity := (rowDict at: 'Name')
-				ifNotNil: [ self newPersonFromRecord: rowDict ]
-				ifNil: [ self newOrganizationFromRecord: rowDict ].
+MpGoogleContactImporter >> domainObjectFromDictionary: aDictionary [
+
+	| mpEntity |
+	mpEntity := (aDictionary at: 'Name')
+		ifNotNil: [ self newPersonFromRecord: aDictionary ]
+		ifNil: [ self newOrganizationFromRecord: aDictionary ].
+
+	self 
+		initializeDomainObject: mpEntity
+		fromRecord: aDictionary
+		mapping: [ :builder |
+			builder
+				map: 'Given Name' fieldTo: #firstNameDescription;
+				map: 'Additional Name' fieldTo: #middleNameDescription;
+				map: 'Family Name' fieldTo: #lastNameDescription;
+				map: 'Name Suffix' fieldTo: #generationalDescription ].
 				
-			self 
-				initializePhonesFor: mpEntity
-				fromRecord: rowDict.
-				
-			"self 
-				initializeBudgetLinesFor: mpEntity
-				fromRecord: rowDict."
-				
-			mpEntity ]
+	self initializeCustomFieldsFor: mpEntity fromRecord: aDictionary.
+	
+	self initializePhonesFor: mpEntity fromRecord: aDictionary.
+
+	^ mpEntity
 ]
 
 { #category : #accessing }
@@ -32,34 +36,40 @@ MpGoogleContactImporter >> fieldNamePropertyKey [
 ]
 
 { #category : #accessing }
-MpGoogleContactImporter >> initializeBudgetLinesFor: anOgMunisAccount fromRecord: aDictionary [
-	
-	| years |
-	years := aDictionary keys asSet
-		select: [ :e | e first isDigit ]
-		thenCollect: #squeezeOutNumber.
-	
-	years do: [ :year |
-		| yearDict expectedDict line |
-		yearDict := aDictionary associationsSelect: [ :assoc |
-			assoc key beginsWith: year asString ].
+MpGoogleContactImporter >> initialize: aString customFieldValue: anObject for: anMpEntity [
+
+	aString = 'MyPeople ID36' ifTrue: [
+		anMpEntity uuidFromString36: anObject.
+		^ self ].
 		
-		expectedDict := Dictionary new.
-		yearDict keysAndValuesDo: [ :k :v |
-			| expectedKey |
-			expectedKey := k copyAfter: Character space.
-			"Clean up inconsistency in field names - Encumbrances vs. Encumbrances/Requisitions"
-			expectedKey := expectedKey copyUpTo: $/.
-			expectedDict at: expectedKey put: v ].
-			
-		line := OgMunisBudgetLine new
-			year: year;
-			yourself.
-		self 
-				initializeDomainObject: line
-				fromRecord: expectedDict.
-				
-		anOgMunisAccount addBudgetLine: line ]
+	self error: 'unknown custom field'
+]
+
+{ #category : #accessing }
+MpGoogleContactImporter >> initializeCustomFieldsFor: anMpEntity fromRecord: aDictionary [
+
+	| fieldValue keyPrefix maxOrgs currentIndex fieldName |
+	maxOrgs := 100. "This is a made-up limit"
+	currentIndex := 1.
+	[ 
+		keyPrefix := 'Custom Field ',  currentIndex asString.
+		aDictionary 
+			at: keyPrefix, ' - Type'
+			ifPresent: [ :fName | 
+				fieldName := fName.
+				true ]
+			ifAbsent: [ false ] 
+	] 
+		whileTrue: [
+			fieldValue := aDictionary at: keyPrefix, ' - Value'.
+			fieldValue ifNotNil: [ 
+				self 
+					initialize: fieldName
+					customFieldValue: fieldValue
+					for: anMpEntity ].
+			currentIndex := currentIndex + 1 ]
+	 
+	
 ]
 
 { #category : #accessing }
@@ -102,8 +112,6 @@ MpGoogleContactImporter >> initializePhonesFor: anMpEntity fromRecord: aDictiona
 				yourself.
 			anMpEntity telephones add: phone ].
 		currentIndex := currentIndex + 1 ]
-	 
-	
 ]
 
 { #category : #accessing }
@@ -114,7 +122,9 @@ MpGoogleContactImporter >> newOrganizationFromRecord: aDictionary [
 	
 	self 
 		initializeDomainObject: result
-		fromRecord: aDictionary.
+		fromRecord: aDictionary
+		mapping: [ :builder |
+			builder map: 'Organization 1 - Name' fieldTo: #nameDescription ].
 		
 	^ result
 ]
@@ -123,11 +133,16 @@ MpGoogleContactImporter >> newOrganizationFromRecord: aDictionary [
 MpGoogleContactImporter >> newPersonFromRecord: aDictionary [
 
 	| name |
-	name := MpName new.
-	
-	self 
-		initializeDomainObject: name
-		fromRecord: aDictionary.
+	name := self 
+		initializeDomainObject: MpName new
+		fromRecord: aDictionary
+		mapping: [ :builder |
+			builder
+				map: 'Given Name' fieldTo: #firstNameDescription;
+				map: 'Additional Name' fieldTo: #middleNameDescription;
+				map: 'Family Name' fieldTo: #lastNameDescription;
+				map: 'Name Suffix' fieldTo: #generationalDescription.
+			].
 		
 	^ MpPerson named: name
 ]
