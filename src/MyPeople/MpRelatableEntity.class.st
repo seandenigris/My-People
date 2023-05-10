@@ -217,14 +217,23 @@ MpRelatableEntity >> gtSearchNewTelephoneFor: aSearch [
 		priority: 50;
 		itemName: [ :result | '+ ' , result gtDisplayText ];
 		search: [ :context | 
-			| isExisting input result |
-			input := context searchQuery trimmed.
-			result := MpTelephone fromString: input.
-			isExisting := self telephones anySatisfy: [ :e | e fullNumber = result fullNumber ].
-			isExisting 
-				ifFalse: [ { result } ]
-				ifTrue: [ { } ] ];
+			self gtSearchNewTelephoneResultsFromInput: context searchQuery trimmed ];
 		send: [ :result | self telephones add: result ]
+]
+
+{ #category : #private }
+MpRelatableEntity >> gtSearchNewTelephoneResultsFromInput: aString [
+
+	| isExisting aPhoneNumber |
+	(MpTelephone isValidNumber: aString) ifFalse: [ ^ {} ].
+	
+	aPhoneNumber := MpTelephone fromString: aString.
+	
+	isExisting := self telephones
+			anySatisfy: [ :e | e fullNumber = aPhoneNumber fullNumber ].
+	isExisting ifTrue: [ ^ {} ].
+	
+	^ { aPhoneNumber }
 ]
 
 { #category : #accessing }

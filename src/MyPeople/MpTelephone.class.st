@@ -37,11 +37,11 @@ MpTelephone class >> example [
 { #category : #examples }
 MpTelephone class >> fromString: aString [
 	| pyNumber nationalNumberStream |
-	pyNumber:= PBApplication uniqueInstance 
-		sendSource: '# https://github.com/daviddrysdale/python-phonenumbers
-import phonenumbers
-phonenumbers.parse(str, "US")' 
-		withBindings: { #str -> aString }.
+	
+	(self isValidNumber: aString) ifFalse: [
+		self error: 'invalid phone number' ].
+	
+	pyNumber:= self pyPhoneNumberFromString: aString.
 	
 	nationalNumberStream := (pyNumber getAttribute: #national_number) asString readStream.
 		
@@ -52,6 +52,26 @@ phonenumbers.parse(str, "US")'
 		lineNumber: (nationalNumberStream upToEnd) asNumber;
 		yourself
 		
+]
+
+{ #category : #accessing }
+MpTelephone class >> isValidNumber: aString [
+
+	| pyNumber |
+	pyNumber := self pyPhoneNumberFromString: aString.
+	^ PBApplication uniqueInstance 
+		sendSource: 'import phonenumbers
+phonenumbers.is_valid_number(aPhoneNumber)' 
+		withBindings: { #aPhoneNumber -> pyNumber }.
+]
+
+{ #category : #examples }
+MpTelephone class >> pyPhoneNumberFromString: aString [
+	^ PBApplication uniqueInstance 
+		sendSource: '# https://github.com/daviddrysdale/python-phonenumbers
+import phonenumbers
+phonenumbers.parse(str, "US")' 
+		withBindings: { #str -> aString }
 ]
 
 { #category : #accessing }
