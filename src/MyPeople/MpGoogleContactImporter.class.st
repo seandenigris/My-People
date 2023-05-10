@@ -5,6 +5,27 @@ Class {
 }
 
 { #category : #accessing }
+MpGoogleContactImporter class >> writeContacts: aCollection toFile: aFileReference [
+
+	| writer |
+	aFileReference writeStreamDo: [ :str | 
+		writer := NeoCSVWriter on: str.
+		writer
+			addField: [ :e | e name firstName ];
+			addField: [ :e | e name middleName ];
+			addField: [ :e | e name lastName ];
+			addField: [ :e | e name generational ];
+			addField: [ :e | '* myContacts' ];
+			addField: [ :e | e telephones ifNotEmpty: [ :phones | phones first typeName ] ];
+			addField: [ :e | e telephones ifNotEmpty: [ :phones | phones first fullNumber ] ];
+			addField: [ :e | e telephones size > 1 ifTrue: [ e telephones second typeName ] ];
+			addField: [ :e | e telephones size > 1 ifTrue: [ e telephones second fullNumber ] ];
+			addField: [ :e | 'MyPeople ID36' ];
+			addField: [ :e | e uuid asString36 ];
+			nextPutAll: aCollection ]
+]
+
+{ #category : #accessing }
 MpGoogleContactImporter >> domainObjectFromDictionary: aDictionary [
 
 	| mpEntity |
