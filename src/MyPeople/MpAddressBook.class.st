@@ -32,11 +32,10 @@ MpAddressBook class >> exampleCelebrities [
 	^ self
 		given: [ self new ]
 		when: [ :ab |
-			ab privateContacts
-				add: MpPerson exampleNassimTaleb;
-				add: MpPerson exampleBretVictor;
-				yourself.
-			ab ]
+			ab
+				ensureContact: MpPerson exampleNassimTaleb;
+				ensureContact: MpPerson exampleBretVictor;
+				yourself  ]
 		then: [ :col :ab | ab where privateContacts should haveSize: 2 ]	
 ]
 
