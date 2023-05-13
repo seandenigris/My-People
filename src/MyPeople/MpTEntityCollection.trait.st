@@ -41,8 +41,8 @@ MpTEntityCollection >> contactsViewListOn: aView [
 	^ aView list
 		title: 'Contacts List' translated;
 		priority: 8;
-		items: [ self privateContacts ]";
-		itemText: [ :aContact | aContact fullName asRopedText ]"
+		items: [ self privateContacts ];
+		actionUpdateButton
 ]
 
 { #category : #searches }
