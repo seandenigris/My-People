@@ -31,10 +31,9 @@ MpAffiliation class >> organization: anOrganization person: aPerson role: titleS
 { #category : #accessing }
 MpAffiliation >> = rhs [
 	
-	^ [ 
-		self organization = rhs organization and: [ self person = rhs person and: [ self role = rhs role ] ] 
-	]
-		on: Error do: [ false ]
+	self species = rhs species ifFalse: [ ^ false ].
+	
+	^ self organization = rhs organization and: [ self person = rhs person and: [ self roles = rhs roles ] ].
 ]
 
 { #category : #accessing }
@@ -53,23 +52,17 @@ MpAffiliation >> doesNotUnderstand: aMessage [
 
 { #category : #accessing }
 MpAffiliation >> hash [
-	^ self organization ensureUUID hash bitXor: (self person ensureUUID hash bitXor: self role hash)
+	^ self organization ensureUUID hash bitXor: (self person ensureUUID hash bitXor: self roles hash)
 ]
 
 { #category : #accessing }
 MpAffiliation >> link [
 	self person affiliations 
-		detect: [ :aff |
-			aff person == self person 
-				and: [ aff organization == self organization 
-					and: [ self role = aff role ] ] ]
+		detect: [ :aff | aff = self ]
 		ifNone: [ self person affiliations add: self ].
 	
 	self organization affiliations 
-		detect: [ :aff |
-			aff person == self person 
-				and: [ aff organization == self organization 
-					and: [ self role = aff role ] ] ]
+		detect: [ :aff | aff = self ]
 		ifNone: [ self organization affiliations add: self ].
 ]
 
