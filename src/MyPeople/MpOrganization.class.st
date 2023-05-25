@@ -71,6 +71,17 @@ MpOrganization >> addChildNamed: aString [
 	^ self addChild: child
 ]
 
+{ #category : #'as yet unclassified' }
+MpOrganization >> affiliations: aCollection [ 
+	
+	| toRemove toAdd |
+	toRemove := self affiliations difference: aCollection.
+	toRemove do: #unlink.
+	
+	toAdd := aCollection difference: self affiliations.
+	toAdd do: #link
+]
+
 { #category : #accessing }
 MpOrganization >> children [
 	^ self maLazyInstVarUsing: self childrenDescription
