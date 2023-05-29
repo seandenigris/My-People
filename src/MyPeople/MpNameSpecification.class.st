@@ -1,7 +1,7 @@
 Class {
 	#name : #MpNameSpecification,
 	#superclass : #TestCase,
-	#category : 'MyPeople-Specifications'
+	#category : #'MyPeople-Specifications'
 }
 
 { #category : #expectations }
@@ -41,12 +41,12 @@ MpNameSpecification >> testComparing [
 		"Person 1 | Person 2 | First Name Score | Middle Name Score | Last Name Score"
 		{ #('Paul' 'Anthony' 'Smith'). #('Paul' 'Anthony' 'Cordero'). 0. 0. 0 }. "Different last name -> 0%"
 		{ #('Smith'). #('Smith'). 0. 0. 50 }. "Last name is worth 50%"
-		{ #('Paul' 'Smith'). #('Paul' 'Smith'). 35. 0. 50 }. "First name worth 35%"
-		{ #('P' 'Smith'). #('P' 'Smith'). 35/2. 0. 50 }. "An initial (here first name) is worth half-credit"
-		{ #('P' 'A' 'Smith'). #('P' 'Smith'). 35/2. 0. 50 }. "Missing info (here middle name) does not affect score"
+		{ #('Paul' 'Smith'). #('Paul' 'Smith'). 25. 0. 50 }. "First name worth 35%"
+		{ #('P' 'Smith'). #('P' 'Smith'). 25/2. 0. 50 }. "An initial (here first name) is worth half-credit"
+		{ #('P' 'A' 'Smith'). #('P' 'Smith'). 25/2. 0. 50 }. "Missing info (here middle name) does not affect score"
 		{ #(nil 'Anthony' 'Smith'). #(nil 'Anthony' 'Smith'). 0. 15. 50 }. "Middle name worth 15%"
-		{ #('P' 'A' 'Smith'). #('P' 'A' 'Smith'). 35/2. 15/2. 50 }. 
-		{ #('Paul' 'Anthony' 'Smith'). #('Paul' 'Anthony' 'Smith'). 35. 15. 50 }.
+		{ #('P' 'A' 'Smith'). #('P' 'A' 'Smith'). 25/2. 15/2. 50 }. 
+		{ #('Paul' 'Anthony' 'Smith'). #('Paul' 'Anthony' 'Smith'). 25. 15. 50 }.
 	}.
 	
 	cases do: [ :c | 	
@@ -109,7 +109,7 @@ MpNameSpecification >> testParsing [
 		
 		name := MpNameParser parse: input.
 		
-		name isPetitFailure should beFalse.
+		name isPetit2Failure should beFalse.
 		name firstName should equal: case second.
 		name middleName should equal: case third.
 		name lastName should equal: case fourth.
