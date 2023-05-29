@@ -34,11 +34,17 @@ BaselineOfMyPeople >> baseline: spec [
 		spec package: #MyPeople with: [
 			spec requires: #('Magritte' 'Mocketry' 'NeoCSV' 'PharoEnhancements' 'SimplePersistence'). ]. ].
 				
+	spec for: #GToolkit do: [ 
+		spec baseline: 'ObjectiveLepiter' with: [
+			spec repository: 'github://seandenigris/Objective-Lepiter' ].
+		spec package: #MyPeople with: [
+			spec requires: #('ObjectiveLepiter') ] ].
+	
 	spec for: #notGToolkit do: [ 
 		spec baseline: 'PetitParser2' with: [
 			spec repository: 'github://seandenigris/PetitParser2' ].
 		spec package: #MyPeople with: [
-			spec requires: #('PetitParser2'). ]. ]
+			spec requires: #('PetitParser2'). ] ]
 ]
 
 { #category : #accessing }
