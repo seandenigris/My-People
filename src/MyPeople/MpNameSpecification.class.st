@@ -7,7 +7,7 @@ Class {
 { #category : #expectations }
 MpNameSpecification >> generationalOf: aMpName shouldMatch: aString [ 
 	aMpName generational ifNil: [ ^ aString isNil ].
-	^ (aMpName generational matches: aString) should beTrue
+	^ (aMpName generational matches: aString) should be: true
 ]
 
 { #category : #expectations }
