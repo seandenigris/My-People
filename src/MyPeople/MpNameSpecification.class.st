@@ -109,7 +109,7 @@ MpNameSpecification >> testParsing [
 		
 		name := MpNameParser parse: input.
 		
-		name isPetit2Failure should beFalse.
+		name isPetit2Failure should be: false.
 		name firstName should equal: case second.
 		name middleName should equal: case third.
 		name lastName should equal: case fourth.
