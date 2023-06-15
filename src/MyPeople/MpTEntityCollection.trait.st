@@ -41,7 +41,7 @@ MpTEntityCollection >> contactsViewListOn: aView [
 	^ aView list
 		title: 'Contacts List' translated;
 		priority: 8;
-		items: [ self privateContacts ];
+		items: [ self privateContacts sorted: #nameForAlphabetization ascending ];
 		actionUpdateButton
 ]
 
