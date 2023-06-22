@@ -21,11 +21,15 @@ MpAffiliation class >> migrateInstancesToMultipleRoles [
 { #category : #accessing }
 MpAffiliation class >> organization: anOrganization person: aPerson role: titleString [
 
-	^ self new
+	| result |
+	result := self new
 		organization: anOrganization;
 		person: aPerson;
-		role: titleString;
-		yourself
+		yourself.
+		
+	result roles add: titleString.
+	
+	^ result
 ]
 
 { #category : #accessing }
