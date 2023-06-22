@@ -94,7 +94,7 @@ MpRelatableEntity >> affiliationsGtSearchFor: aSearch [
 	^ aSearch list
 		priority: 40;
 		title: 'Affiliations';
-		items: [ self affiliations ];
+		items: [ self affiliations asOrderedCollection ];
 		"itemName: #gtDisplayString;"
 		filterBySubstring
 ]
