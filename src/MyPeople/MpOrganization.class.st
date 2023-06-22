@@ -56,10 +56,11 @@ MpOrganization class >> named: aString [
 ]
 
 { #category : #accessing }
-MpOrganization >> addChild: aRelatableEntity [
+MpOrganization >> addChild: anOrganization [
 	
-	self addressBook ensureContact: aRelatableEntity.
-	^ self children add: aRelatableEntity
+	self validateSameAddressBookAs: anOrganization.
+	anOrganization basicParent: self.
+	^ self children add: anOrganization "Children currently a set so don't worry about duplicate adding"
 ]
 
 { #category : #accessing }
@@ -80,6 +81,12 @@ MpOrganization >> affiliations: aCollection [
 	
 	toAdd := aCollection difference: self affiliations.
 	toAdd do: #link
+]
+
+{ #category : #accessing }
+MpOrganization >> basicParent: anOrganization [
+	parent ifNotNil: [ parent children remove: self ].
+	parent := anOrganization.
 ]
 
 { #category : #accessing }
@@ -181,9 +188,15 @@ MpOrganization >> parent [
 
 { #category : #accessing }
 MpOrganization >> parent: anOrganization [
-	parent ifNotNil: [ parent children remove: self ].
-	parent := anOrganization.
-	parent ifNotNil: [ parent children add: self ]
+
+	anOrganization ifNil: [
+		parent := nil.
+		^ self ].
+	
+	self validateSameAddressBookAs: anOrganization.
+	
+	self basicParent: anOrganization.
+	anOrganization addChild: self.
 ]
 
 { #category : #'magritte-descriptions' }
@@ -216,4 +229,17 @@ MpOrganization >> similarityByNameTo: rhs [
 			ifFalse: [ 0.0 ] ].
 	^ wordScores average.
 	
+]
+
+{ #category : #accessing }
+MpOrganization >> validateSameAddressBookAs: anOrganization [ 
+	| isConflict |
+	"Address book cannot be nil - see #addressBook:"
+	
+	"If both non-nil equal, no action needed"
+	anOrganization addressBook = self addressBook ifTrue: [ ^ self ].
+	
+	"If we get here, the libraries are not equal"
+	isConflict := anOrganization addressBook isNotNil and: [ self addressBook  isNotNil ].
+	isConflict ifTrue: [ ^ self error: 'Address books conflict' ].
 ]

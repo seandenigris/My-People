@@ -53,6 +53,13 @@ MpRelatableEntity >> addressBook [
 		ifAbsent: [ MpAddressBook uniqueInstance ]
 ]
 
+{ #category : #accessing }
+MpRelatableEntity >> addressBook: anMpAddressBook [
+	^ self
+		propertyAt: #addressBook
+		putRemovingNil: anMpAddressBook
+]
+
 { #category : #'GtABContact compatibility' }
 MpRelatableEntity >> addresses [
 	^ self maLazyInstVarUsing: self addressesDescription
