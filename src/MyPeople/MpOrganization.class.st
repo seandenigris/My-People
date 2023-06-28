@@ -114,6 +114,18 @@ MpOrganization >> childrenDescription [
 ]
 
 { #category : #accessing }
+MpOrganization >> childrenGtSearchExistingFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch list
+		title: 'Add Child (existing)';
+		priority: 50;
+		items: [ self addressBook organizations privateContacts ];
+		filterBySubstring;
+		send: [ :anObject | self addChild: anObject ]
+]
+
+{ #category : #accessing }
 MpOrganization >> childrenGtSpotNewFor: aSearch [
 	<gtSearch>
 	
