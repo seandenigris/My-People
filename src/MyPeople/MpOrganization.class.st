@@ -58,7 +58,7 @@ MpOrganization class >> named: aString [
 { #category : #accessing }
 MpOrganization >> addChild: anOrganization [
 	
-	self validateSameAddressBookAs: anOrganization.
+	self reconcileAddressBookWith: anOrganization.
 	anOrganization basicParent: self.
 	^ self children add: anOrganization "Children currently a set so don't worry about duplicate adding"
 ]
@@ -205,9 +205,7 @@ MpOrganization >> parent: anOrganization [
 		parent := nil.
 		^ self ].
 	
-	self validateSameAddressBookAs: anOrganization.
-	
-	self basicParent: anOrganization.
+	self reconcileAddressBookWith: anOrganization.
 	anOrganization addChild: self.
 ]
 
@@ -229,6 +227,29 @@ MpOrganization >> printOn: aStream [
 ]
 
 { #category : #accessing }
+MpOrganization >> reconcileAddressBookWith: anOrganization [ 
+	| isConflict |
+	
+	"If both equal, no action needed"
+	anOrganization addressBook = self addressBook ifTrue: [ ^ self ].
+	
+	"If we get here, the address books are not equal"
+	
+	isConflict := anOrganization addressBook isNotNil and: [ self addressBook  isNotNil ].
+	isConflict ifTrue: [ ^ self error: 'Address books conflict' ].
+	
+	"If we get here, there is one nil and one non-nil address book"
+	
+	anOrganization addressBook ifNotNil: [ :book |
+		self addressBook: book.
+		^ self ].
+		
+	self addressBook ifNotNil: [ :book |
+		anOrganization addressBook: book.
+		^ self ]. 
+]
+
+{ #category : #accessing }
 MpOrganization >> similarityByNameTo: rhs [
 	| myWords theirWords wordScores |
 	myWords := self name mpFullNameWords.
@@ -241,17 +262,4 @@ MpOrganization >> similarityByNameTo: rhs [
 			ifFalse: [ 0.0 ] ].
 	^ wordScores average.
 	
-]
-
-{ #category : #accessing }
-MpOrganization >> validateSameAddressBookAs: anOrganization [ 
-	| isConflict |
-	"Address book cannot be nil - see #addressBook:"
-	
-	"If both non-nil equal, no action needed"
-	anOrganization addressBook = self addressBook ifTrue: [ ^ self ].
-	
-	"If we get here, the libraries are not equal"
-	isConflict := anOrganization addressBook isNotNil and: [ self addressBook  isNotNil ].
-	isConflict ifTrue: [ ^ self error: 'Address books conflict' ].
 ]
