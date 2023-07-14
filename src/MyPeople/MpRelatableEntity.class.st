@@ -50,7 +50,7 @@ MpRelatableEntity >> = rhs [
 MpRelatableEntity >> addressBook [
 	^ self
 		propertyAt: #addressBook
-		ifAbsent: [ MpAddressBook uniqueInstance ]
+		ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }
