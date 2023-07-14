@@ -55,6 +55,11 @@ MpRelatableEntity >> addressBook [
 
 { #category : #accessing }
 MpRelatableEntity >> addressBook: anMpAddressBook [
+	anMpAddressBook ensureContact: self
+]
+
+{ #category : #accessing }
+MpRelatableEntity >> addressBookBasic: anMpAddressBook [
 	^ self
 		propertyAt: #addressBook
 		putRemovingNil: anMpAddressBook

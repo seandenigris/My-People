@@ -92,7 +92,9 @@ MpAddressBook >> contacts [
 MpAddressBook >> ensureContact: aRelatableEntity [
 
 	(self privateContacts identityIncludes: aRelatableEntity)
-		ifFalse: [ self privateContacts add: aRelatableEntity ].
+		ifFalse: [ 
+			self privateContacts add: aRelatableEntity.
+			aRelatableEntity addressBookBasic: self ].
 		
 	^ aRelatableEntity
 ]
