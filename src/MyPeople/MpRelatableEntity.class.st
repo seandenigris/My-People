@@ -14,20 +14,6 @@ Class {
 	#category : #'MyPeople-Core'
 }
 
-{ #category : #convenience }
-MpRelatableEntity class >> ensureNamed: aString [
-	"Assumes default Address Book"
-	| collection |
-	collection := MpAddressBook uniqueInstance privateContacts.
-	^ collection
-		detect: [ :e | e fullName asUppercase = aString asUppercase ]
-		ifNone: [ 
-			| new |
-			new := self named: aString.
-			collection add: new ].
-	"Implementation note: This method is a holdover from before address book, when MpPerson has its own DB on its class-side. The problem is that now there are two axes: 1) which AddressBook and 2) which entity (e.g. person or organization)."
-]
-
 { #category : #accessing }
 MpRelatableEntity class >> isAbstract [
 	^ false
@@ -350,6 +336,11 @@ MpRelatableEntity >> import [
 MpRelatableEntity >> initialize [
 	super initialize.
 	self ensureUUID
+]
+
+{ #category : #testing }
+MpRelatableEntity >> isMunicipality [
+	^ false
 ]
 
 { #category : #testing }

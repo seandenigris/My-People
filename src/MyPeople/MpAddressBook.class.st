@@ -21,7 +21,7 @@ MpAddressBook class >> example [
 
 	| result |
 	result := self exampleCelebrities.
-	result privateContacts addAll: self exampleHarryPotter privateContacts.
+	result addAll: self exampleHarryPotter asEntityCollection.
 	^ result
 ]
 
@@ -36,7 +36,7 @@ MpAddressBook class >> exampleCelebrities [
 				ensureContact: MpPerson exampleNassimTaleb;
 				ensureContact: MpPerson exampleBretVictor;
 				yourself  ]
-		then: [ :col :ab | ab where privateContacts should haveSize: 2 ]	
+		then: [ :col :ab | ab should haveSize: 2 ]	
 ]
 
 { #category : #examples }
@@ -46,12 +46,12 @@ MpAddressBook class >> exampleHarryPotter [
 	^ self
 		given: [ self new ]
 		when: [ :ab |
-			ab privateContacts
-				add: MpPerson exampleDumbledore;
-				add: MpOrganization exampleLeakyCauldron;
-				add: MpOrganization exampleOllivanders.
+			ab
+				ensureContact: MpPerson exampleDumbledore;
+				ensureContact: MpOrganization exampleLeakyCauldron;
+				ensureContact: MpOrganization exampleOllivanders.
 			ab ]
-		then: [ :col :ab | ab where privateContacts should haveSize: 3 ]	
+		then: [ :col :ab | ab should haveSize: 3 ]	
 ]
 
 { #category : #accessing }
@@ -83,6 +83,18 @@ MpAddressBook class >> uniqueInstance [
 ]
 
 { #category : #accessing }
+MpAddressBook >> add: aRelatableEntity [
+
+	^ self ensureContact: aRelatableEntity
+]
+
+{ #category : #accessing }
+MpAddressBook >> addAll: aCollection [
+
+	^ aCollection do: [ :aRelatableEntity | self ensureContact: aRelatableEntity ]
+]
+
+{ #category : #accessing }
 MpAddressBook >> ensureContact: aRelatableEntity [
 
 	(self privateContacts identityIncludes: aRelatableEntity)
@@ -95,19 +107,40 @@ MpAddressBook >> ensureContact: aRelatableEntity [
 
 { #category : #convenience }
 MpAddressBook >> ensureMunicipalityNamed: aString [
-	^ MpMunicipality ensureNamed: aString.
+
+	^ self municipalities
+		detect: [ :org | org name = aString ]
+		ifNone: [ 
+			| newOrg |
+			newOrg := MpMunicipality named: aString.
+			self ensureContact: newOrg ].
+			
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
 { #category : #convenience }
 MpAddressBook >> ensureOrganizationNamed: aString [
-	^ MpOrganization ensureNamed: aString.
+
+	^ self organizations
+		detect: [ :org | org name = aString ]
+		ifNone: [ 
+			| newOrg |
+			newOrg := MpOrganization named: aString.
+			self ensureContact: newOrg ].
+			
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
 { #category : #convenience }
-MpAddressBook >> ensurePersonNamed: aString [
-	^ MpPerson ensureNamed: aString.
+MpAddressBook >> ensurePersonNamed: aStringOrMpName [
+	
+	^ self people
+		detect: [ :org | org name = aStringOrMpName mpAsName ]
+		ifNone: [ 
+			| newOrg |
+			newOrg := MpPerson named: aStringOrMpName.
+			self ensureContact: newOrg ].
+			
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 

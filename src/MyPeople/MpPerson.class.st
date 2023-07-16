@@ -204,11 +204,6 @@ MpPerson >> isAffiliatedWith: anOrganization [
 ]
 
 { #category : #testing }
-MpPerson >> isOrganization [
-	^ false
-]
-
-{ #category : #testing }
 MpPerson >> isPerson [
 	^ true
 ]

@@ -120,7 +120,7 @@ MpOrganization >> childrenGtSearchExistingFor: aSearch [
 	^ aSearch list
 		title: 'Add Child (existing)';
 		priority: 50;
-		items: [ self addressBook organizations privateContacts ];
+		items: [ self addressBook organizations asEntityCollection ];
 		filterBySubstring;
 		send: [ :anObject | self addChild: anObject ]
 ]

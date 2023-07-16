@@ -50,7 +50,7 @@ MpUSAddress class >> gtSpotterNewFor: aSearch [
 
 { #category : #accessing }
 MpUSAddress class >> states [
-	^ MpAddressBook uniqueInstance usStates
+	^ MpAddressBook uniqueInstance usStates asEntityCollection
 ]
 
 { #category : #'magritte-accessing' }

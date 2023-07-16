@@ -1,5 +1,7 @@
 "
-I exist because sometimes, you just need a real collection, not a collection-y domain object. For example, I was created to integrate with Magritte ToMany relationships, which expect a collection.
+I exist because sometimes, you just need a real collection, not a collection-y domain object. For example, the following expect a collection:
+- Magritte options descriptions
+- GT searches
 
 Implementation note: I used to be a SortedCollection, but:
 - since I am a general class, it doesn't seem universally valid
@@ -14,6 +16,17 @@ Class {
 }
 
 { #category : #accessing }
-MpEntityCollection >> privateContacts [
+MpEntityCollection >> asEntityCollection [
+	^ self
+]
+
+{ #category : #copying }
+MpEntityCollection >> copyAddingFilter: aBlock [
+
+	^ self select: aBlock
+]
+
+{ #category : #accessing }
+MpEntityCollection >> privateFilteredContacts [
 	^ self
 ]

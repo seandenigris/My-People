@@ -10,14 +10,19 @@ MpTEntityCollection >> addressesSearchFor: aSearch [
 	^ aSearch list
 		priority: 10;
 		title: 'Addresses' translated;
-		items: [ (self privateContacts flatCollect: #addresses as: Set) asOrderedCollection ];
-		"itemName: [ :each | each city , ', ' , each country ];"
+		items: [ (self flatCollect: #addresses as: Set) asOrderedCollection ];
 		matchSubstrings
 ]
 
 { #category : #accessing }
+MpTEntityCollection >> asEntityCollection [
+	self explicitRequirement
+]
+
+{ #category : #accessing }
 MpTEntityCollection >> contacts [
-	^ self privateContacts
+	self flag: 'Do not use. This will go away as soon as we figure out a way to support Dynabook data migration for users'.
+	^ self privateFilteredContacts
 ]
 
 { #category : #searches }
@@ -27,7 +32,7 @@ MpTEntityCollection >> contactsViewDetailedOn: aView [
 	^ aView columnedList
 		title: 'Contacts with details' translated;
 		priority: 10;
-		items: [ self privateContacts ];
+		items: [ self asEntityCollection ];
 		column: 'Avatar' 
 			icon: [ :aContact | aContact avatar asElement asScalableElement size: 32 @ 32 ]
 			width: 75;
@@ -41,46 +46,57 @@ MpTEntityCollection >> contactsViewListOn: aView [
 	^ aView list
 		title: 'Contacts List' translated;
 		priority: 8;
-		items: [ self privateContacts sorted: #nameForAlphabetization ascending ];
+		items: [ self asEntityCollection sorted: #nameForAlphabetization ascending ];
 		actionUpdateButton
 ]
 
 { #category : #searches }
 MpTEntityCollection >> contactsWithAddress: anAddress [
 
-	^ self snapshotFromContactsBlock: [ :aContact | 
+	^ self copyAddingFilter: [ :aContact | 
 		aContact address = anAddress ] 
 ]
 
 { #category : #searches }
 MpTEntityCollection >> contactsWithTelephone: aNumber [
 
-	^ self snapshotFromContactsBlock: [ :aContact | 
+	^ self copyAddingFilter: [ :aContact | 
 		aContact telephones anySatisfy: [ :aTelephone | 
 			aTelephone number = aNumber ] ]
 ]
 
+{ #category : #copying }
+MpTEntityCollection >> copyAddingFilter: aBlock [
+
+	self explicitRequirement
+]
+
 { #category : #accessing }
 MpTEntityCollection >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock [
-	^ self privateContacts detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
+	^ self detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> googleCSVExport [
 
 	| maxPhones |
-	maxPhones := self privateContacts max: [ :e | e telephones size ].
+	maxPhones := self max: [ :e | e telephones size ].
 	^ maxPhones
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> hasEntryNamed: aString [
-	^ self privateContacts anySatisfy: [ :e | e fullName = aString ]
+	^ self anySatisfy: [ :e | e fullName = aString ]
+]
+
+{ #category : #accessing }
+MpTEntityCollection >> municipalities [
+	^ self copyAddingFilter: #isMunicipality
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> organizations [
-	^ self snapshotFromContactsBlock: #isOrganization
+	^ self copyAddingFilter: #isOrganization
 ]
 
 { #category : #accessing }
@@ -98,7 +114,7 @@ MpTEntityCollection >> organizationsSearchFor: aSearch [
 
 { #category : #accessing }
 MpTEntityCollection >> people [
-	^ self snapshotFromContactsBlock: #isPerson
+	^ self copyAddingFilter: #isPerson
 ]
 
 { #category : #searches }
@@ -118,31 +134,21 @@ MpTEntityCollection >> peopleSearchFor: aSearch [
 MpTEntityCollection >> printOn: aStream [
 
 	aStream 
-		print: self privateContacts size;
+		print: self size;
 		nextPutAll: ' contacts'
 ]
 
 { #category : #accessing }
-MpTEntityCollection >> privateContacts [
+MpTEntityCollection >> privateFilteredContacts [
 	self explicitRequirement
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> removeDuplicateContactFields [
 
-	self privateContacts do: [ :entity | 
+	self do: [ :entity | 
 		entity telephones: entity telephones asSet asOrderedCollection.
 		entity emailAddresses: entity emailAddresses asSet asOrderedCollection ]
-]
-
-{ #category : #searches }
-MpTEntityCollection >> snapshotFromContactsBlock: aBlock [
-
-	| matches |
-	matches := self privateContacts select: aBlock.
-	^ MpContactsSnapshot new
-		privateContacts: matches asArray;
-		yourself
 ]
 
 { #category : #searches }
@@ -151,11 +157,11 @@ MpTEntityCollection >> telephonesSearchFor: aSearch [
 	^ aSearch list
 		priority: 15;
 		title: 'Telephones' translated;
-		items: [ self privateContacts flatCollect: [ :aContact | aContact telephones ] ];
+		items: [ self flatCollect: [ :aContact | aContact telephones ] ];
 		matchSubstrings
 ]
 
 { #category : #accessing }
 MpTEntityCollection >> usStates [
-	^ self privateContacts select: #isUSState
+	^ self copyAddingFilter: #isUSState
 ]

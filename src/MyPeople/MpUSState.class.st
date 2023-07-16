@@ -9,7 +9,7 @@ Class {
 
 { #category : #setup }
 MpUSState class >> addAllToAddressBookSingleton [
-	MpAddressBook uniqueInstance privateContacts addAll: self all
+	MpAddressBook uniqueInstance addAll: self all
 ]
 
 { #category : #accessing }
