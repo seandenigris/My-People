@@ -83,12 +83,6 @@ MpAddressBook class >> uniqueInstance [
 ]
 
 { #category : #accessing }
-MpAddressBook >> contacts [
-
-	^ self privateContacts
-]
-
-{ #category : #accessing }
 MpAddressBook >> ensureContact: aRelatableEntity [
 
 	(self privateContacts identityIncludes: aRelatableEntity)
@@ -145,14 +139,6 @@ MpAddressBook >> peopleSearchNewFor: aSearch [
 		searchNew: MpPerson
 		for: aSearch 
 		priority: 60
-]
-
-{ #category : #accessing }
-MpAddressBook >> printOn: aStream [
-
-	aStream 
-		print: self privateContacts size;
-		nextPutAll: ' contacts'
 ]
 
 { #category : #spotter }
