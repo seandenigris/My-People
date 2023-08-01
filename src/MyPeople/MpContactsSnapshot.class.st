@@ -51,6 +51,11 @@ MpContactsSnapshot >> privateContacts: anObject [
 	privateContacts := anObject
 ]
 
+{ #category : #enumerating }
+MpContactsSnapshot >> privateEnumerable [
+	^ self privateFilteredContacts
+]
+
 { #category : #accessing }
 MpContactsSnapshot >> privateFilteredContacts [
 
