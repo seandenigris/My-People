@@ -77,6 +77,7 @@ phonenumbers.parse(str, "US")'
 { #category : #accessing }
 MpTelephone >> = rhs [
 
+	self species = rhs species ifFalse: [ ^ false ].
 	^ super = rhs and: [ self fullNumber = rhs fullNumber ]
 ]
 
