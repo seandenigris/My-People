@@ -79,7 +79,7 @@ MpAddressBook class >> spData [
 { #category : #accessing }
 MpAddressBook class >> uniqueInstance [
 	
-	^ UniqueInstance
+	^ UniqueInstance ifNil: [ UniqueInstance := MpAddressBook new ]
 ]
 
 { #category : #accessing }
