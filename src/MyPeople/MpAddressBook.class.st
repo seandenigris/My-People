@@ -135,7 +135,7 @@ MpAddressBook >> ensureOrganizationNamed: aString [
 MpAddressBook >> ensurePersonNamed: aStringOrMpName [
 	
 	^ self people
-		detect: [ :org | org name = aStringOrMpName mpAsName ]
+		detect: [ :org | org name = aStringOrMpName asMpName ]
 		ifNone: [ 
 			| newOrg |
 			newOrg := MpPerson named: aStringOrMpName.

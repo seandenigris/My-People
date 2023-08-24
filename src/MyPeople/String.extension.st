@@ -1,6 +1,6 @@
 Extension { #name : #String }
 
 { #category : #'*MyPeople' }
-String >> mpAsName [
+String >> asMpName [
 	^ MpName fromString: self
 ]

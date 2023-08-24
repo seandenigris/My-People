@@ -65,6 +65,11 @@ MpName >> abbreviationsFor: givenNameString [
 	^ result
 ]
 
+{ #category : #converting }
+MpName >> asMpName [
+	^ self
+]
+
 { #category : #comparing }
 MpName >> detectMostSimilarIn: collection [
 	^ self detectMostSimilarIn: collection ifNone: [ nil ]

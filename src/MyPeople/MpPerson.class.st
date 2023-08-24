@@ -88,7 +88,7 @@ MpPerson class >> isValidName: aString [
 MpPerson class >> named: convertibleToName [
 
 	^ self new
-		name: convertibleToName mpAsName;
+		name: convertibleToName asMpName;
 		yourself
 ]
 
