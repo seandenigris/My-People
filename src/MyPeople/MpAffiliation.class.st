@@ -19,6 +19,20 @@ MpAffiliation class >> migrateInstancesToMultipleRoles [
 ]
 
 { #category : #accessing }
+MpAffiliation class >> organization: anOrganization member: aRelatableEntity role: titleString [
+
+	| result |
+	result := self new
+		organization: anOrganization;
+		member: aRelatableEntity;
+		yourself.
+		
+	result roles add: titleString.
+	
+	^ result
+]
+
+{ #category : #accessing }
 MpAffiliation class >> organization: anOrganization person: aPerson role: titleString [
 
 	| result |
@@ -37,7 +51,7 @@ MpAffiliation >> = rhs [
 	
 	self species = rhs species ifFalse: [ ^ false ].
 	
-	^ self organization = rhs organization and: [ self person = rhs person and: [ self roles = rhs roles ] ].
+	^ self organization = rhs organization and: [ self member = rhs member and: [ self roles = rhs roles ] ].
 ]
 
 { #category : #accessing }
@@ -49,21 +63,21 @@ MpAffiliation >> addressBook [
 { #category : #printing }
 MpAffiliation >> doesNotUnderstand: aMessage [
 	
-	^ self person
+	^ self member
 		ifNotNil: [ :info | aMessage sendTo: info ]
 		ifNil: [ super doesNotUnderstand: aMessage ].
 ]
 
 { #category : #accessing }
 MpAffiliation >> hash [
-	^ self organization ensureUUID hash bitXor: (self person ensureUUID hash bitXor: self roles hash)
+	^ self organization ensureUUID hash bitXor: (self member ensureUUID hash bitXor: self roles hash)
 ]
 
 { #category : #accessing }
 MpAffiliation >> link [
-	self person affiliations 
+	self member affiliations 
 		detect: [ :aff | aff = self ]
-		ifNone: [ self person affiliations add: self ].
+		ifNone: [ self member affiliations add: self ].
 	
 	self organization affiliations 
 		detect: [ :aff | aff = self ]
@@ -78,6 +92,35 @@ MpAffiliation >> linkDescription [
 		  action: #link;
 		  gtIcon: BrGlamorousVectorIcons link;
 		  yourself
+]
+
+{ #category : #accessing }
+MpAffiliation >> member [
+
+	^ person
+]
+
+{ #category : #accessing }
+MpAffiliation >> member: anObject [
+
+	person := anObject
+]
+
+{ #category : #accessing }
+MpAffiliation >> memberDescription [
+	<magritteDescription>
+	
+	| searchSource |
+	searchSource := PeGtDelegatedSearch
+		to: self addressBook
+		message: #peopleSearchFor:.
+	
+	^ MAToOneRelationDescription new
+		accessor: #member;
+		priority: 200;
+		classes: MpPerson withAllSubclasses;
+		gtSearchSource: searchSource; 
+		yourself
 ]
 
 { #category : #accessing }
@@ -111,14 +154,16 @@ MpAffiliation >> organizationDescription [
 
 { #category : #accessing }
 MpAffiliation >> person [
+	self deprecated: 'Use #member instead'.
 
-	^ person
+	^ self member
 ]
 
 { #category : #accessing }
-MpAffiliation >> person: anObject [
+MpAffiliation >> person: aRelatableEntity [
+	self deprecated: 'Use #member: instead'.
 
-	person := anObject
+	^ self member: aRelatableEntity
 ]
 
 { #category : #accessing }
@@ -145,7 +190,7 @@ MpAffiliation >> printOn: aStream [
 			
 	aStream
 		space;
-		print: self person.
+		print: self member.
 		
 	self roles do: [ :r |
 		aStream
@@ -212,6 +257,6 @@ MpAffiliation >> rolesGtSearchFor: aSearch [
 
 { #category : #accessing }
 MpAffiliation >> unlink [
-	self person affiliations remove: self.
+	self member affiliations remove: self.
 	self organization affiliations remove: self.
 ]
