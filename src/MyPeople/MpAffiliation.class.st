@@ -33,20 +33,6 @@ MpAffiliation class >> organization: anOrganization member: aRelatableEntity rol
 ]
 
 { #category : #accessing }
-MpAffiliation class >> organization: anOrganization person: aPerson role: titleString [
-
-	| result |
-	result := self new
-		organization: anOrganization;
-		person: aPerson;
-		yourself.
-		
-	result roles add: titleString.
-	
-	^ result
-]
-
-{ #category : #accessing }
 MpAffiliation >> = rhs [
 	
 	self species = rhs species ifFalse: [ ^ false ].
@@ -164,23 +150,6 @@ MpAffiliation >> person: aRelatableEntity [
 	self deprecated: 'Use #member: instead'.
 
 	^ self member: aRelatableEntity
-]
-
-{ #category : #accessing }
-MpAffiliation >> personDescription [
-	<magritteDescription>
-	
-	| searchSource |
-	searchSource := PeGtDelegatedSearch
-		to: self addressBook
-		message: #peopleSearchFor:.
-	
-	^ MAToOneRelationDescription new
-		accessor: #person;
-		priority: 200;
-		classes: MpPerson withAllSubclasses;
-		gtSearchSource: searchSource; 
-		yourself
 ]
 
 { #category : #accessing }

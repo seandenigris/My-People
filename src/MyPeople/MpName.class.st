@@ -223,11 +223,6 @@ MpName >> middleNameDescription [
 			yourself
 ]
 
-{ #category : #converting }
-MpName >> mpAsName [
-	^ self
-]
-
 { #category : #merging }
 MpName >> patchRelativeToBase: oldValue as: description of: receiver [
 	"Edit me in place instead of full replacement like a value object"
