@@ -166,10 +166,11 @@ MpOrganization >> gtViewChildrenFor: aView [
 
 	self children isEmptyOrNil ifTrue: [ ^ aView empty ].
 	
-	^ aView list
+	^ aView tree
 		title: 'Children' translated;
 		priority: 60;
 		items: [ self children asOrderedCollection ];
+		children: #children;
 		actionUpdateButtonTooltip: 'Update'.
 ]
 
