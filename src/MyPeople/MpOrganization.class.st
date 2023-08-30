@@ -11,6 +11,15 @@ Class {
 }
 
 { #category : #accessing }
+MpOrganization class >> exampleHogwarts [
+	<gtExample>
+	^ self 
+		given: [ ]
+		when: [ self named: 'Hogwarts' ]
+		then: [ :org | org name should equal: 'Hogwarts' ]
+]
+
+{ #category : #accessing }
 MpOrganization class >> exampleLeakyCauldron [
 	<gtExample>
 	^ self 

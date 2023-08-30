@@ -12,6 +12,15 @@ Class {
 	#category : #'MyPeople-Core'
 }
 
+{ #category : #examples }
+MpAffiliation class >> exampleDumbledore [
+	<gtExample>
+
+	^ MpAffiliation
+		organization: MpOrganization exampleHogwarts
+		member: MpPerson exampleDumbledore role: 'Headmaster'
+]
+
 { #category : #migrating }
 MpAffiliation class >> migrateInstancesToMultipleRoles [
 	self allSubInstancesDo: [ :e | 
