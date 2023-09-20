@@ -148,6 +148,25 @@ MpRelatableEntity >> description [
 ]
 
 { #category : #accessing }
+MpRelatableEntity >> emailAddressGtSearchNewFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch explicit
+		title: 'New email';
+		priority: 50;
+		itemName: [ :result | '+ ' , result gtDisplayText ];
+		search: [ :context | 
+			| isExisting input |
+			input := context searchQuery trimmed.
+			self flag: 'what should be in empty collection?'.
+			isExisting := #() anySatisfy: [ :e | e title = input ].
+			isExisting 
+				ifFalse: [ { MpEmailField fromString: input } ]
+				ifTrue: [ { } ] ];
+		send: [ :result | self emailAddresses add: result ]
+]
+
+{ #category : #accessing }
 MpRelatableEntity >> emailAddresses [
 
 	^ self maLazyInstVarUsing: self emailAddressesDescription
@@ -166,7 +185,7 @@ MpRelatableEntity >> emailAddressesDescription [
 			accessor: #emailAddresses;
 			priority: 500;
 			default: OrderedCollection new;
-			gtSearchDelegateTo: self message: #gtSearchNewEmailAddressFor:;
+			gtSearchDelegateTo: self message: #emailAddressGtSearchNewFor:;
 			classes: { MpEmailField };
 			referenceDisplay: #displayString;
 			yourself

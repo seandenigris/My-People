@@ -10,26 +10,39 @@ Class {
 { #category : #accessing }
 MpEmailField class >> fromString: aString [
 
-	| fieldName address parser |
+	| fieldName address parser addressToken |
 	fieldName := ($# asPParser, #space asPParser negate plus flatten) ==> #second.
-	address := ($# asPParser negate, #space asPParser negate plus) flatten.
-	parser := address, (#space asPParser plus, fieldName ==> #second) optional ==> [ :n |
+	addressToken := (#space asPParser / $@ asPParser) negate plus.
+	address := (addressToken, $@ asPParser, addressToken) flatten.
+	parser := address, (#space asPParser plus, fieldName) optional ==> [ :n |
 		self new
 			address: n first;
-			typeName: (n second ifNil: [ 'main' ]);
+			typeName: (n second ifNil: [ 'main' ] ifNotNil: [ n second second ]);
 			yourself ].
 	^ parser parse: aString.
 ]
 
 { #category : #accessing }
-MpEmailField class >> fromStringExample [
+MpEmailField class >> fromStringNoLabelExample [
 	<gtExample>
 	
 	^ self
-		given: [ 'sean@clipperadams.com #main' ]
+		given: [ 'sean@clipperadams.com' ]
 		when: [ :input | self fromString: input ]
 		then: [ :result |
-			result name should equal: #main.
+			result typeName should equal: #main.
+			result address should equal: 'sean@clipperadams.com' ]
+]
+
+{ #category : #accessing }
+MpEmailField class >> fromStringWithLabelExample [
+	<gtExample>
+	
+	^ self
+		given: [ 'sean@clipperadams.com #work' ]
+		when: [ :input | self fromString: input ]
+		then: [ :result |
+			result typeName should equal: #work.
 			result address should equal: 'sean@clipperadams.com' ]
 ]
 
