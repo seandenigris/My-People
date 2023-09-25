@@ -209,24 +209,6 @@ MpRelatableEntity >> gtPhonesOn: aView [
 ]
 
 { #category : #accessing }
-MpRelatableEntity >> gtSearchNewEmailAddressFor: aSearch [
-	
-	^ aSearch explicit
-		title: 'New email';
-		priority: 50;
-		itemName: [ :result | '+ ' , result gtDisplayText ];
-		search: [ :context | 
-			| isExisting input |
-			input := context searchQuery trimmed.
-			self flag: 'what should be in empty collection?'.
-			isExisting := #() anySatisfy: [ :e | e title = input ].
-			isExisting 
-				ifFalse: [ { MpEmailField fromString: input } ]
-				ifTrue: [ { } ] ];
-		send: [ :result | self emailAddresses add: result ]
-]
-
-{ #category : #accessing }
 MpRelatableEntity >> gtSearchNewTelephoneFor: aSearch [
 	
 	^ aSearch explicit
