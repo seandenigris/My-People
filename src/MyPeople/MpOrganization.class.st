@@ -115,7 +115,7 @@ MpOrganization >> childrenDescription [
 	^ MAToManyRelationDescription new
 		accessor: #children;
 		priority: 500;
-		default: Set new;
+		default: IdentitySet new;
 		classes: MpOrganization withAllSubclasses;
 		comment: 'Not too fleshed out - subsidiaries? Locations?';
 		gtSearchSource: (MessageSend receiver: MpAddressBook selector: #uniqueInstance);
