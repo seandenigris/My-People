@@ -178,7 +178,8 @@ MpOrganization >> gtViewChildrenFor: aView [
 	^ aView tree
 		title: 'Children' translated;
 		priority: 60;
-		items: [ self children asOrderedCollection ];
+		items: [ self children asSortedCollection: #name ascending ];
+		itemText: #name;
 		children: #children;
 		actionUpdateButtonTooltip: 'Update'.
 ]
