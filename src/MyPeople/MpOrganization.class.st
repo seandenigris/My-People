@@ -181,7 +181,7 @@ MpOrganization >> gtViewChildrenFor: aView [
 		items: [ self children asSortedCollection: #name ascending ];
 		itemText: #name;
 		children: #children;
-		actionUpdateButtonTooltip: 'Update'.
+		actionUpdateButton
 ]
 
 { #category : #testing }
