@@ -15,6 +15,8 @@ BaselineOfMyPeople >> baseline: spec [
 
 	spec for: #'common' do: [
 		spec 
+			baseline: 'DynabookFoundation' with: [
+				spec repository: 'github://seandenigris/Dynabook-Foundation' ];
 			baseline: 'Magritte' with: [
 				spec 
 					loads: #('Magritte-Merging');
@@ -32,7 +34,7 @@ BaselineOfMyPeople >> baseline: spec [
 			baseline: 'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ].
 		spec package: #MyPeople with: [
-			spec requires: #('Magritte' 'Mocketry' 'NeoCSV' 'PharoEnhancements' 'SimplePersistence'). ]. ].
+			spec requires: #('DynabookFoundation' 'Magritte' 'Mocketry' 'NeoCSV' 'PharoEnhancements' 'SimplePersistence'). ]. ].
 				
 	spec for: #GToolkit do: [ 
 		spec baseline: 'ObjectiveLepiter' with: [

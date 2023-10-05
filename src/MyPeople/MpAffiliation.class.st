@@ -1,8 +1,8 @@
 Class {
 	#name : #MpAffiliation,
 	#superclass : #Object,
-	#traits : 'MATPropertyOwner',
-	#classTraits : 'MATPropertyOwner classTrait',
+	#traits : 'DbTDomainObject',
+	#classTraits : 'DbTDomainObject classTrait',
 	#instVars : [
 		'organization',
 		'person',
