@@ -43,7 +43,7 @@ MpNameParser >> firstNameFirst [
 			firstName: nodes first asLowercase capitalized;
 			yourself.
 		nodes second first ifNotNil: [ :mn | result middleName: (mn asLowercase capitalized trimRight: [ :c | c = $. ]) ].
-		nodes third ifNotNil: [ :g | result generational: g asLowercase capitalized ].
+		nodes third ifNotNil: [ :g | result generational: g mpAsGenerational ].
 		result ].
 ]
 
