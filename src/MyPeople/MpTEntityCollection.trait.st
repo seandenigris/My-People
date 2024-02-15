@@ -26,6 +26,24 @@ MpTEntityCollection >> contacts [
 ]
 
 { #category : #searches }
+MpTEntityCollection >> contactsGtViewListOn: aView [
+	<gtView>
+	^ self
+		contactsGtViewListOn: aView 
+		sortedUsing: #nameForAlphabetization ascending
+]
+
+{ #category : #searches }
+MpTEntityCollection >> contactsGtViewListOn: aView sortedUsing: aBlock [
+	
+	^ aView list
+		title: 'Contacts List' translated;
+		priority: 8;
+		items: [ self asEntityCollection sorted: aBlock ];
+		actionUpdateButton
+]
+
+{ #category : #searches }
 MpTEntityCollection >> contactsViewDetailedOn: aView [
 	<gtView>
 	
@@ -38,16 +56,6 @@ MpTEntityCollection >> contactsViewDetailedOn: aView [
 			width: 75;
 		column: 'Name' text: [ :aContact | aContact fullName ];
 		column: 'Phone' text: [ :aContact | aContact telephone ]
-]
-
-{ #category : #searches }
-MpTEntityCollection >> contactsViewListOn: aView [
-	<gtView>
-	^ aView list
-		title: 'Contacts List' translated;
-		priority: 8;
-		items: [ self asEntityCollection sorted: #nameForAlphabetization ascending ];
-		actionUpdateButton
 ]
 
 { #category : #searches }
