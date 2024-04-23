@@ -180,6 +180,18 @@ MpName >> lastNameDescription [
 			yourself
 ]
 
+{ #category : #accessing }
+MpName >> lastNameFirst [
+	^ String streamContents: [ :str |
+		self lastName ifNotNil: [ :n |
+			str << n ].
+		str << ', '.
+		self firstName ifNotNil: [ :n |
+			str << n ].
+		self middleName ifNotNil: [ :n |
+			str << ' ' << n ] ]
+]
+
 { #category : #merging }
 MpName >> merge: rhs [
 
