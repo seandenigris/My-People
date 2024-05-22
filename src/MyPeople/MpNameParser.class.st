@@ -20,6 +20,17 @@ MpNameParser class >> exampleDashedLastName [
 		then: [ :result | result isPetit2Success should equal: true ]
 ]
 
+{ #category : #examples }
+MpNameParser class >> exampleDontNormalizeCamelCase [
+	<gtExample>
+	^ self
+		given: []
+		when: [ self parse: 'LEONARDO daVinci' ]
+		then: [ :result | 
+			result firstName should equal: 'Leonardo'.
+			result lastName should equal: 'daVinci' ]
+]
+
 { #category : #private }
 MpNameParser >> abbreviatable: aParser [
 	^ (aParser, $. asPParser optional) flatten
@@ -39,10 +50,10 @@ MpNameParser >> firstNameFirst [
 	^ (abbreviatableToken, ((middleName, lastName) / (nil asPParser, lastName)), generationalPart optional) ==> [ :nodes | 
 		| result |
 		result := MpName new
-			lastName: nodes second second asLowercase capitalized;
-			firstName: nodes first asLowercase capitalized;
+			lastName: nodes second second mpAsNameCase;
+			firstName: nodes first mpAsNameCase;
 			yourself.
-		nodes second first ifNotNil: [ :mn | result middleName: (mn asLowercase capitalized trimRight: [ :c | c = $. ]) ].
+		nodes second first ifNotNil: [ :mn | result middleName: (mn mpAsNameCase trimRight: [ :c | c = $. ]) ].
 		nodes third ifNotNil: [ :g | result generational: g mpAsGenerational ].
 		result ].
 ]
@@ -65,10 +76,10 @@ MpNameParser >> lastNameFirst [
 	middleName := (#space asPParser, (generational not, abbreviatableToken) ==> #second) ==> #second.
 	^ lastName, ',' asPParser, firstName, middleName optional, generationalPart optional ==> [ :nodes | | result |
 		result := MpName new
-			lastName: nodes first asLowercase capitalized;
-			firstName: nodes third asLowercase capitalized;
+			lastName: nodes first mpAsNameCase;
+			firstName: nodes third mpAsNameCase;
 			yourself.
-		nodes fourth ifNotNil: [ :mn | result middleName: (mn asLowercase capitalized trimRight: [ :c | c = $. ]) ].
+		nodes fourth ifNotNil: [ :mn | result middleName: (mn mpAsNameCase trimRight: [ :c | c = $. ]) ].
 		nodes fifth ifNotNil: [ :g | result generational: g mpAsGenerational ].
 		result ].
 ]
