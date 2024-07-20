@@ -8,7 +8,7 @@ The following python libraries were investigated:
 "
 Class {
 	#name : #MpUSAddress,
-	#superclass : #GtABAddress,
+	#superclass : #MpAddress,
 	#instVars : [
 		'state',
 		'zipCode',
