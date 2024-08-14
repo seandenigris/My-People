@@ -227,13 +227,14 @@ MpPerson >> linkedInProfileUrl [
 { #category : #'magritte-descriptions' }
 MpPerson >> nameDescription [
 	<magritteDescription>
+	
 	^ MAToOneRelationDescription new
-			mergeInPlace: true;
-			accessor: #name;
-			label: 'Name';
-			classes: { MpName };
-			priority: 100;
-			yourself
+		mergeInPlace: true;
+		accessor: #name;
+		label: 'Name';
+		classes: { MpName };
+		priority: 100;
+		yourself
 ]
 
 { #category : #accessing }
