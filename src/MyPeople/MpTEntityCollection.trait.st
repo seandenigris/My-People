@@ -135,7 +135,17 @@ MpTEntityCollection >> peopleSearchFor: aSearch [
 		items: [ self people asEntityCollection ];
 		matchSubstrings;
 		itemName:[ :aContact | 
-			aContact name lastName , ', ' , aContact name firstName ].		
+			String streamContents: [ :aStream |
+				aStream
+					nextPutAll: aContact name lastName;
+					nextPutAll: ', ';
+					nextPutAll: aContact name firstName.
+				aContact aliases ifNotEmpty: [
+					aStream nextPutAll: ' "'.
+					aContact aliases
+						do: [ :alias | aStream nextPutAll: alias ]
+						separatedBy: [ aStream nextPut: $/ ].
+					aStream nextPut: $" ] ] ].		
 ]
 
 { #category : #accessing }
