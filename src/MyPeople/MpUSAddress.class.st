@@ -21,7 +21,7 @@ Class {
 { #category : #accessing }
 MpUSAddress class >> fromString: aString [
 	| tokens stateAndZip state |
-	tokens := aString splitOn: $,.
+	tokens := aString findTokens: { $,. Character cr. Character lf }.
 	stateAndZip := tokens last trimBoth splitOn: Character space.
 	state := MpAddressBook uniqueInstance usStates detect: [ :e | e matches: stateAndZip first trimBoth ].
 	^ self new
@@ -36,6 +36,13 @@ MpUSAddress class >> fromString: aString [
 MpUSAddress class >> fromStringExample [
 	<gtExample>
 	^ self fromString: '428 S. Main Street, Somewhere, NY 12345'
+]
+
+{ #category : #accessing }
+MpUSAddress class >> fromStringMultilineExample [
+	<gtExample>
+	^ self fromString: '428 S. Main Street
+Somewhere, NY 12345'
 ]
 
 { #category : #accessing }
