@@ -15,38 +15,38 @@ BaselineOfMyPeople >> baseline: spec [
 
 	spec for: #'common' do: [
 		spec 
-			baseline: 'DynabookFoundation' with: [
+			baseline: #'DynabookFoundation' with: [
 				spec repository: 'github://seandenigris/Dynabook-Foundation' ];
-			baseline: 'Magritte' with: [
+			baseline: #'Magritte' with: [
 				spec 
-					loads: #('Magritte-Merging');
+					loads: #(#'Magritte-Merging');
 					repository: 'github://seandenigris/Magritte' ];
-			baseline: 'Mocketry' with: [
+			baseline: #'Mocketry' with: [
 				spec repository: 'github://dionisiydk/Mocketry' ];
-			baseline: 'NeoCSV' with: [
+			baseline: #'NeoCSV' with: [
 				spec 
 					repository: 'github://seandenigris/NeoCSV';
-					loads: 'Neo-CSV-Magritte' ];
-			baseline: 'PharoEnhancements' with: [
+					loads: #'Neo-CSV-Magritte' ];
+			baseline: #'PharoEnhancements' with: [
 				spec 
 					repository: 'github://seandenigris/Pharo-Enhancements';
-					loads: #(#default 'PharoEnhancements-Magritte') ];
-			baseline: 'SimplePersistence' with: [
+					loads: #(#default #'PharoEnhancements-Magritte') ];
+			baseline: #'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ].
 		spec package: #MyPeople with: [
-			spec requires: #('DynabookFoundation' 'Magritte' 'Mocketry' 'NeoCSV' 'PharoEnhancements' 'SimplePersistence'). ]. ].
+			spec requires: #(DynabookFoundation Magritte Mocketry NeoCSV PharoEnhancements SimplePersistence). ]. ].
 				
 	spec for: #GToolkit do: [ 
-		spec baseline: 'ObjectiveLepiter' with: [
+		spec baseline: #'ObjectiveLepiter' with: [
 			spec repository: 'github://seandenigris/Objective-Lepiter' ].
 		spec package: #MyPeople with: [
-			spec requires: #('ObjectiveLepiter') ] ].
+			spec requires: #(ObjectiveLepiter) ] ].
 	
 	spec for: #notGToolkit do: [ 
-		spec baseline: 'PetitParser2' with: [
+		spec baseline: #'PetitParser2' with: [
 			spec repository: 'github://seandenigris/PetitParser2' ].
 		spec package: #MyPeople with: [
-			spec requires: #('PetitParser2'). ] ]
+			spec requires: #(PetitParser2). ] ]
 ]
 
 { #category : #accessing }
