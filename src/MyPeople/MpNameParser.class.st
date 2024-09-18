@@ -6,7 +6,8 @@ Class {
 		'abbreviatableToken',
 		'lastNameFirst',
 		'firstNameFirst',
-		'generational'
+		'generational',
+		'topLevelGrammars'
 	],
 	#category : #'MyPeople-Core'
 }
