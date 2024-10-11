@@ -426,8 +426,8 @@ MpRelatableEntity >> website [
 ]
 
 { #category : #accessing }
-MpRelatableEntity >> website: anObject [
-	website := anObject
+MpRelatableEntity >> website: aUrl [
+	website := aUrl
 ]
 
 { #category : #'magritte-accessing' }
