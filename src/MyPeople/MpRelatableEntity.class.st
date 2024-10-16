@@ -156,13 +156,15 @@ MpRelatableEntity >> emailAddressGtSearchNewFor: aSearch [
 		priority: 50;
 		itemName: [ :result | '+ ' , result gtDisplayText ];
 		search: [ :context | 
-			| isExisting input |
+			| isApplicable input |
 			input := context searchQuery trimmed.
-			self flag: 'what should be in empty collection?'.
-			isExisting := #() anySatisfy: [ :e | e title = input ].
-			isExisting 
-				ifFalse: [ { MpEmailField fromString: input } ]
-				ifTrue: [ { } ] ];
+
+			isApplicable := MpEmailField parser matches: input.
+			"self flag: 'what should be in empty collection?'.
+			isExisting := #() anySatisfy: [ :e | e title = input ]".
+			isApplicable 
+				ifTrue: [ { MpEmailField fromString: input } ]
+				ifFalse: [ { } ] ];
 		send: [ :result | self emailAddresses add: result ]
 ]
 

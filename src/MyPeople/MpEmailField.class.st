@@ -10,16 +10,7 @@ Class {
 { #category : #accessing }
 MpEmailField class >> fromString: aString [
 
-	| fieldName address parser addressToken |
-	fieldName := ($# asPParser, #space asPParser negate plus flatten) ==> #second.
-	addressToken := (#space asPParser / $@ asPParser) negate plus.
-	address := (addressToken, $@ asPParser, addressToken) flatten.
-	parser := address, (#space asPParser plus, fieldName) optional ==> [ :n |
-		self new
-			address: n first;
-			typeName: (n second ifNil: [ 'main' ] ifNotNil: [ n second second ]);
-			yourself ].
-	^ parser parse: aString.
+	^ self parser parse: aString.
 ]
 
 { #category : #accessing }
@@ -44,6 +35,20 @@ MpEmailField class >> fromStringWithLabelExample [
 		then: [ :result |
 			result typeName should equal: #work.
 			result address should equal: 'sean@clipperadams.com' ]
+]
+
+{ #category : #accessing }
+MpEmailField class >> parser [
+
+	| fieldName address addressToken |
+	fieldName := ($# asPParser, #space asPParser negate plus flatten) ==> #second.
+	addressToken := (#space asPParser / $@ asPParser) negate plus.
+	address := (addressToken, $@ asPParser, addressToken) flatten.
+	^ address, (#space asPParser plus, fieldName) optional ==> [ :n |
+		self new
+			address: n first;
+			typeName: (n second ifNil: [ 'main' ] ifNotNil: [ n second second ]);
+			yourself ].
 ]
 
 { #category : #accessing }
