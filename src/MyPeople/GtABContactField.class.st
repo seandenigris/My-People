@@ -15,6 +15,8 @@ Class {
 { #category : #accessing }
 GtABContactField >> = rhs [
 
+	self species = rhs species ifFalse: [ ^ false ].
+	
 	^ self typeName = rhs typeName
 ]
 
