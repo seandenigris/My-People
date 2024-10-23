@@ -102,17 +102,20 @@ MpAffiliation >> member: anObject [
 MpAffiliation >> memberDescription [
 	<magritteDescription>
 	
-	| searchSource |
-	searchSource := PeGtDelegatedSearch
-		to: self addressBook
-		message: #peopleSearchFor:.
-	
 	^ MAToOneRelationDescription new
 		accessor: #member;
 		priority: 200;
 		classes: MpPerson withAllSubclasses;
-		gtSearchSource: searchSource; 
+		gtSearchSource: self memberGtSearchSource; 
 		yourself
+]
+
+{ #category : #accessing }
+MpAffiliation >> memberGtSearchSource [
+
+	^ PeGtDelegatedSearch
+		to: self addressBook
+		message: #peopleSearchFor:.
 ]
 
 { #category : #accessing }
