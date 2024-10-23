@@ -70,13 +70,8 @@ MpAffiliation >> hash [
 
 { #category : #accessing }
 MpAffiliation >> link [
-	self member affiliations 
-		detect: [ :aff | aff = self ]
-		ifNone: [ self member affiliations add: self ].
-	
-	self organization affiliations 
-		detect: [ :aff | aff = self ]
-		ifNone: [ self organization affiliations add: self ].
+	self memberLink.
+	self organizationLink
 ]
 
 { #category : #accessing }
@@ -98,7 +93,9 @@ MpAffiliation >> member [
 { #category : #accessing }
 MpAffiliation >> member: anObject [
 
-	person := anObject
+	self memberUnlink.
+	person := anObject.
+	self memberLink.
 ]
 
 { #category : #accessing }
@@ -116,6 +113,18 @@ MpAffiliation >> memberDescription [
 		classes: MpPerson withAllSubclasses;
 		gtSearchSource: searchSource; 
 		yourself
+]
+
+{ #category : #accessing }
+MpAffiliation >> memberLink [
+	self member affiliations
+		detect: [ :aff | aff = self ]
+		ifNone: [ self member affiliations add: self ]
+]
+
+{ #category : #accessing }
+MpAffiliation >> memberUnlink [
+	self member ifNotNil: [ :mbr | mbr affiliations remove: self ]
 ]
 
 { #category : #accessing }
@@ -145,6 +154,18 @@ MpAffiliation >> organizationDescription [
 		classes: MpOrganization withAllSubclasses;
 		gtSearchSource: searchSource; 
 		yourself
+]
+
+{ #category : #accessing }
+MpAffiliation >> organizationLink [
+	self organization affiliations
+		detect: [ :aff | aff = self ]
+		ifNone: [ self organization affiliations add: self ]
+]
+
+{ #category : #accessing }
+MpAffiliation >> organizationUnlink [
+	self organization affiliations remove: self
 ]
 
 { #category : #accessing }
@@ -235,6 +256,6 @@ MpAffiliation >> rolesGtSearchFor: aSearch [
 
 { #category : #accessing }
 MpAffiliation >> unlink [
-	self member affiliations remove: self.
-	self organization affiliations remove: self.
+	self memberUnlink.
+	self organizationUnlink
 ]
