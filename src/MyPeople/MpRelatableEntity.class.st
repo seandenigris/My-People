@@ -184,13 +184,13 @@ MpRelatableEntity >> emailAddresses: anObject [
 MpRelatableEntity >> emailAddressesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
-			accessor: #emailAddresses;
-			priority: 500;
-			default: OrderedCollection new;
-			gtSearchDelegateTo: self message: #emailAddressGtSearchNewFor:;
-			classes: { MpEmailField };
-			referenceDisplay: #displayString;
-			yourself
+		accessor: #emailAddresses;
+		priority: 500;
+		default: OrderedCollection new;
+		gtSearchDelegateTo: self message: #emailAddressGtSearchNewFor:;
+		classes: { MpEmailField };
+		referenceDisplay: #displayString;
+		yourself
 ]
 
 { #category : #accessing }
