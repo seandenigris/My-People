@@ -31,10 +31,12 @@ BaselineOfMyPeople >> baseline: spec [
 				spec 
 					repository: 'github://seandenigris/Pharo-Enhancements';
 					loads: #(#default #'PharoEnhancements-Magritte') ];
+			baseline: 'ResourcesLive' with: [
+				spec repository: 'github://seandenigris/Resources-Live' ];
 			baseline: #'SimplePersistence' with: [
 				spec repository: 'github://seandenigris/Simple-Persistence' ].
 		spec package: #MyPeople with: [
-			spec requires: #(DynabookFoundation Magritte Mocketry NeoCSV PharoEnhancements SimplePersistence). ]. ].
+			spec requires: #(DynabookFoundation Magritte Mocketry NeoCSV PharoEnhancements ResourcesLive SimplePersistence). ]. ].
 				
 	spec for: #GToolkit do: [ 
 		spec baseline: #'ObjectiveLepiter' with: [
