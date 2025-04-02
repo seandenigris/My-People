@@ -33,3 +33,14 @@ MpMunicipality >> parcels [
 		at: #parcels 
 		ifAbsentPut: [ self parcelsGet ]
 ]
+
+{ #category : #accessing }
+MpMunicipality >> propertyAddresses [
+
+	^ self
+		propertyAt: #propertyAddresses
+		ifAbsentPut: [ 
+			| addressParcels |
+			addressParcels := self parcels select: #isAddress.
+			addressParcels collect: #canonicalAddress. ]
+]
