@@ -83,7 +83,10 @@ MpUSState >> isUSState [
 MpUSState >> matches: aString [
 	self name = aString ifTrue: [ ^ true ].
 	self postalCode = aString ifTrue: [ ^ true ].
-	(self aliases includes: aString) ifTrue: [ ^ true ].
+	self aliases 
+		detect: [ :anAlias | 
+			(anAlias copyWithout: $.) = (aString copyWithout: $.) ]
+		ifFound: [ ^ true ].
 	^ false
 ]
 
