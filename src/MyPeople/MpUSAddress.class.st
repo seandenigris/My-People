@@ -18,6 +18,17 @@ Class {
 	#category : #'MyPeople-Core'
 }
 
+{ #category : #'as yet unclassified' }
+MpUSAddress class >> directionalMap [
+
+	^ {
+		#east -> #('e').
+		#north -> #('n').
+		#south -> #('s' 'so'). "directional"
+		#west -> #('w').
+	} asDictionary
+]
+
 { #category : #accessing }
 MpUSAddress class >> fromString: aString [
 	| tokens stateAndZip state |
@@ -55,9 +66,75 @@ MpUSAddress class >> gtSpotterNewFor: aSearch [
 		search: [ :context | self fromString: context searchQuery trimmed ]
 ]
 
+{ #category : #'as yet unclassified' }
+MpUSAddress class >> normalizeToken: aString withMap: aDictionary [
+
+	| fixedString |
+	fixedString := aString withBlanksCondensed asLowercase copyWithout: $..
+
+	aDictionary keysAndValuesDo: [ :k :v |
+		(fixedString = k or: [ v includes: fixedString ])
+				ifTrue: [ ^ k asString ] ].
+				
+	^ fixedString
+]
+
 { #category : #accessing }
 MpUSAddress class >> states [
 	^ MpAddressBook uniqueInstance usStates asEntityCollection
+]
+
+{ #category : #'as yet unclassified' }
+MpUSAddress class >> streetNameMap [
+
+	^ {
+		#'1st' -> #('first').
+		#'2nd' -> #('second').
+		#'3rd' -> #('third').
+		#'4th' -> #('fourth').
+		#'5th' -> #('fifth').
+		#'6th' -> #('sixth').
+		#'7th' -> #('seventh').
+		#'8th' -> #('eighth').
+		#'9th' -> #('ninth').
+		#'st' -> #('saint').
+	} asDictionary
+]
+
+{ #category : #'as yet unclassified' }
+MpUSAddress class >> streetSuffixMap [
+	"aka street type, but USPS calls it a street suffix (see https://pe.usps.com/text/pub28/28c2_012.htm#ep526349)"
+
+	^ {
+		#avenue -> #('ave').
+		#boulevard -> #('blvd').
+		#circle -> #('cir').
+		#close -> #().
+		#court -> #('ct'). "*ct"
+		#crescent -> #('cres').
+		#drive -> #('dr').
+		#esplanade -> #().
+		#highway -> #('hgwy' 'hwy').
+		#hollow -> #('holw').
+		#lane -> #('la' 'ln'). "*la ln"
+		#mount -> #('mt').
+		#oval -> #().
+		#park -> #('pk'). "*pk multiple"
+		#path -> #().
+		#pathway -> #().
+		#parkway -> #('pkwy').
+		#place -> #('pl'). "*pl"
+		#plaza -> #('plz'). "*plz"
+		#point -> #('pt'). "*pt"
+		#ridge -> #('rdg').
+		#road -> #('rd').
+		#run -> #().
+		#serpentine -> #('serpentine').
+		#street -> #('st'). "*st"
+		#terrace -> #('ter' 'terr' 'tr'). "*ter tr"
+		#trail -> #('trl').
+		#way -> #().
+	} asDictionary
 ]
 
 { #category : #'magritte-accessing' }
