@@ -37,8 +37,22 @@ MpMunicipality >> parcels [
 { #category : #accessing }
 MpMunicipality >> propertyAddresses [
 
-	^ self
+	^ self propertyAt: #propertyAddresses
+]
+
+{ #category : #accessing }
+MpMunicipality >> propertyAddresses: aCollection [
+
+	^ self 
 		propertyAt: #propertyAddresses
+		putRemovingNil: aCollection
+]
+
+{ #category : #accessing }
+MpMunicipality >> propertyAddressesFromParcels [
+
+	^ self
+		propertyAt: #propertyAddressesFromParcels
 		ifAbsentPut: [ 
 			| addressParcels |
 			addressParcels := self parcels select: #isAddress.
