@@ -67,7 +67,7 @@ phonenumbers.is_valid_number(aPhoneNumber)'
 
 { #category : #examples }
 MpTelephone class >> pyPhoneNumberFromString: aString [
-	^ PBApplication uniqueInstance 
+	^ PBApplication start 
 		sendSource: '# https://github.com/daviddrysdale/python-phonenumbers
 import phonenumbers
 phonenumbers.parse(str, "US")' 
