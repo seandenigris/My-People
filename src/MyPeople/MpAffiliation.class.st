@@ -68,6 +68,13 @@ MpAffiliation >> hash [
 	^ self organization ensureUUID hash bitXor: (self member ensureUUID hash bitXor: self roles hash)
 ]
 
+{ #category : #initalization }
+MpAffiliation >> initialize [
+
+	super initialize.
+	self ensureUUID
+]
+
 { #category : #accessing }
 MpAffiliation >> link [
 	self memberLink.
