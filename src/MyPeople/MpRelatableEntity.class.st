@@ -332,7 +332,7 @@ MpRelatableEntity >> hash [
 { #category : #accessing }
 MpRelatableEntity >> import [
 
-	self addressBook ensureContact: self
+	MpAddressBook uniqueInstance ensureContact: self
 ]
 
 { #category : #accessing }
