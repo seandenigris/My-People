@@ -65,7 +65,8 @@ MpAffiliation >> doesNotUnderstand: aMessage [
 
 { #category : #accessing }
 MpAffiliation >> hash [
-	^ self organization ensureUUID hash bitXor: (self member ensureUUID hash bitXor: self roles hash)
+
+	^ self organization hash bitXor: (self member hash bitXor: self roles hash)
 ]
 
 { #category : #initalization }
