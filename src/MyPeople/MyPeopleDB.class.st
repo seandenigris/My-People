@@ -1,15 +1,17 @@
 Class {
-	#name : #MyPeopleDB,
-	#superclass : #SpFileDatabase,
-	#category : 'MyPeople-Persistence'
+	#name : 'MyPeopleDB',
+	#superclass : 'SpFileDatabase',
+	#category : 'MyPeople-Persistence',
+	#package : 'MyPeople',
+	#tag : 'Persistence'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MyPeopleDB class >> backupDirectoryParent [
 	^ FileLocator dynabookData
 ]
 
-{ #category : #'loading/saving' }
+{ #category : 'loading/saving' }
 MyPeopleDB class >> schema [
 
 	^ { MpAddressBook }.

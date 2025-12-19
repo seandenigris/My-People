@@ -1,6 +1,6 @@
 Class {
-	#name : #MpUSAddressGrammar,
-	#superclass : #PP2CompositeNode,
+	#name : 'MpUSAddressGrammar',
+	#superclass : 'PP2CompositeNode',
 	#instVars : [
 		'number',
 		'directional',
@@ -9,10 +9,11 @@ Class {
 		'secondaryAddress',
 		'parser'
 	],
-	#category : #MyPeople
+	#category : 'MyPeople',
+	#package : 'MyPeople'
 }
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> directional [
 
 	| result |
@@ -24,12 +25,12 @@ MpUSAddressGrammar >> directional [
 	^ result
 ]
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> number [
 	^ #digit asPParser plus flatten
 ]
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> parser [
 	^ number , (#space asPParser , directional) optional , #space asPParser
 		, streetName , #space asPParser , suffix
@@ -37,22 +38,22 @@ MpUSAddressGrammar >> parser [
 		, (#space asPParser, secondaryAddress flatten) optional
 ]
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> secondaryAddress [
 	^ #any asPParser plus
 ]
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> start [
 	^ self parser
 ]
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> streetName [
 	^ suffix not , #word asPParser plus flatten
 ]
 
-{ #category : #grammar }
+{ #category : 'grammar' }
 MpUSAddressGrammar >> suffix [
 	
 	| result |

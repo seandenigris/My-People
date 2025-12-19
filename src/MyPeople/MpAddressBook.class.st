@@ -8,15 +8,17 @@ Some might have addresses and other contact information, but some probably won't
 I am called an ''address book'', but I'm in search of a better name.
 "
 Class {
-	#name : #MpAddressBook,
-	#superclass : #MpContactsSnapshot,
+	#name : 'MpAddressBook',
+	#superclass : 'MpContactsSnapshot',
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpAddressBook class >> example [
 
 	| result |
@@ -25,7 +27,7 @@ MpAddressBook class >> example [
 	^ result
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpAddressBook class >> exampleCelebrities [
 	<gtExample>
 	
@@ -39,7 +41,7 @@ MpAddressBook class >> exampleCelebrities [
 		then: [ :col :ab | ab should haveSize: 2 ]	
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpAddressBook class >> exampleHarryPotter [
 	<gtExample>
 	
@@ -54,7 +56,7 @@ MpAddressBook class >> exampleHarryPotter [
 		then: [ :col :ab | ab should haveSize: 3 ]	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddressBook class >> gtDefaultFor: aView inContext: aContext [
 	<gtView>
 	<gtClassView>
@@ -64,37 +66,37 @@ MpAddressBook class >> gtDefaultFor: aView inContext: aContext [
 		views: (self uniqueInstance gtViewsInContext: aContext)
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 MpAddressBook class >> restoreFrom: anObject [
 
 	UniqueInstance := anObject.
 ]
 
-{ #category : #persistence }
+{ #category : 'persistence' }
 MpAddressBook class >> spData [
 
 	^ UniqueInstance
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddressBook class >> uniqueInstance [
 	
 	^ UniqueInstance ifNil: [ UniqueInstance := MpAddressBook new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddressBook >> add: aRelatableEntity [
 
 	^ self ensureContact: aRelatableEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddressBook >> addAll: aCollection [
 
 	^ aCollection do: [ :aRelatableEntity | self ensureContact: aRelatableEntity ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddressBook >> ensureContact: aRelatableEntity [
 
 	(self privateContacts identityIncludes: aRelatableEntity)
@@ -105,7 +107,7 @@ MpAddressBook >> ensureContact: aRelatableEntity [
 	^ aRelatableEntity
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 MpAddressBook >> ensureMunicipalityNamed: aString [
 
 	^ self municipalities
@@ -118,7 +120,7 @@ MpAddressBook >> ensureMunicipalityNamed: aString [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 MpAddressBook >> ensureOrganizationNamed: aString [
 
 	^ self organizations
@@ -131,7 +133,7 @@ MpAddressBook >> ensureOrganizationNamed: aString [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 MpAddressBook >> ensurePersonNamed: aStringOrMpName [
 	
 	^ self people
@@ -144,7 +146,7 @@ MpAddressBook >> ensurePersonNamed: aStringOrMpName [
 	"For the moment, there are person, organization and numicipality, which seems like a closed set, leaving us with a fixed tolerable number of convenience messages. We'll see..."
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 MpAddressBook >> municipalitiesSearchNewFor: aSearch [
 	<gtSearch>
 	
@@ -154,7 +156,7 @@ MpAddressBook >> municipalitiesSearchNewFor: aSearch [
 		priority: 100
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 MpAddressBook >> organizationsSearchNewFor: aSearch [
 	<gtSearch>
 	
@@ -164,7 +166,7 @@ MpAddressBook >> organizationsSearchNewFor: aSearch [
 		priority: 50
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 MpAddressBook >> peopleSearchNewFor: aSearch [
 	<gtSearch>
 	
@@ -174,7 +176,7 @@ MpAddressBook >> peopleSearchNewFor: aSearch [
 		priority: 60
 ]
 
-{ #category : #spotter }
+{ #category : 'spotter' }
 MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 	
 	^ aSearch explicit

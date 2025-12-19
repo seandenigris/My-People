@@ -7,18 +7,20 @@ The following python libraries were investigated:
 - [address_parser](https://pypi.org/project/address-parser/) is listed as beta and the last commit was in 2019
 "
 Class {
-	#name : #MpUSAddress,
-	#superclass : #MpAddress,
+	#name : 'MpUSAddress',
+	#superclass : 'MpAddress',
 	#instVars : [
 		'state',
 		'zipCode',
 		'streetAddress',
 		'streetAddress2'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddress class >> directionalMap [
 
 	^ {
@@ -29,7 +31,7 @@ MpUSAddress class >> directionalMap [
 	} asDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress class >> fromString: aString [
 	| tokens stateAndZip state |
 	tokens := aString findTokens: { $,. Character cr. Character lf }.
@@ -43,20 +45,20 @@ MpUSAddress class >> fromString: aString [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress class >> fromStringExample [
 	<gtExample>
 	^ self fromString: '428 S. Main Street, Somewhere, NY 12345'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress class >> fromStringMultilineExample [
 	<gtExample>
 	^ self fromString: '428 S. Main Street
 Somewhere, NY 12345'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress class >> gtSpotterNewFor: aSearch [
 	<gtSearch>
 	^ aSearch explicit
@@ -66,7 +68,7 @@ MpUSAddress class >> gtSpotterNewFor: aSearch [
 		search: [ :context | self fromString: context searchQuery trimmed ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddress class >> normalizeToken: aString withMap: aDictionary [
 
 	| fixedString |
@@ -79,12 +81,12 @@ MpUSAddress class >> normalizeToken: aString withMap: aDictionary [
 	^ fixedString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress class >> states [
 	^ MpAddressBook uniqueInstance usStates asEntityCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddress class >> streetNameMap [
 
 	^ {
@@ -101,7 +103,7 @@ MpUSAddress class >> streetNameMap [
 	} asDictionary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddress class >> streetSuffixMap [
 	"aka street type, but USPS calls it a street suffix (see https://pe.usps.com/text/pub28/28c2_012.htm#ep526349)"
 
@@ -137,7 +139,7 @@ MpUSAddress class >> streetSuffixMap [
 	} asDictionary
 ]
 
-{ #category : #'magritte-accessing' }
+{ #category : 'magritte-accessing' }
 MpUSAddress >> cityDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -146,12 +148,12 @@ MpUSAddress >> cityDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> country [
 	^ 'USA'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> printOn: aStream [
 	aStream 
 		maPrint: self streetAddressDescription for: self;
@@ -165,17 +167,17 @@ MpUSAddress >> printOn: aStream [
 		nextPutAll: self country
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> state [
 	^ self maLazyInstVarUsing: self stateDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> state: anObject [
 	state := anObject
 ]
 
-{ #category : #'magritte-accessing' }
+{ #category : 'magritte-accessing' }
 MpUSAddress >> stateDescription [
 	<magritteDescription>
 	^ MASingleOptionDescription new
@@ -185,22 +187,22 @@ MpUSAddress >> stateDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> streetAddress [
 	^ self maLazyInstVarUsing: self streetAddressDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> streetAddress2 [
 	^ streetAddress2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> streetAddress2: anObject [
 	streetAddress2 := anObject
 ]
 
-{ #category : #'magritte-accessing' }
+{ #category : 'magritte-accessing' }
 MpUSAddress >> streetAddress2Description [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -209,12 +211,12 @@ MpUSAddress >> streetAddress2Description [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> streetAddress: aString [
 	streetAddress := aString
 ]
 
-{ #category : #'magritte-accessing' }
+{ #category : 'magritte-accessing' }
 MpUSAddress >> streetAddressDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -223,17 +225,17 @@ MpUSAddress >> streetAddressDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> zipCode [
 	^ self maLazyInstVarUsing: self zipCodeDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSAddress >> zipCode: aString [
 	zipCode := aString
 ]
 
-{ #category : #'magritte-accessing' }
+{ #category : 'magritte-accessing' }
 MpUSAddress >> zipCodeDescription [
 	<magritteDescription>
 	^ MAStringDescription new

@@ -4,15 +4,17 @@ I am the root of all domain objects for the address book application
 
 "
 Class {
-	#name : #GtABContactField,
-	#superclass : #Object,
+	#name : 'GtABContactField',
+	#superclass : 'Object',
 	#instVars : [
 		'typeName'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtABContactField >> = rhs [
 
 	self species = rhs species ifFalse: [ ^ false ].
@@ -20,23 +22,23 @@ GtABContactField >> = rhs [
 	^ self typeName = rhs typeName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtABContactField >> hash [
 
 	^ self typeName hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtABContactField >> typeName [
 	^ typeName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtABContactField >> typeName: anObject [
 	typeName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtABContactField >> typeNameDescription [
 	<magritteDescription>
 	

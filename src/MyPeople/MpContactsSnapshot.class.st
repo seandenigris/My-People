@@ -1,22 +1,24 @@
 Class {
-	#name : #MpContactsSnapshot,
-	#superclass : #Object,
+	#name : 'MpContactsSnapshot',
+	#superclass : 'Object',
 	#traits : 'MpTEntityCollection + PeTEnumerable',
 	#classTraits : 'MpTEntityCollection classTrait + PeTEnumerable classTrait',
 	#instVars : [
 		'filter',
 		'privateContacts'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> asEntityCollection [
 
 	^ MpEntityCollection withAll: self privateFilteredContacts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> copyAddingFilter: aBlock [
 
 	| myFilter |
@@ -31,32 +33,32 @@ MpContactsSnapshot >> copyAddingFilter: aBlock [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> filter [
 	^ filter ifNil: [ [ :aff | true ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> filter: anObject [
 	filter := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> privateContacts [
 	^ privateContacts ifNil: [ privateContacts := SortedCollection sortUsing: #nameForAlphabetization ascending ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> privateContacts: anObject [
 	privateContacts := anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MpContactsSnapshot >> privateEnumerable [
 	^ self privateFilteredContacts
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpContactsSnapshot >> privateFilteredContacts [
 
 	^ filter 

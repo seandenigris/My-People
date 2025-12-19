@@ -1,6 +1,6 @@
 Class {
-	#name : #MpAffiliation,
-	#superclass : #Object,
+	#name : 'MpAffiliation',
+	#superclass : 'Object',
 	#traits : 'DbTDomainObject',
 	#classTraits : 'DbTDomainObject classTrait',
 	#instVars : [
@@ -9,10 +9,12 @@ Class {
 		'role',
 		'roles'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpAffiliation class >> exampleDumbledore [
 	<gtExample>
 
@@ -21,13 +23,13 @@ MpAffiliation class >> exampleDumbledore [
 		member: MpPerson exampleDumbledore role: 'Headmaster'
 ]
 
-{ #category : #migrating }
+{ #category : 'migrating' }
 MpAffiliation class >> migrateInstancesToMultipleRoles [
 	self allSubInstancesDo: [ :e | 
 		(e instVarNamed: #role) ifNotNil: [ :role | e roles add: role ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation class >> organization: anOrganization member: aRelatableEntity role: titleString [
 
 	| result |
@@ -41,7 +43,7 @@ MpAffiliation class >> organization: anOrganization member: aRelatableEntity rol
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> = rhs [
 	
 	self species = rhs species ifFalse: [ ^ false ].
@@ -49,13 +51,13 @@ MpAffiliation >> = rhs [
 	^ self organization = rhs organization and: [ self member = rhs member and: [ self roles = rhs roles ] ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> addressBook [
 	
 	^ MpAddressBook uniqueInstance
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MpAffiliation >> doesNotUnderstand: aMessage [
 	
 	^ self member
@@ -63,26 +65,26 @@ MpAffiliation >> doesNotUnderstand: aMessage [
 		ifNil: [ super doesNotUnderstand: aMessage ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> hash [
 
 	^ self organization hash bitXor: (self member hash bitXor: self roles hash)
 ]
 
-{ #category : #initalization }
+{ #category : 'initalization' }
 MpAffiliation >> initialize [
 
 	super initialize.
 	self ensureUUID
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> link [
 	self memberLink.
 	self organizationLink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> linkDescription [
 	<magritteActionDescription>
 	
@@ -92,13 +94,13 @@ MpAffiliation >> linkDescription [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> member [
 
 	^ person
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> member: anObject [
 
 	self memberUnlink.
@@ -106,7 +108,7 @@ MpAffiliation >> member: anObject [
 	self memberLink.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> memberDescription [
 	<magritteDescription>
 	
@@ -118,7 +120,7 @@ MpAffiliation >> memberDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> memberGtSearchSource [
 
 	^ PeGtDelegatedSearch
@@ -126,31 +128,31 @@ MpAffiliation >> memberGtSearchSource [
 		message: #peopleSearchFor:.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> memberLink [
 	self member affiliations
 		detect: [ :aff | aff = self ]
 		ifNone: [ self member affiliations add: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> memberUnlink [
 	self member ifNotNil: [ :mbr | mbr affiliations remove: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> organization [
 
 	^ organization
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> organization: anObject [
 
 	organization := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> organizationDescription [
 	<magritteDescription>
 	
@@ -167,33 +169,33 @@ MpAffiliation >> organizationDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> organizationLink [
 	self organization affiliations
 		detect: [ :aff | aff = self ]
 		ifNone: [ self organization affiliations add: self ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> organizationUnlink [
 	self organization affiliations remove: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> person [
 	self deprecated: 'Use #member instead'.
 
 	^ self member
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> person: aRelatableEntity [
 	self deprecated: 'Use #member: instead'.
 
 	^ self member: aRelatableEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> printOn: aStream [
 
 	aStream print: self organization.
@@ -208,7 +210,7 @@ MpAffiliation >> printOn: aStream [
 			nextPutAll: r ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> role [
 	self deprecated: 'Affiliations can now have multiple roles. Use something like `aff roles first` instead.'.
 
@@ -217,7 +219,7 @@ MpAffiliation >> role [
 	^ role
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> role: anObject [
 	self deprecated: 'Affiliations can now have multiple roles. Use something like `aff roles add: aString` instead.'.
 	
@@ -226,19 +228,19 @@ MpAffiliation >> role: anObject [
 	role := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> roles [
 	^ roles ifNil: [ roles := Set new ]
 	
 	"Implementation note: originally was a Bag, but that means the number of occurences is significant, which it shouldn't be. We want to avoid duplicates. Since roles are currently strings, a Set should be fine/safe. If more dynamic objects are used for roles later, this should be reassessed"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> roles: anObject [
 	roles := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> rolesDescription [
 	<magritteDescription>
 	
@@ -250,7 +252,7 @@ MpAffiliation >> rolesDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> rolesGtSearchFor: aSearch [
 	<gtSearch>
 	
@@ -265,7 +267,7 @@ MpAffiliation >> rolesGtSearchFor: aSearch [
 		send: [ :result | self roles add: result ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAffiliation >> unlink [
 	self memberUnlink.
 	self organizationUnlink

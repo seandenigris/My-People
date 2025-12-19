@@ -1,13 +1,15 @@
 Class {
-	#name : #MpMunicipality,
-	#superclass : #MpOrganization,
+	#name : 'MpMunicipality',
+	#superclass : 'MpOrganization',
 	#instVars : [
 		'cache'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpMunicipality >> buildingFootprints [
 
 	^ self cache
@@ -15,18 +17,18 @@ MpMunicipality >> buildingFootprints [
 		ifAbsentPut: [ self buildingFootprintsGet ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpMunicipality >> cache [
 
 	^ cache ifNil: [ cache := RlCache new ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpMunicipality >> isMunicipality [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpMunicipality >> parcels [
 
 	^ self cache
@@ -34,13 +36,13 @@ MpMunicipality >> parcels [
 		ifAbsentPut: [ self parcelsGet ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpMunicipality >> propertyAddresses [
 
 	^ self propertyAt: #propertyAddresses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpMunicipality >> propertyAddresses: aCollection [
 
 	^ self 
@@ -48,7 +50,7 @@ MpMunicipality >> propertyAddresses: aCollection [
 		putRemovingNil: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpMunicipality >> propertyAddressesFromParcels [
 
 	^ self

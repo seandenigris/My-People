@@ -1,19 +1,21 @@
 Class {
-	#name : #MpEmailField,
-	#superclass : #GtABContactField,
+	#name : 'MpEmailField',
+	#superclass : 'GtABContactField',
 	#instVars : [
 		'address'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField class >> fromString: aString [
 
 	^ self parser parse: aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField class >> fromStringNoLabelExample [
 	<gtExample>
 	
@@ -25,7 +27,7 @@ MpEmailField class >> fromStringNoLabelExample [
 			result address should equal: 'sean@clipperadams.com' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField class >> fromStringWithLabelExample [
 	<gtExample>
 	
@@ -37,7 +39,7 @@ MpEmailField class >> fromStringWithLabelExample [
 			result address should equal: 'sean@clipperadams.com' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField class >> parser [
 
 	| fieldName address addressToken |
@@ -51,25 +53,25 @@ MpEmailField class >> parser [
 			yourself ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> = rhs [
 
 	^ super = rhs and: [ self address = rhs address ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> address [
 
 	^ address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> address: anObject [
 
 	address := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> addressDescription [
 	<magritteDescription>
 	
@@ -79,7 +81,7 @@ MpEmailField >> addressDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> displayStringOn: aStream [
 
 	self address ifNotNil: [ :add | aStream nextPutAll: add ].
@@ -89,13 +91,13 @@ MpEmailField >> displayStringOn: aStream [
 			nextPutAll: str ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> hash [
 
 	^ super hash bitXor: self address hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEmailField >> printOn: aStream [
 
 	self displayStringOn: aStream.

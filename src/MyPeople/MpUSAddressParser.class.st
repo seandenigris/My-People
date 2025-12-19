@@ -1,10 +1,11 @@
 Class {
-	#name : #MpUSAddressParser,
-	#superclass : #MpUSAddressGrammar,
-	#category : #MyPeople
+	#name : 'MpUSAddressParser',
+	#superclass : 'MpUSAddressGrammar',
+	#category : 'MyPeople',
+	#package : 'MyPeople'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddressParser >> directional [
 
 	^ super directional ==> [ :aString |
@@ -13,7 +14,7 @@ MpUSAddressParser >> directional [
 			withMap: MpUSAddress directionalMap ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddressParser >> parser [
 
 	^ super parser ==> [ :nodes |
@@ -30,7 +31,7 @@ MpUSAddressParser >> parser [
 		tokens joinUsing: Character space ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpUSAddressParser >> suffix [
 
 	^ super suffix ==> [ :aString |

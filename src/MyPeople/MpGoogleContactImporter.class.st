@@ -1,10 +1,12 @@
 Class {
-	#name : #MpGoogleContactImporter,
-	#superclass : #MACSVTwoStageImporter,
-	#category : #'MyPeople-Google'
+	#name : 'MpGoogleContactImporter',
+	#superclass : 'MACSVTwoStageImporter',
+	#category : 'MyPeople-Google',
+	#package : 'MyPeople',
+	#tag : 'Google'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter class >> writeContacts: aCollection toFile: aFileReference [
 
 	| writer |
@@ -25,7 +27,7 @@ MpGoogleContactImporter class >> writeContacts: aCollection toFile: aFileReferen
 			nextPutAll: aCollection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> domainObjectFromDictionary: aDictionary [
 
 	| mpEntity |
@@ -50,13 +52,13 @@ MpGoogleContactImporter >> domainObjectFromDictionary: aDictionary [
 	^ mpEntity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> fieldNamePropertyKey [
 
 	^ #googleCsvFieldName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> initialize: aString customFieldValue: anObject for: anMpEntity [
 
 	aString = 'MyPeople ID36' ifTrue: [
@@ -66,7 +68,7 @@ MpGoogleContactImporter >> initialize: aString customFieldValue: anObject for: a
 	self error: 'unknown custom field'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> initializeCustomFieldsFor: anMpEntity fromRecord: aDictionary [
 
 	| fieldValue keyPrefix maxOrgs currentIndex fieldName |
@@ -93,7 +95,7 @@ MpGoogleContactImporter >> initializeCustomFieldsFor: anMpEntity fromRecord: aDi
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> initializeOrganizationsFor: anMpEntity fromRecord: aDictionary [
 
 	| title org name keyPrefix maxOrgs currentIndex |
@@ -115,7 +117,7 @@ MpGoogleContactImporter >> initializeOrganizationsFor: anMpEntity fromRecord: aD
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> initializePhonesFor: anMpEntity fromRecord: aDictionary [
 
 	| typeName phone number keyPrefix maxPhones currentIndex |
@@ -135,7 +137,7 @@ MpGoogleContactImporter >> initializePhonesFor: anMpEntity fromRecord: aDictiona
 		currentIndex := currentIndex + 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> newOrganizationFromRecord: aDictionary [
 
 	| result |
@@ -150,7 +152,7 @@ MpGoogleContactImporter >> newOrganizationFromRecord: aDictionary [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpGoogleContactImporter >> newPersonFromRecord: aDictionary [
 
 	| name |

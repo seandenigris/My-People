@@ -8,25 +8,27 @@ Implementation note: I used to be a SortedCollection, but:
 - it was slowing the whole system down to a crawl!!
 "
 Class {
-	#name : #MpEntityCollection,
-	#superclass : #OrderedCollection,
+	#name : 'MpEntityCollection',
+	#superclass : 'OrderedCollection',
 	#traits : 'MpTEntityCollection',
 	#classTraits : 'MpTEntityCollection classTrait',
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEntityCollection >> asEntityCollection [
 	^ self
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MpEntityCollection >> copyAddingFilter: aBlock [
 
 	^ self select: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpEntityCollection >> privateFilteredContacts [
 	^ self
 ]

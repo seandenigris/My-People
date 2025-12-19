@@ -1,10 +1,12 @@
 Class {
-	#name : #SmeRealPersonTests,
-	#superclass : #TestCase,
-	#category : #'MyPeople-Specifications'
+	#name : 'SmeRealPersonTests',
+	#superclass : 'TestCase',
+	#category : 'MyPeople-Specifications',
+	#package : 'MyPeople',
+	#tag : 'Specifications'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmeRealPersonTests >> testComparing [
 
 	| person name samePerson |
@@ -15,7 +17,7 @@ SmeRealPersonTests >> testComparing [
 	(person chanceIsSameAs: samePerson) should equal: 75 percent.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmeRealPersonTests >> testCreation [
 	"Process the following into a person object:
 	
@@ -31,7 +33,7 @@ SmeRealPersonTests >> testCreation [
 	person dateOfDeath should = (Year year: 1860)."
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SmeRealPersonTests >> testPrinting [
 
 	| person |

@@ -1,12 +1,12 @@
-Extension { #name : #RlEmail }
+Extension { #name : 'RlEmail' }
 
-{ #category : #'*MyPeople' }
+{ #category : '*MyPeople' }
 RlEmail >> addressBook [
 
 	^ MpAddressBook uniqueInstance
 ]
 
-{ #category : #'*MyPeople' }
+{ #category : '*MyPeople' }
 RlEmail >> isSender: anMpRelatableEntity [
 
 	anMpRelatableEntity website ifNotNil: [ :web | 
@@ -21,7 +21,7 @@ RlEmail >> isSender: anMpRelatableEntity [
 	^ false
 ]
 
-{ #category : #'*MyPeople' }
+{ #category : '*MyPeople' }
 RlEmail >> sender [
 
 	^ self addressBook contacts 

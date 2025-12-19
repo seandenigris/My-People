@@ -1,6 +1,6 @@
 Class {
-	#name : #MpRelatableEntity,
-	#superclass : #Object,
+	#name : 'MpRelatableEntity',
+	#superclass : 'Object',
 	#traits : 'MpTPersonComparable + DbTDomainObject',
 	#classTraits : 'MpTPersonComparable classTrait + DbTDomainObject classTrait',
 	#instVars : [
@@ -11,57 +11,59 @@ Class {
 		'addresses',
 		'emailAddresses'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity class >> isAbstract [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpRelatableEntity class >> isValidName: aString [
 
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpRelatableEntity >> = rhs [
 
 	self class = rhs class ifFalse: [ ^ false ].
 	^ self uuid = rhs uuid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> addressBook [
 	^ self
 		propertyAt: #addressBook
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> addressBook: anMpAddressBook [
 	anMpAddressBook ensureContact: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> addressBookBasic: anMpAddressBook [
 	^ self
 		propertyAt: #addressBook
 		putRemovingNil: anMpAddressBook
 ]
 
-{ #category : #'GtABContact compatibility' }
+{ #category : 'GtABContact compatibility' }
 MpRelatableEntity >> addresses [
 	^ self maLazyInstVarUsing: self addressesDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> addresses: anObject [
 	addresses := anObject
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpRelatableEntity >> addressesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -73,12 +75,12 @@ MpRelatableEntity >> addressesDescription [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> affiliations [
 	^ self propertyAt: #affiliations ifAbsentPut: [ SortedCollection sortUsing: #nameForAlphabetization asSortFunction ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> affiliationsGtSearchFor: aSearch [
 	<gtSearch>
 	
@@ -90,17 +92,17 @@ MpRelatableEntity >> affiliationsGtSearchFor: aSearch [
 		filterBySubstring
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> aliases [
 	^ self maLazyInstVarUsing: self aliasesDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> aliases: anObject [
 	aliases := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> aliasesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -111,28 +113,28 @@ MpRelatableEntity >> aliasesDescription [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> avatar [
 	avatar ifNotNil: [ ^ avatar ].
 	self avatarSource ifNotNil: [ :as | ^ as asForm ].
 	^ self defaultAvatar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> avatarSource [
 	^ self
 		propertyAt: #avatarSource
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> avatarSource: formable [
 	self
 		propertyAt: #avatarSource
 		put: formable
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpRelatableEntity >> avatarSourceDescription [
 	<magritteDescription>
 	^ MAToOneRelationDescription new
@@ -142,12 +144,12 @@ MpRelatableEntity >> avatarSourceDescription [
 			yourself
 ]
 
-{ #category : #'GtABContact compatibility' }
+{ #category : 'GtABContact compatibility' }
 MpRelatableEntity >> description [
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> emailAddressGtSearchNewFor: aSearch [
 	<gtSearch>
 	
@@ -168,19 +170,19 @@ MpRelatableEntity >> emailAddressGtSearchNewFor: aSearch [
 		send: [ :result | self emailAddresses add: result ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> emailAddresses [
 
 	^ self maLazyInstVarUsing: self emailAddressesDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> emailAddresses: anObject [
 
 	emailAddresses := anObject
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpRelatableEntity >> emailAddressesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -193,13 +195,13 @@ MpRelatableEntity >> emailAddressesDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> fullName [
 
 	^ name asString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> gtPhonesOn: aView [
 	<gtView>
 	^ aView columnedList
@@ -210,7 +212,7 @@ MpRelatableEntity >> gtPhonesOn: aView [
 		column: 'Number' text: [ :e | e fullNumber ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> gtSearchNewTelephoneFor: aSearch [
 	
 	^ aSearch explicit
@@ -222,7 +224,7 @@ MpRelatableEntity >> gtSearchNewTelephoneFor: aSearch [
 		send: [ :result | self telephones add: result ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MpRelatableEntity >> gtSearchNewTelephoneResultsFromInput: aString [
 
 	| isExisting aPhoneNumber |
@@ -237,7 +239,7 @@ MpRelatableEntity >> gtSearchNewTelephoneResultsFromInput: aString [
 	^ { aPhoneNumber }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> gtViewAffiliationsOn: aView [
 	<gtView>
 	
@@ -251,7 +253,7 @@ MpRelatableEntity >> gtViewAffiliationsOn: aView [
 		actionUpdateButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> gtViewContactDetailsOn: aView [
 	<gtView>
 	^ aView explicit
@@ -311,7 +313,7 @@ MpRelatableEntity >> gtViewContactDetailsOn: aView [
 			container ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> gtViewPreviewOn: aView [
 	<gtView>
 	^ aView explicit
@@ -323,87 +325,87 @@ MpRelatableEntity >> gtViewPreviewOn: aView [
 				imageForm asElement asPannableElement ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpRelatableEntity >> hash [
 
 	^ self uuid hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> import [
 
 	MpAddressBook uniqueInstance ensureContact: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> initialize [
 	super initialize.
 	self ensureUUID
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpRelatableEntity >> isMunicipality [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpRelatableEntity >> isOrganization [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpRelatableEntity >> isPerson [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpRelatableEntity >> isUSState [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> name [
 	^ self maLazyInstVarUsing: self nameDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> nameForAlphabetization [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> newEmail [
 	CwMacMail new newMessageTo: self fullName at: self emailAddresses atRandom address re: '' asFollows: ''
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MpRelatableEntity >> printOn: aStream [
 
 	name displayStringOn: aStream.
 ]
 
-{ #category : #'GtABContact compatibility' }
+{ #category : 'GtABContact compatibility' }
 MpRelatableEntity >> telephone [
 	^ ''
 ]
 
-{ #category : #'GtABContact compatibility' }
+{ #category : 'GtABContact compatibility' }
 MpRelatableEntity >> telephones [
 	^ self propertyAt: #telephones ifAbsentPut: [ OrderedCollection new ]
 ]
 
-{ #category : #'GtABContact compatibility' }
+{ #category : 'GtABContact compatibility' }
 MpRelatableEntity >> telephones: aCollection [
 	^ self propertyAt: #telephones putRemovingNil: aCollection
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpRelatableEntity >> telephonesDescription [
 	<magritteDescription>
 	^ MAToManyRelationDescription new
@@ -416,23 +418,23 @@ MpRelatableEntity >> telephonesDescription [
 			yourself
 ]
 
-{ #category : #'*MyPeople' }
+{ #category : 'accessing' }
 MpRelatableEntity >> uuidFromString36: aString [
 	
-	 ^ self propertyAt: #uuid put: (UUID fromString36: aString)
+	 ^ self uuid: (UUID fromString36: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> website [
 	^ self maLazyInstVarUsing: self websiteDescription
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpRelatableEntity >> website: aUrl [
 	website := aUrl
 ]
 
-{ #category : #'magritte-accessing' }
+{ #category : 'magritte-accessing' }
 MpRelatableEntity >> websiteDescription [
 	<magritteDescription>
 	^ MAUrlDescription new

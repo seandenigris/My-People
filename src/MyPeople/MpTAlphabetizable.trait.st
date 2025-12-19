@@ -1,14 +1,16 @@
 Trait {
-	#name : #MpTAlphabetizable,
-	#category : #'MyPeople-Support'
+	#name : 'MpTAlphabetizable',
+	#category : 'MyPeople-Support',
+	#package : 'MyPeople',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTAlphabetizable >> fullName [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTAlphabetizable >> nameForAlphabetization [
 	
 	^ #('A ' 'An ' 'The ') 

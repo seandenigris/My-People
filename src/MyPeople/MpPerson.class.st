@@ -1,6 +1,6 @@
 Class {
-	#name : #MpPerson,
-	#superclass : #MpRelatableEntity,
+	#name : 'MpPerson',
+	#superclass : 'MpRelatableEntity',
 	#instVars : [
 		'occupation',
 		'yearOfDeath',
@@ -9,10 +9,12 @@ Class {
 	#classInstVars : [
 		'contacts'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpPerson class >> exampleAffiliation [
 	<gtExample>
 	| org result |
@@ -24,7 +26,7 @@ MpPerson class >> exampleAffiliation [
 		
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpPerson class >> exampleBretVictor [
 	<gtExample>
 	| result |
@@ -36,7 +38,7 @@ MpPerson class >> exampleBretVictor [
 	^ result
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpPerson class >> exampleDumbledore [
 	<gtExample>
 	| result |
@@ -45,14 +47,14 @@ MpPerson class >> exampleDumbledore [
 	^ result
 ]
 
-{ #category : #example }
+{ #category : 'example' }
 MpPerson class >> exampleFlickrUser [
 	^ MpPerson new
 		propertyAt: #flickrUsername put: 'sixteenmilesofstring';
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpPerson class >> exampleHarryPotter [
 	<gtExample>
 	| result |
@@ -61,13 +63,13 @@ MpPerson class >> exampleHarryPotter [
 	^ result
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MpPerson class >> exampleMatch: masterList to: prospectList [
 
 	^ masterList collect: [ :m | { m. prospectList select: [ :pm | (m chanceIsSameAs: pm) > 0 percent ] } ].
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpPerson class >> exampleNassimTaleb [
 	| result |
 	result := MpPerson named: 'Nassim Taleb'.
@@ -78,13 +80,13 @@ MpPerson class >> exampleNassimTaleb [
 	^ result
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpPerson class >> isValidName: aString [
 
 	^ MpName isValidInput: aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MpPerson class >> named: convertibleToName [
 
 	^ self new
@@ -92,7 +94,7 @@ MpPerson class >> named: convertibleToName [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> addAffiliationWith: anOrganization as: titleString [
 	| aff |
 	aff := MpAffiliation organization: anOrganization member: self role: titleString.
@@ -100,18 +102,18 @@ MpPerson >> addAffiliationWith: anOrganization as: titleString [
 	^ aff
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpPerson >> age [
 	^ self ageOn: Date today translateToUTC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> ageOn: aDate [
 
 	^ aDate yearsSince: self dateOfBirth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> birthdate [
 	self 
 		deprecated: 'Renamed to #dateOfBirth'
@@ -119,7 +121,7 @@ MpPerson >> birthdate [
 	^ self dateOfBirth.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> birthdate: aDate [
 	self 
 		deprecated: 'Renamed to #dateOfBirth:'
@@ -128,19 +130,19 @@ MpPerson >> birthdate: aDate [
 	self dateOfBirth: aDate.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> dateOfBirth [
 
 	^ dateOfBirth.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> dateOfBirth: aDate [
 
 	dateOfBirth := aDate.
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpPerson >> dateOfBirthDescription [
 	
 	<magritteDescription>
@@ -152,28 +154,28 @@ MpPerson >> dateOfBirthDescription [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> defaultAvatar [
 	^ GtABContact unknowsJoeAvatar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> flickrUsername [
 	^ self propertyAt: #flickrUsername ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> flickrUsername: aString [
 	self propertyAt: #flickrUsername put: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> fullName: aString [
 
 	name := MpNameParser parse: aString onError: [ self error: 'Failed parsing ', aString ]
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpPerson >> fullNameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -185,7 +187,7 @@ MpPerson >> fullNameDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> gtSpotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	| previewMorph |
@@ -198,22 +200,22 @@ MpPerson >> gtSpotterPreviewIn: aComposite [
 		hSpaceFill
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> isAffiliatedWith: anOrganization [
 	^ self affiliations includesKey: anOrganization
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpPerson >> isPerson [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> linkedInProfile: aString [
 	self propertyAt: #linkedInProfile put: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> linkedInProfileUrl [
 	^ self 
 		propertyAt: #linkedInProfile 
@@ -224,7 +226,7 @@ MpPerson >> linkedInProfileUrl [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #'magritte-descriptions' }
+{ #category : 'magritte-descriptions' }
 MpPerson >> nameDescription [
 	<magritteDescription>
 	
@@ -237,18 +239,18 @@ MpPerson >> nameDescription [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> nameForAlphabetization [
 	^ self name lastNameFirst asUppercase copyWithout: $.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> occupation: aString [ 
 
 	occupation := aString.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> ssaFullRetirementAge [
 
 	| birthYear |
@@ -274,23 +276,23 @@ MpPerson >> ssaFullRetirementAge [
 	"Reference: https://www.ssa.gov/oact/progdata/nra.html"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> twitterUsername [
 	^ self propertyAt: #twitterUsername ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> twitterUsername: aString [
 	^ self propertyAt: #twitterUsername put: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> yearOfDeath [
 
 	^ yearOfDeath.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpPerson >> yearOfDeath: aNumber [
 
 	yearOfDeath := aNumber.

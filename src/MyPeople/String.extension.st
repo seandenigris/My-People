@@ -1,11 +1,11 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*MyPeople' }
+{ #category : '*MyPeople' }
 String >> asMpName [
 	^ MpName fromString: self
 ]
 
-{ #category : #'*MyPeople' }
+{ #category : '*MyPeople' }
 String >> mpAsNameCase [
 
 	| isAllCaps shouldNormalize |

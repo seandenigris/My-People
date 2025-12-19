@@ -2,8 +2,8 @@
 Part names from [Wikipedia](https://en.wikipedia.org/wiki/North_American_Numbering_Plan)
 "
 Class {
-	#name : #MpTelephone,
-	#superclass : #GtABContactField,
+	#name : 'MpTelephone',
+	#superclass : 'GtABContactField',
 	#instVars : [
 		'areaCode',
 		'lineNumber',
@@ -13,15 +13,17 @@ Class {
 	#classInstVars : [
 		'countryCode'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpTelephone class >> countryCode [
 	^ countryCode
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpTelephone class >> example [
 	<gtExample>
 	^ self 
@@ -34,7 +36,7 @@ MpTelephone class >> example [
 			r lineNumber should equal: 0100 ].
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpTelephone class >> fromString: aString [
 	| pyNumber nationalNumberStream |
 	
@@ -54,7 +56,7 @@ MpTelephone class >> fromString: aString [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone class >> isValidNumber: aString [
 
 	| pyNumber |
@@ -65,7 +67,7 @@ phonenumbers.is_valid_number(aPhoneNumber)'
 		withBindings: { #aPhoneNumber -> pyNumber }.
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 MpTelephone class >> pyPhoneNumberFromString: aString [
 	^ PBApplication start 
 		sendSource: '# https://github.com/daviddrysdale/python-phonenumbers
@@ -74,36 +76,36 @@ phonenumbers.parse(str, "US")'
 		withBindings: { #str -> aString }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> = rhs [
 
 	self species = rhs species ifFalse: [ ^ false ].
 	^ super = rhs and: [ self fullNumber = rhs fullNumber ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> areaCode [
 
 	^ areaCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> areaCode: anObject [
 
 	areaCode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> countryCode [
 	^ countryCode
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 MpTelephone >> countryCode: anInteger [ 
 	countryCode := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> displayStringOn: aStream [
 
 	self fullNumber ifNotNil: [ :num | aStream nextPutAll: num ].
@@ -114,19 +116,19 @@ MpTelephone >> displayStringOn: aStream [
 			nextPutAll: str ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> exchange [
 
 	^ exchange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> exchange: anObject [
 
 	exchange := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> fullNumber [
 
 	^ String streamContents: [ :str | 
@@ -140,25 +142,25 @@ MpTelephone >> fullNumber [
 			nextPutAll: (self lineNumber asString padLeftTo: 4 with: $0) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> hash [
 
 	^ super hash bitXor: self fullNumber hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> lineNumber [
 
 	^ lineNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> lineNumber: anObject [
 
 	lineNumber := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTelephone >> printOn: aStream [
 
 	self displayStringOn: aStream.

@@ -1,29 +1,31 @@
 Class {
-	#name : #MpName,
-	#superclass : #Object,
+	#name : 'MpName',
+	#superclass : 'Object',
 	#instVars : [
 		'firstName',
 		'middleName',
 		'lastName',
 		'generational'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MpName class >> fromString: aString [
 
 	^ MpNameParser parse: aString onError: [ self error: 'Failed parsing ', aString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpName class >> isValidInput: aString [ 
 
 	MpNameParser parse: aString onError: [ ^ false ].
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> < rhs [
 	self lastName < rhs lastName ifTrue: [ ^ true ].
 	(self lastName = rhs lastName and: [ self firstName < rhs firstName ]) ifTrue: [ ^ true ].
@@ -32,7 +34,7 @@ MpName >> < rhs [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> <= rhs [
 	self lastName <= rhs lastName ifTrue: [ ^ true ].
 	(self lastName = rhs lastName and: [ self firstName <= rhs firstName ]) ifTrue: [ ^ true ].
@@ -41,12 +43,12 @@ MpName >> <= rhs [
 	^ false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> = rhs [
 	^ self isSameAs: rhs
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MpName >> abbreviationsFor: givenNameString [
 	| map result |
 	result := OrderedCollection new.
@@ -65,17 +67,17 @@ MpName >> abbreviationsFor: givenNameString [
 	^ result
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MpName >> asMpName [
 	^ self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> detectMostSimilarIn: collection [
 	^ self detectMostSimilarIn: collection ifNone: [ nil ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> detectMostSimilarIn: collection ifNone: noneBlock [
 	| maxSimilarity candidates |
 	maxSimilarity := collection max: [ :e | e name similarityTo: self ].
@@ -93,17 +95,17 @@ MpName >> detectMostSimilarIn: collection ifNone: noneBlock [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> firstName [
 	^ firstName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> firstName: anObject [
 	firstName := anObject
 ]
 
-{ #category : #Magritte }
+{ #category : 'Magritte' }
 MpName >> firstNameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -114,23 +116,23 @@ MpName >> firstNameDescription [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> fullName [
 	^ String streamContents: [ :str | self printOn: str ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> generational [
 	"https://en.wikipedia.org/wiki/Suffix_(name)"
 	^ generational
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> generational: anObject [
 	generational := anObject
 ]
 
-{ #category : #Magritte }
+{ #category : 'Magritte' }
 MpName >> generationalDescription [
 	<magritteDescription>
 	^ MASingleOptionDescription new
@@ -144,12 +146,12 @@ MpName >> generationalDescription [
 			yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> hash [
 	^ self maHash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpName >> is: newValue anInterestingReplacementFor: oldValue [
 	newValue isEmptyOrNil ifTrue: [ ^ false ].
 	(newValue isKindOf: MpGenerational) ifTrue: [ 
@@ -159,17 +161,17 @@ MpName >> is: newValue anInterestingReplacementFor: oldValue [
 	^ super is: newValue mpAsCanonicalName anInterestingReplacementFor: (oldValue ifNotNil: [ oldValue mpAsCanonicalName ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> lastName [
 	^ lastName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> lastName: anObject [
 	lastName := anObject
 ]
 
-{ #category : #Magritte }
+{ #category : 'Magritte' }
 MpName >> lastNameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -180,7 +182,7 @@ MpName >> lastNameDescription [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> lastNameFirst [
 	^ String streamContents: [ :str |
 		self lastName ifNotNil: [ :n |
@@ -192,13 +194,13 @@ MpName >> lastNameFirst [
 			str << ' ' << n ] ]
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MpName >> merge: rhs [
 
 	self magritteDescription do: [ :desc | desc mergeFrom: rhs to: self ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MpName >> merge: rhs into: aSelector [
 
 	| current input isInputBetter |
@@ -215,17 +217,17 @@ MpName >> merge: rhs into: aSelector [
 	
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> middleName [
 	^ middleName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpName >> middleName: aString [
 	middleName := aString
 ]
 
-{ #category : #Magritte }
+{ #category : 'Magritte' }
 MpName >> middleNameDescription [
 	<magritteDescription>
 	^ MAStringDescription new
@@ -235,13 +237,13 @@ MpName >> middleNameDescription [
 			yourself
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MpName >> patchRelativeToBase: oldValue as: description of: receiver [
 	"Edit me in place instead of full replacement like a value object"
 	^ self patchRelativeToBase: oldValue
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MpName >> printOn: aStream [
 	firstName ifNotNil: [ :fn | aStream nextPutAll: fn ].
 	middleName ifNotNil: [ :mn | 
@@ -260,7 +262,7 @@ MpName >> printOn: aStream [
 				nextPutAll: str ] ]
 ]
 
-{ #category : #Magritte }
+{ #category : 'Magritte' }
 MpName >> shouldAutoMergeBlock [
 
 	^ [ :old :new |
@@ -269,7 +271,7 @@ MpName >> shouldAutoMergeBlock [
 			new beginsWith: oldNoPeriod ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> similarityBetweenGenerationals: lhs and: rhs ifConflicting: aBlock [
 
 	(lhs isEmptyOrNil or: [ rhs isEmptyOrNil ]) ifTrue: [ ^ 0 percent ].
@@ -278,7 +280,7 @@ MpName >> similarityBetweenGenerationals: lhs and: rhs ifConflicting: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> similarityBetweenGivenNames: aName and: anotherName ifConflicting: aBlock [
 
 	(aName isNil or: [ anotherName isNil ]) ifTrue: [ ^ 0 percent ].
@@ -289,7 +291,7 @@ MpName >> similarityBetweenGivenNames: aName and: anotherName ifConflicting: aBl
 	^ aBlock value
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpName >> similarityTo: rhs [
 
 	| score lastNameWeight firstNameWeight middleNameWeight generationalWeight |

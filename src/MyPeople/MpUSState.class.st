@@ -1,18 +1,20 @@
 Class {
-	#name : #MpUSState,
-	#superclass : #MpOrganization,
+	#name : 'MpUSState',
+	#superclass : 'MpOrganization',
 	#instVars : [
 		'postalCode'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #setup }
+{ #category : 'setup' }
 MpUSState class >> addAllToAddressBookSingleton [
 	MpAddressBook uniqueInstance addAll: self all
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSState class >> all [
 	| data |
 	data := 	#(
@@ -74,12 +76,12 @@ MpUSState class >> all [
 			aliases: e third asOrderedCollection ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MpUSState >> isUSState [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSState >> matches: aString [
 	self name = aString ifTrue: [ ^ true ].
 	self postalCode = aString ifTrue: [ ^ true ].
@@ -90,12 +92,12 @@ MpUSState >> matches: aString [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSState >> postalCode [
 	^ postalCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpUSState >> postalCode: aString [ 
 	postalCode := aString
 ]

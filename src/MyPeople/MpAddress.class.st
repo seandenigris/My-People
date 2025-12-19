@@ -1,41 +1,43 @@
 Class {
-	#name : #MpAddress,
-	#superclass : #Object,
+	#name : 'MpAddress',
+	#superclass : 'Object',
 	#instVars : [
 		'city',
 		'country'
 	],
-	#category : #'MyPeople-Core'
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpAddress >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	^ city = anObject city and: [ self country = anObject country ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddress >> city [
 	^ city
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddress >> city: anObject [
 	city := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddress >> country [
 	^ country
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpAddress >> country: anObject [
 	country := anObject
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 MpAddress >> gtSpotterForPeopleFor: aSearch [
 	<gtSearch>
 	(aSearch hasPreviousNavigationFromClass: GtABAddressBook)
@@ -49,14 +51,14 @@ MpAddress >> gtSpotterForPeopleFor: aSearch [
 		matchSubstrings
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MpAddress >> hash [
 
 	^ city hash bitXor: country hash
 	
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MpAddress >> printOn: aStream [
 
 	aStream nextPutAll: self city.

@@ -1,9 +1,11 @@
 Trait {
-	#name : #MpTEntityCollection,
-	#category : #'MyPeople-Core'
+	#name : 'MpTEntityCollection',
+	#category : 'MyPeople-Core',
+	#package : 'MyPeople',
+	#tag : 'Core'
 }
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> addressesSearchFor: aSearch [
 	<gtSearch>
 	
@@ -14,18 +16,18 @@ MpTEntityCollection >> addressesSearchFor: aSearch [
 		matchSubstrings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> asEntityCollection [
 	self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> contacts [
 	self flag: 'Do not use. This will go away as soon as we figure out a way to support Dynabook data migration for users'.
 	^ self privateFilteredContacts
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> contactsGtViewListOn: aView [
 	<gtView>
 	^ self
@@ -33,7 +35,7 @@ MpTEntityCollection >> contactsGtViewListOn: aView [
 		sortedUsing: #nameForAlphabetization ascending
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> contactsGtViewListOn: aView sortedUsing: aBlock [
 	
 	^ aView list
@@ -43,7 +45,7 @@ MpTEntityCollection >> contactsGtViewListOn: aView sortedUsing: aBlock [
 		actionUpdateButton
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> contactsViewDetailedOn: aView [
 	<gtView>
 	
@@ -58,14 +60,14 @@ MpTEntityCollection >> contactsViewDetailedOn: aView [
 		column: 'Phone' text: [ :aContact | aContact telephone ]
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> contactsWithAddress: anAddress [
 
 	^ self copyAddingFilter: [ :aContact | 
 		aContact address = anAddress ] 
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> contactsWithTelephone: aNumber [
 
 	^ self copyAddingFilter: [ :aContact | 
@@ -73,18 +75,18 @@ MpTEntityCollection >> contactsWithTelephone: aNumber [
 			aTelephone number = aNumber ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MpTEntityCollection >> copyAddingFilter: aBlock [
 
 	self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> entryNamed: aString ifFound: foundBlock ifNone: noneBlock [
 	^ self detect: [ :e | e fullName = aString ] ifFound: foundBlock ifNone: noneBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> googleCSVExport [
 
 	| maxPhones |
@@ -92,22 +94,22 @@ MpTEntityCollection >> googleCSVExport [
 	^ maxPhones
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> hasEntryNamed: aString [
 	^ self anySatisfy: [ :e | e fullName = aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> municipalities [
 	^ self copyAddingFilter: #isMunicipality
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> organizations [
 	^ self copyAddingFilter: #isOrganization
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> organizationsSearchFor: aSearch [
 	"Adapted from GT superclass"
 
@@ -120,12 +122,12 @@ MpTEntityCollection >> organizationsSearchFor: aSearch [
 		itemName: [ :aContact | aContact fullName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> people [
 	^ self copyAddingFilter: #isPerson
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> peopleSearchFor: aSearch [
 	<gtSearch>
 	
@@ -148,7 +150,7 @@ MpTEntityCollection >> peopleSearchFor: aSearch [
 					aStream nextPut: $" ] ] ].		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> printOn: aStream [
 
 	aStream 
@@ -156,12 +158,12 @@ MpTEntityCollection >> printOn: aStream [
 		nextPutAll: ' contacts'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> privateFilteredContacts [
 	self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> removeDuplicateContactFields [
 
 	self do: [ :entity | 
@@ -169,7 +171,7 @@ MpTEntityCollection >> removeDuplicateContactFields [
 		entity emailAddresses: entity emailAddresses asSet asOrderedCollection ]
 ]
 
-{ #category : #searches }
+{ #category : 'searches' }
 MpTEntityCollection >> telephonesSearchFor: aSearch [
 	<gtSearch>
 	^ aSearch list
@@ -179,7 +181,7 @@ MpTEntityCollection >> telephonesSearchFor: aSearch [
 		matchSubstrings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MpTEntityCollection >> usStates [
 	^ self copyAddingFilter: #isUSState
 ]
