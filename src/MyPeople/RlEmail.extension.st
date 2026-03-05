@@ -20,17 +20,3 @@ RlEmail >> isSender: anMpRelatableEntity [
 		
 	^ false
 ]
-
-{ #category : '*MyPeople' }
-RlEmail >> sender [
-
-	^ self
-		propertyAt: #senderCache
-		ifAbsentPut: [ self senderBasic ]
-]
-
-{ #category : '*MyPeople' }
-RlEmail >> senderBasic [
-
-	^ RlEmailSender of: self
-]
