@@ -24,7 +24,13 @@ RlEmail >> isSender: anMpRelatableEntity [
 { #category : '*MyPeople' }
 RlEmail >> sender [
 
-	^ self addressBook contacts 
-		detect: [ :c | self isSender: c ]
-		ifNone: [ nil ]
+	^ self
+		propertyAt: #senderCache
+		ifAbsentPut: [ self senderBasic ]
+]
+
+{ #category : '*MyPeople' }
+RlEmail >> senderBasic [
+
+	^ RlEmailSender of: self
 ]
