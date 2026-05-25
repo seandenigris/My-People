@@ -313,18 +313,6 @@ MpRelatableEntity >> gtViewContactDetailsOn: aView [
 			container ]
 ]
 
-{ #category : 'accessing' }
-MpRelatableEntity >> gtViewPreviewOn: aView [
-	<gtView>
-	^ aView explicit
-		title: 'Preview' translated;
-		priority: 6;
-		stencil: [
-			"Use the old morph for now"
-			((GtABPreviewMorph new contact: self) extent: 500@300)
-				imageForm asElement asPannableElement ]
-]
-
 { #category : 'comparing' }
 MpRelatableEntity >> hash [
 
