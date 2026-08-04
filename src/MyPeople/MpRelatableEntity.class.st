@@ -1,8 +1,8 @@
 Class {
 	#name : 'MpRelatableEntity',
 	#superclass : 'Object',
-	#traits : 'MpTPersonComparable + DbTDomainObject',
-	#classTraits : 'MpTPersonComparable classTrait + DbTDomainObject classTrait',
+	#traits : 'MpTPersonComparable + DbTDomainObject + DbTProjectProperty',
+	#classTraits : 'MpTPersonComparable classTrait + DbTDomainObject classTrait + DbTProjectProperty classTrait',
 	#instVars : [
 		'name',
 		'aliases',
