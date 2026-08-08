@@ -43,6 +43,13 @@ MpRelatableEntity >> addressBook [
 
 { #category : 'accessing' }
 MpRelatableEntity >> addressBook: anMpAddressBook [
+	
+	anMpAddressBook ifNil: [ 
+		self properties
+			removeKey: #addressBook
+			ifAbsent: [].
+		^ self ].
+	
 	anMpAddressBook ensureContact: self
 ]
 
@@ -142,6 +149,15 @@ MpRelatableEntity >> avatarSourceDescription [
 			priority: 500;
 			gtSearchSource: (MessageSend receiver: RlResourceLibrary selector: #uniqueInstance);
 			yourself
+]
+
+{ #category : 'as yet unclassified' }
+MpRelatableEntity >> delete [
+
+	self error: 'child/parent and affiliatinos have not been considered'.
+	self addressBook remove: self.
+	self addressBook: nil.
+	
 ]
 
 { #category : 'GtABContact compatibility' }

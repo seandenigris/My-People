@@ -176,6 +176,12 @@ MpAddressBook >> peopleSearchNewFor: aSearch [
 		priority: 60
 ]
 
+{ #category : 'as yet unclassified' }
+MpAddressBook >> remove: anMprelatableEntity [
+
+	self privateContacts remove: anMprelatableEntity
+]
+
 { #category : 'spotter' }
 MpAddressBook >> searchNew: aClass for: aSearch priority: aNumber [
 	
