@@ -100,6 +100,20 @@ MpRelatableEntity >> affiliationsGtSearchFor: aSearch [
 ]
 
 { #category : 'accessing' }
+MpRelatableEntity >> affiliationsGtViewOn: aView [
+	<gtView>
+	
+	self affiliations ifEmpty: [ ^ aView empty ].
+	
+	^ aView list
+		title: 'Affiliations' translated;
+		priority: 60;
+		items: [ self affiliations asOrderedCollection ];
+		inspectButtonFor: [ self affiliations ];
+		actionUpdateButton
+]
+
+{ #category : 'accessing' }
 MpRelatableEntity >> aliases [
 	^ self maLazyInstVarUsing: self aliasesDescription
 ]
@@ -149,6 +163,66 @@ MpRelatableEntity >> avatarSourceDescription [
 			priority: 500;
 			gtSearchSource: (MessageSend receiver: RlResourceLibrary selector: #uniqueInstance);
 			yourself
+]
+
+{ #category : 'accessing' }
+MpRelatableEntity >> contactDetailsGtViewOn: aView [
+	<gtView>
+	^ aView explicit
+		title: 'Details' translated;
+		priority: 5;
+		stencil:
+				[ | container verticalContainer detailsTextContainer avatarContainer nameTextContainer details |
+			details := String
+				streamContents: [ :aStream | 
+					self telephones
+						do: [ :aTelephone | aStream nextPutAll: aTelephone fullNumber ]
+						separatedBy: [ aStream cr ].
+					aStream cr.
+					self addresses
+						do: [ :aTelephone | aStream nextPutAll: aTelephone gtDisplayString ]
+						separatedBy: [ aStream cr ] ].
+			container := BlElement new
+				layout: BlLinearLayout horizontal;
+				background: Color white;
+				aptitude: BrShadowAptitude;
+				margin: (BlInsets all: 20);
+				constraintsDo: [ :c | 
+					c horizontal fitContent.
+					c vertical fitContent ].
+			avatarContainer := BlElement new
+				size: 124 @ 124;
+				background: (self avatar scaledToSize: 124 @ 124);
+				margin: (BlInsets all: 10).
+			nameTextContainer := BlTextElement new
+				constraintsDo: [ :c | c horizontal matchParent ];
+				margin:
+					(BlInsets
+						top: 5
+						right: 0
+						bottom: 20
+						left: 5);
+				text:
+					(self fullName asRopedText glamorousRegularFont
+						fontSize: 30;
+						foreground: Color black).
+			detailsTextContainer := BrEditor new
+				aptitude: (BrGlamorousRegularEditorAptitude new fontSize: 16);
+				text: details;
+				constraintsDo: [ :c | 
+					c horizontal matchParent.
+					c vertical matchParent ].
+			verticalContainer := BlElement new
+				layout: BlLinearLayout vertical;
+				margin: (BlInsets all: 10);
+				constraintsDo: [ :c | 
+					c horizontal matchParent.
+					c vertical matchParent ].
+			verticalContainer addChild: nameTextContainer.
+			verticalContainer addChild: detailsTextContainer.
+			container addChild: avatarContainer.
+			container addChild: verticalContainer.
+			container ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -215,118 +289,6 @@ MpRelatableEntity >> emailAddressesDescription [
 MpRelatableEntity >> fullName [
 
 	^ name asString.
-]
-
-{ #category : 'accessing' }
-MpRelatableEntity >> gtPhonesOn: aView [
-	<gtView>
-	^ aView columnedList
-		title: 'Phones' translated;
-		priority: 10;
-		items: [ self telephones ];
-		column: 'Type' text: [ :e | e typeName ];
-		column: 'Number' text: [ :e | e fullNumber ]
-]
-
-{ #category : 'accessing' }
-MpRelatableEntity >> gtSearchNewTelephoneFor: aSearch [
-	
-	^ aSearch explicit
-		title: 'New telephone';
-		priority: 50;
-		itemName: [ :result | '+ ' , result gtDisplayText ];
-		search: [ :context | 
-			self gtSearchNewTelephoneResultsFromInput: context searchQuery trimmed ];
-		send: [ :result | self telephones add: result ]
-]
-
-{ #category : 'private' }
-MpRelatableEntity >> gtSearchNewTelephoneResultsFromInput: aString [
-
-	| isExisting aPhoneNumber |
-	(MpTelephone isValidNumber: aString) ifFalse: [ ^ {} ].
-	
-	aPhoneNumber := MpTelephone fromString: aString.
-	
-	isExisting := self telephones
-			anySatisfy: [ :e | e fullNumber = aPhoneNumber fullNumber ].
-	isExisting ifTrue: [ ^ {} ].
-	
-	^ { aPhoneNumber }
-]
-
-{ #category : 'accessing' }
-MpRelatableEntity >> gtViewAffiliationsOn: aView [
-	<gtView>
-	
-	self affiliations ifEmpty: [ ^ aView empty ].
-	
-	^ aView list
-		title: 'Affiliations' translated;
-		priority: 60;
-		items: [ self affiliations asOrderedCollection ];
-		inspectButtonFor: [ self affiliations ];
-		actionUpdateButton
-]
-
-{ #category : 'accessing' }
-MpRelatableEntity >> gtViewContactDetailsOn: aView [
-	<gtView>
-	^ aView explicit
-		title: 'Details' translated;
-		priority: 5;
-		stencil:
-				[ | container verticalContainer detailsTextContainer avatarContainer nameTextContainer details |
-			details := String
-				streamContents: [ :aStream | 
-					self telephones
-						do: [ :aTelephone | aStream nextPutAll: aTelephone fullNumber ]
-						separatedBy: [ aStream cr ].
-					aStream cr.
-					self addresses
-						do: [ :aTelephone | aStream nextPutAll: aTelephone gtDisplayString ]
-						separatedBy: [ aStream cr ] ].
-			container := BlElement new
-				layout: BlLinearLayout horizontal;
-				background: Color white;
-				aptitude: BrShadowAptitude;
-				margin: (BlInsets all: 20);
-				constraintsDo: [ :c | 
-					c horizontal fitContent.
-					c vertical fitContent ].
-			avatarContainer := BlElement new
-				size: 124 @ 124;
-				background: (self avatar scaledToSize: 124 @ 124);
-				margin: (BlInsets all: 10).
-			nameTextContainer := BlTextElement new
-				constraintsDo: [ :c | c horizontal matchParent ];
-				margin:
-					(BlInsets
-						top: 5
-						right: 0
-						bottom: 20
-						left: 5);
-				text:
-					(self fullName asRopedText glamorousRegularFont
-						fontSize: 30;
-						foreground: Color black).
-			detailsTextContainer := BrEditor new
-				aptitude: (BrGlamorousRegularEditorAptitude new fontSize: 16);
-				text: details;
-				constraintsDo: [ :c | 
-					c horizontal matchParent.
-					c vertical matchParent ].
-			verticalContainer := BlElement new
-				layout: BlLinearLayout vertical;
-				margin: (BlInsets all: 10);
-				constraintsDo: [ :c | 
-					c horizontal matchParent.
-					c vertical matchParent ].
-			verticalContainer addChild: nameTextContainer.
-			verticalContainer addChild: detailsTextContainer.
-			container addChild: avatarContainer.
-			container addChild: verticalContainer.
-			container ]
 ]
 
 { #category : 'comparing' }
@@ -399,6 +361,18 @@ MpRelatableEntity >> telephone [
 	^ ''
 ]
 
+{ #category : 'accessing' }
+MpRelatableEntity >> telephoneNewGtSearchFor: aSearch [
+	
+	^ aSearch explicit
+		title: 'New telephone';
+		priority: 50;
+		itemName: [ :result | '+ ' , result gtDisplayText ];
+		search: [ :context | 
+			self telephonesNewFromString: context searchQuery trimmed ];
+		send: [ :result | self telephones add: result ]
+]
+
 { #category : 'GtABContact compatibility' }
 MpRelatableEntity >> telephones [
 	^ self propertyAt: #telephones ifAbsentPut: [ OrderedCollection new ]
@@ -416,10 +390,36 @@ MpRelatableEntity >> telephonesDescription [
 			accessor: #telephones;
 			priority: 500;
 			default: OrderedCollection new;
-			gtSearchDelegateTo: self message: #gtSearchNewTelephoneFor:;
+			gtSearchDelegateTo: self message: #telephoneNewGtSearchFor:;
 			classes: { MpTelephone };
 			referenceDisplay: #displayString;
 			yourself
+]
+
+{ #category : 'accessing' }
+MpRelatableEntity >> telephonesGtViewOn: aView [
+	<gtView>
+	^ aView columnedList
+		title: 'Phones' translated;
+		priority: 10;
+		items: [ self telephones ];
+		column: 'Type' text: [ :e | e typeName ];
+		column: 'Number' text: [ :e | e fullNumber ]
+]
+
+{ #category : 'private' }
+MpRelatableEntity >> telephonesNewFromString: aString [
+
+	| isExisting aPhoneNumber |
+	(MpTelephone isValidNumber: aString) ifFalse: [ ^ {} ].
+	
+	aPhoneNumber := MpTelephone fromString: aString.
+	
+	isExisting := self telephones
+			anySatisfy: [ :e | e fullNumber = aPhoneNumber fullNumber ].
+	isExisting ifTrue: [ ^ {} ].
+	
+	^ { aPhoneNumber }
 ]
 
 { #category : 'accessing' }
